@@ -43,8 +43,8 @@ export default function CodeEntryPage() {
       setCode('')
       setError(
         result.reason === 'network'
-          ? "We couldn't check the code. Check your connection and try again."
-          : "That code didn't work. It may be wrong or expired. Check the latest email, or send a new code.",
+          ? "Wir konnten den Code nicht prüfen. Prüf deine Verbindung und versuch es noch einmal."
+          : "Der Code hat nicht funktioniert. Er ist falsch oder abgelaufen. Schau in die neueste E-Mail oder lass dir einen neuen Code schicken.",
       )
     }
   }
@@ -60,13 +60,13 @@ export default function CodeEntryPage() {
     setError(null)
     const result = await sendCode(email)
     if (result.ok) {
-      setNotice('A new code is on its way.')
+      setNotice('Ein neuer Code ist unterwegs.')
       setCooldown(RESEND_SECONDS)
     } else {
       setError(
         result.reason === 'rate_limited'
-          ? 'Too many tries. Please wait a minute and try again.'
-          : "We couldn't send a new code. Try again in a moment.",
+          ? 'Zu viele Versuche. Bitte warte eine Minute und versuch es dann noch einmal.'
+          : "Wir konnten keinen neuen Code senden. Versuch es gleich noch einmal.",
       )
     }
   }
@@ -74,15 +74,15 @@ export default function CodeEntryPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col gap-6 p-6">
       <Button asChild variant="ghost" size="icon" className="-ml-2 self-start">
-        <Link to="/sign-in" aria-label="Back">
+        <Link to="/sign-in" aria-label="Zurück">
           <ArrowLeft />
         </Link>
       </Button>
       <div className="space-y-2">
         <Illustration name="stars" size={110} boil />
-        <Headline animate>Enter your code</Headline>
+        <Headline animate>Code eingeben</Headline>
         <p className="text-muted-foreground">
-          We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>.
+          Wir haben einen 6-stelligen Code an <span className="font-medium text-foreground">{email}</span> geschickt.
         </p>
       </div>
       <form
@@ -94,7 +94,7 @@ export default function CodeEntryPage() {
       >
         <div className="space-y-2">
           <label htmlFor="code" className="text-sm font-medium">
-            6-digit code
+            6-stelliger Code
           </label>
           <Input
             id="code"
@@ -121,11 +121,11 @@ export default function CodeEntryPage() {
           )}
         </div>
         <Button type="submit" size="lg" className="w-full" disabled={busy || code.length !== 6}>
-          {busy ? 'Checking…' : 'Continue'}
+          {busy ? 'Wird geprüft …' : 'Weiter'}
         </Button>
       </form>
       <Button type="button" variant="link" onClick={resend} disabled={cooldown > 0 || busy}>
-        {cooldown > 0 ? `Send a new code in ${cooldown}s` : 'Send a new code'}
+        {cooldown > 0 ? `Neuen Code senden (in ${cooldown} s)` : 'Neuen Code senden'}
       </Button>
     </main>
   )
