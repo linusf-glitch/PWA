@@ -11,6 +11,8 @@ Update at the end of every session.
 - Subdomain app.sizeless-shoe.com created (2026-10-08), not yet pointed at Vercel.
 - 2026-10-08: repo starter docs added (this PR).
 
+- 2026-10-08: backlog item 2, schema v1 (SQL migration in supabase/migrations/), RLS on every table, 37 database checks incl. parent-isolation tests, CI job. Not applied to any real Supabase project: Linus creates the project (Frankfurt) and we apply it later.
+
 ## Next
 
 1. Paste Step 1 into Claude Design, review the new Home, approve. Then Step 2.
