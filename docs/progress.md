@@ -20,10 +20,15 @@ Update at the end of every session.
 - 2026-10-08: look and feel step 1 of 3 (draft PR): warm design system v2 tokens, pill Button, Input, tinted NavCard, sticker SizeBadge, styleguide. Step 2 (drawings, motion) and step 3 (apply to screens, after the Home states PR merges) follow.
 - 2026-10-08: backlog item 5, part B (Home states): one dominant action per child (no shoes, fit check "feels tight", rescan due, season nudge, normal), a line for each other child that needs something, child overview (shoe with size + setting, growth, next fit check), empty Home for parents with no child yet. Review on a preview link with `?demo=fitcheck|season|rescan|onekid|empty`. Not built yet: Gift & invite (item 12), Buy without scanning (item 11), Add another child (item 13), desktop two-column Home.
 - 2026-10-08: look and feel step 2 of 3 (PR open): hand-drawn illustration components (8 drawings, doodles, squiggle headline, confetti), motion keyframes with reduced-motion fallbacks, styleguide section. Not yet used on real screens (step 3).
+- 2026-10-08: look and feel step 3 of 3 (PR open): drawings on Home (hero drawing per state, tinted overview cards with sticker tiles), sign-in and code screens, empty and placeholder pages; logo text no longer teal. Sign-in copy is still English (translation to German not yet decided).
+- 2026-10-08: docs catch-up: decisions.md and CLAUDE.md now cover the playful look, sticker drawings, #9ECACD, Footprint placeholder, phases, private repo.
+
+## Phases
+1 Foundation: done. 2 Look and feel: done with this PR. 3 Scan and buy (backlog 6-8): next. 4 Growth and history (9). 5 WhatsApp and reorder (10-12). 6 Account and launch (13-14, real sign-in setup, domain app.sizeless-shoe.com, Vercel Pro, lawyer check, security review, beta).
 
 ## Next
 
-1. Paste Step 1 into Claude Design, review the new Home, approve. Then Step 2.
+1. Phase 3: Scan intro + Footprint placeholder (backlog 6).
 2. Update the flow doc (see docs/product-spec.md, "Pending updates").
 3. Design system done in Claude Design ("Sizeless App"). Next: high-fidelity versions of about 6 key screens.
 4. Footprint questions (desktop QR, measurement ID reuse, extra lasts).

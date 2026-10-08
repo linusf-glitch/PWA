@@ -2,6 +2,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
 
+import { Headline, Illustration } from '@/components/illustration/illustration'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -78,7 +79,8 @@ export default function CodeEntryPage() {
         </Link>
       </Button>
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Enter your code</h1>
+        <Illustration name="stars" size={110} boil />
+        <Headline animate>Enter your code</Headline>
         <p className="text-muted-foreground">
           We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>.
         </p>

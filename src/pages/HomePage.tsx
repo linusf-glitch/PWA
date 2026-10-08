@@ -1,7 +1,9 @@
-import { CalendarDays, ChevronRight, Footprints, Lock, TrendingUp, UserRound } from 'lucide-react'
+import { ChevronRight, Lock, UserRound } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
+import { Headline, Illustration } from '@/components/illustration/illustration'
+import type { DrawingName } from '@/components/illustration/drawings'
 import { KidSwitcher } from '@/components/shell/kid-switcher'
 import { NavCard } from '@/components/sizeless/nav-card'
 import { SettingChip } from '@/components/sizeless/setting-chip'
@@ -18,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       <header className="sticky top-0 z-10 flex min-h-14 items-center gap-2 border-b bg-background/95 px-4 pt-[env(safe-area-inset-top)] backdrop-blur lg:hidden">
-        <h1 className="text-h3 tracking-wide text-primary">
+        <h1 className="text-h3 tracking-wide text-foreground">
           <span aria-hidden="true">SIZELESS</span>
           <span className="sr-only">Sizeless</span>
         </h1>
@@ -76,6 +78,14 @@ const OTHER_KID_LINE: Record<HomeState, string> = {
   normal: '',
 }
 
+const HERO_DRAWING: Record<HomeState, DrawingName> = {
+  noShoes: 'footprints',
+  fitCheck: 'measure',
+  rescanDue: 'ruler',
+  season: 'sock',
+  normal: 'hand',
+}
+
 function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
   const copy = {
     noShoes: {
@@ -111,9 +121,14 @@ function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
 
   return (
     <section data-state={state} className="flex flex-col gap-3 rounded-xl bg-accent p-5">
-      <p className="text-caption font-semibold text-accent-foreground">{copy.eyebrow}</p>
-      {'title' in copy && <h2 className="text-h2">{copy.title}</h2>}
-      <p className="text-body">{copy.text}</p>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-col gap-3">
+          <p className="text-caption font-semibold text-accent-foreground">{copy.eyebrow}</p>
+          {'title' in copy && <h2 className="text-h2">{copy.title}</h2>}
+          <p className="text-body">{copy.text}</p>
+        </div>
+        <Illustration name={HERO_DRAWING[state]} size={92} boil={state === 'normal'} className="-mt-1 -mr-1 shrink-0" />
+      </div>
       <Button asChild size="lg" className="w-full">
         <Link to="/scan">{copy.action}</Link>
       </Button>
@@ -131,7 +146,8 @@ function Overview({ kid }: { kid: Kid }) {
         href="/shoes"
         eyebrow="Schuhe"
         title={kid.shoe ? `${kid.shoe.model}-Schuh` : 'Noch keine Schuhe'}
-        media={<Footprints aria-hidden="true" className="size-6 text-primary" />}
+        tone="apricot"
+        media={<Illustration name="shoe" size={48} />}
       >
         {kid.shoe && (
           <>
@@ -144,14 +160,16 @@ function Overview({ kid }: { kid: Kid }) {
         href="/growth"
         eyebrow="Wachstum"
         title={kid.measurements === 1 ? '1 Messung' : `${kid.measurements} Messungen`}
-        media={<TrendingUp aria-hidden="true" className="size-6 text-primary" />}
+        tone="lilac"
+        media={<Illustration name="sprout" size={48} />}
       />
       {kid.nextFitCheck && (
         <NavCard
           href="/account"
           eyebrow="Nächster Passform-Check"
           title={`ca. ${formatDate(kid.nextFitCheck)}`}
-          media={<CalendarDays aria-hidden="true" className="size-6 text-primary" />}
+          tone="sage"
+          media={<Illustration name="tape" size={48} />}
         >
           Wir fragen per WhatsApp
         </NavCard>
@@ -168,7 +186,9 @@ function EmptyHome() {
     <>
       <section className="flex flex-col gap-3 rounded-xl bg-accent p-5">
         <p className="text-caption font-semibold text-accent-foreground">Willkommen bei Sizeless</p>
-        <h2 className="text-h2">Wen messen wir?</h2>
+        <Headline as="h2" size="h2" animate>
+          Wen messen wir?
+        </Headline>
         <label htmlFor="kid-name" className="text-label">
           Vorname
         </label>

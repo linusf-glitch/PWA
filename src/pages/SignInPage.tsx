@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { Headline, Illustration } from '@/components/illustration/illustration'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -37,7 +38,8 @@ export default function SignInPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 p-6">
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Sign in</h1>
+        <Illustration name="footprints" size={120} boil />
+        <Headline animate>Sign in</Headline>
         <p className="text-muted-foreground">We'll email you a 6-digit code. No password needed.</p>
       </div>
       <form onSubmit={onSubmit} noValidate className="space-y-4">
