@@ -1,6 +1,6 @@
 # Security and data rules (non-negotiable)
 
-- Child data under GDPR: Supabase EU region, privacy policy, consent for WhatsApp marketing, data export and deletion (Account > Your data), no PII in logs.
+- Child data under GDPR: Supabase EU region, privacy policy, consent for WhatsApp fit checks and (separately) marketing, logged with text version and time (see decisions.md, "WhatsApp consent"), data export and deletion (Account > Your data), no PII in logs.
 - Row-level security on EVERY table; a parent can only read their own children.
 - Shopify admin token and WhatsApp token server-side only. No secrets in client code.
 - Verify webhook signatures; rate-limit the email-code endpoint; signed one-time tokens in WhatsApp links.
