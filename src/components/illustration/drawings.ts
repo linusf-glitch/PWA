@@ -1,7 +1,7 @@
 // Original Sizeless drawings from the "Sizeless App" design system (illustration.md): clean paths on a
 // 160x160 grid; the wobble filter in Illustration makes them look hand-drawn. Fill keys: a apricot,
-// l lilac, s sage, n card cream, p soft apricot. Never the setting colours.
-export type Fill = 'a' | 'l' | 's' | 'n' | 'p'
+// l lilac, s sage, y brand yellow, n card cream, p soft apricot. Never the setting colours.
+export type Fill = 'a' | 'l' | 's' | 'n' | 'p' | 'y'
 export type Group = {
   t?: string
   fills: Array<[Fill, string]>
@@ -50,19 +50,19 @@ const F3 = 'M95 106 C95 95 98 88 104 88 C110 88 111 96 110 108'
 const THUMB = 'M40 114 C30 112 24 104 28 96 C31 91 38 91 42 98 C44 102 46 106 50 108'
 
 export const DRAWINGS = {
-  shoe: [shoeG('a', 'l')],
+  shoe: [shoeG('a', 'y')],
   footprints: [footG('a', 'rotate(-8 50 100)'), footG('l', 'translate(160 -10) scale(-1 1) rotate(-6 50 100)')],
   measure: [
     {
       t: 'translate(-6 0)',
-      fills: [['a', SOLEF], ...TOES.map((d): [Fill, string] => ['a', d]), ['l', star(132, 40, 10)]],
+      fills: [['a', SOLEF], ...TOES.map((d): [Fill, string] => ['a', d]), ['y', star(132, 40, 10)]],
       lines: [SOLEF, ...TOES, 'M104 57 C105 82 103 110 104 133', 'M96 57 H112', 'M96 133 H112', 'M100 64 L104 56 L108 64', 'M100 126 L104 134 L108 126', star(132, 40, 10)],
       dashed: ['M44 56 H98', 'M60 134 H98'],
       dots: [[130, 96, 2.2], [140, 82, 1.8], [124, 112, 1.8]],
     },
   ],
   hand: [
-    shoeG('s', 'l', 'translate(30 6) scale(.62)'),
+    shoeG('s', 'y', 'translate(30 6) scale(.62)'),
     {
       fills: [['p', `${HAND} Z`], ['p', `${F1} Z`], ['p', `${F2} Z`], ['p', `${F3} Z`], ['p', `${THUMB} Z`]],
       lines: [HAND, F1, F2, F3, THUMB],
@@ -72,7 +72,7 @@ export const DRAWINGS = {
     {
       fills: [
         ['l', 'M18 141 L19 108 L65 109 L64 141 Z'],
-        ['a', 'M64 141 L65 88 L108 89 L107 141 Z'],
+        ['y', 'M64 141 L65 88 L108 89 L107 141 Z'],
         ['n', 'M107 141 L108 68 L149 69 L148 141 Z'],
         ['s', 'M127 50 C118 48 112 42 112 34 C120 33 127 38 127 50 Z'],
         ['s', 'M128 46 C134 40 142 38 148 40 C148 48 140 52 128 46 Z'],
@@ -86,7 +86,7 @@ export const DRAWINGS = {
   ],
   ruler: [
     {
-      fills: [['a', 'M56 16 C70 14 90 15 104 15 L105 145 C90 147 70 146 55 146 Z'], ['l', star(138, 52, 10)]],
+      fills: [['y', 'M56 16 C70 14 90 15 104 15 L105 145 C90 147 70 146 55 146 Z'], ['l', star(138, 52, 10)]],
       lines: [
         'M56 16 C70 14 90 15 104 15 L105 145 C90 147 70 146 55 146 Z',
         ...[30, 50, 70, 90, 110, 130].map((y) => `M56 ${y} C62 ${y - 1} 68 ${y} 76 ${y}`),
@@ -98,7 +98,7 @@ export const DRAWINGS = {
   ],
   stars: [
     {
-      fills: [['l', star(62, 66, 32)], ['a', star(118, 38, 15)], ['s', star(122, 108, 12)]],
+      fills: [['l', star(62, 66, 32)], ['y', star(118, 38, 15)], ['s', star(122, 108, 12)]],
       lines: [star(62, 66, 32), star(118, 38, 15), star(122, 108, 12), 'M22 134 C30 120 38 148 46 134 S62 120 70 134 S86 148 94 134', 'M18 70 V84 M11 77 H25'],
       dots: [[24, 36, 2.6], [96, 78, 2.2], [36, 100, 2], [140, 74, 2.2], [84, 22, 2]],
     },
@@ -117,7 +117,7 @@ export const DRAWINGS = {
     {
       fills: [
         ['s', 'M58 22 L102 22 L102 84 C102 92 108 96 118 100 C136 106 142 114 140 124 C138 134 126 138 112 137 L74 136 C60 135 56 124 56 112 Z'],
-        ['l', 'M58 22 L102 22 L102 42 L58 42 Z'],
+        ['y', 'M58 22 L102 22 L102 42 L58 42 Z'],
         ['a', 'M118 100 C136 106 142 114 140 124 C138 134 126 138 112 137 C118 128 120 112 118 100 Z'],
       ],
       lines: [
@@ -130,7 +130,7 @@ export const DRAWINGS = {
   tape: [
     {
       fills: [
-        ['p', 'M96 118 L150 126 L147 142 L92 133 Z'],
+        ['y', 'M96 118 L150 126 L147 142 L92 133 Z'],
         ['a', circ(70, 86, 44)],
         ['n', circ(70, 86, 16)],
       ],
@@ -142,7 +142,7 @@ export const DRAWINGS = {
     {
       fills: [
         ['l', 'M80 14 C112 14 132 40 130 66 C128 92 100 108 88 116 L72 116 C60 108 30 92 30 66 C28 40 48 14 80 14 Z'],
-        ['a', 'M72 116 L88 116 L92 128 L68 128 Z'],
+        ['y', 'M72 116 L88 116 L92 128 L68 128 Z'],
       ],
       lines: [
         'M80 14 C112 14 132 40 130 66 C128 92 100 108 88 116 L72 116 C60 108 30 92 30 66 C28 40 48 14 80 14 Z',

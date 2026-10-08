@@ -221,6 +221,7 @@
 .sz-fl-a, .sz-fl-apricot { fill: var(--accent-apricot); }
 .sz-fl-l, .sz-fl-lilac { fill: var(--accent-lilac); }
 .sz-fl-s, .sz-fl-sage { fill: var(--accent-sage); }
+.sz-fl-y { fill: var(--brand-yellow); }
 .sz-fl-n { fill: var(--card); }
 .sz-fl-p { fill: var(--accent-apricot-soft); }
 .sz-fl-ink { fill: var(--ink); }
