@@ -1,15 +1,15 @@
 import { cn } from '@/lib/utils'
 
-export type ShoeSetting = 'green' | 'yellow' | 'red'
+export type ShoeSetting = 'turquoise' | 'yellow' | 'red'
 
 // The shoe's adjustment setting, NOT its colourway. This is the only component allowed to use
 // the setting-* colours (enforced by setting-colours.test.ts). Colour always comes with a word and
-// a shape so colour-blind parents can read it: Grün = circle, Gelb = triangle, Rot = square.
+// a shape so colour-blind parents can read it: Türkis = circle, Gelb = triangle, Rot = square.
 const SETTINGS: Record<ShoeSetting, { label: string; solid: string; soft: string }> = {
-  green: {
-    label: 'Grün',
-    solid: 'bg-setting-green text-setting-green-foreground',
-    soft: 'bg-setting-green-soft text-setting-green-text',
+  turquoise: {
+    label: 'Türkis',
+    solid: 'bg-setting-turquoise text-setting-turquoise-foreground',
+    soft: 'bg-setting-turquoise-soft text-setting-turquoise-text',
   },
   yellow: {
     label: 'Gelb',
@@ -28,10 +28,10 @@ function SettingShape({ setting, className }: { setting: ShoeSetting; className?
     <svg
       viewBox="0 0 12 12"
       aria-hidden="true"
-      data-shape={setting === 'green' ? 'circle' : setting === 'yellow' ? 'triangle' : 'square'}
+      data-shape={setting === 'turquoise' ? 'circle' : setting === 'yellow' ? 'triangle' : 'square'}
       className={cn('shrink-0 fill-current', className)}
     >
-      {setting === 'green' && <circle cx="6" cy="6" r="5" />}
+      {setting === 'turquoise' && <circle cx="6" cy="6" r="5" />}
       {setting === 'yellow' && <path d="M6 1 11.2 10.5H.8Z" />}
       {setting === 'red' && <rect x="1.5" y="1.5" width="9" height="9" rx="1" />}
     </svg>

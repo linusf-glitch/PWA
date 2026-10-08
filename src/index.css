@@ -51,19 +51,19 @@
   --chart-4: #a9d8d8;
   --chart-5: #56635f;
 
-  /* Shoe adjustment SETTING colours. Not colourways, not status colours. Only SettingChip uses them. */
-  --setting-green: #7bc74d;
-  --setting-green-foreground: #0a0f0e;
-  --setting-green-soft: #eef8e6;
-  --setting-green-text: #3b6b1a;
-  --setting-yellow: #f6be00;
+  /* Shoe adjustment SETTING colours (Türkis smallest, Gelb, Rot largest; Linus 2026-10-08). Not colourways, not status colours. Only SettingChip uses them. */
+  --setting-turquoise: #62d2d0;
+  --setting-turquoise-foreground: #0a0f0e;
+  --setting-turquoise-soft: #e3f6f6;
+  --setting-turquoise-text: #0b6466;
+  --setting-yellow: #f4d963;
   --setting-yellow-foreground: #0a0f0e;
-  --setting-yellow-soft: #fff5cc;
+  --setting-yellow-soft: #fdf6d3;
   --setting-yellow-text: #6e5200;
-  --setting-red: #f2552c;
+  --setting-red: #e57289;
   --setting-red-foreground: #0a0f0e;
-  --setting-red-soft: #fde9e3;
-  --setting-red-text: #a3300f;
+  --setting-red-soft: #fbe6ea;
+  --setting-red-text: #a3203f;
 
   --brand-teal: #087e8b;
   --brand-teal-light: #53b1b2;
@@ -107,10 +107,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-setting-green: var(--setting-green);
-  --color-setting-green-foreground: var(--setting-green-foreground);
-  --color-setting-green-soft: var(--setting-green-soft);
-  --color-setting-green-text: var(--setting-green-text);
+  --color-setting-turquoise: var(--setting-turquoise);
+  --color-setting-turquoise-foreground: var(--setting-turquoise-foreground);
+  --color-setting-turquoise-soft: var(--setting-turquoise-soft);
+  --color-setting-turquoise-text: var(--setting-turquoise-text);
   --color-setting-yellow: var(--setting-yellow);
   --color-setting-yellow-foreground: var(--setting-yellow-foreground);
   --color-setting-yellow-soft: var(--setting-yellow-soft);

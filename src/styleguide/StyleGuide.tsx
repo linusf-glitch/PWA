@@ -13,7 +13,7 @@ const COLOURS: Array<[string, string]> = [
   ['primary', 'bg-primary'],
   ['primary-pressed', 'bg-primary-pressed'],
   ['brand-teal-light', 'bg-brand-teal-light'],
-  ['brand-deep-green', 'bg-brand-deep-green'],
+  ['brand-deep-turquoise', 'bg-brand-deep-turquoise'],
   ['foreground', 'bg-foreground'],
   ['muted-foreground', 'bg-muted-foreground'],
   ['secondary / muted', 'bg-muted'],
@@ -66,7 +66,7 @@ export default function StyleGuide() {
           <div className="flex flex-col gap-3">
             <NavCard eyebrow="Aktueller Schuh" title="Sizeless Sneaker" onClick={() => {}}>
               <SizeBadge size={27} />
-              <SettingChip setting="green" size="sm" />
+              <SettingChip setting="turquoise" size="sm" />
             </NavCard>
             <NavCard
               eyebrow="Wachstum"
@@ -100,12 +100,12 @@ export default function StyleGuide() {
 
       <Section title="Shoe setting (not the shoe colour)">
         <div className="flex flex-wrap gap-3">
-          <SettingChip setting="green" />
+          <SettingChip setting="turquoise" />
           <SettingChip setting="yellow" />
           <SettingChip setting="red" />
         </div>
         <div className="flex flex-wrap gap-3">
-          <SettingChip setting="green" tone="soft" size="sm" />
+          <SettingChip setting="turquoise" tone="soft" size="sm" />
           <SettingChip setting="yellow" tone="soft" size="sm" />
           <SettingChip setting="red" tone="soft" size="sm" />
         </div>

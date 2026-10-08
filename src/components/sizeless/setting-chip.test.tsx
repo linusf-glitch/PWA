@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { SettingChip, type ShoeSetting } from './setting-chip'
 
 const cases: Array<[ShoeSetting, string, string]> = [
-  ['green', 'Grün', 'circle'],
+  ['turquoise', 'Türkis', 'circle'],
   ['yellow', 'Gelb', 'triangle'],
   ['red', 'Rot', 'square'],
 ]
