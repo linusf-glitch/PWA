@@ -7,6 +7,8 @@ import CheckoutHandoffPage from '@/pages/CheckoutHandoffPage'
 import CodeEntryPage from '@/pages/CodeEntryPage'
 import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
+import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
+import PaymentDonePage from '@/pages/PaymentDonePage'
 import PlaceholderPage from '@/pages/PlaceholderPage'
 import ScanPage from '@/pages/ScanPage'
 import ScanResultPage from '@/pages/ScanResultPage'
@@ -51,6 +53,8 @@ export default function App() {
           <Route path="/scan/setting" element={<SettingExplainPage />} />
           <Route path="/checkout" element={<ColourwayPage />} />
           <Route path="/checkout/go" element={<CheckoutHandoffPage />} />
+          <Route path="/order/done" element={<PaymentDonePage />} />
+          <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>

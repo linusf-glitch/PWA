@@ -51,3 +51,7 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Docs are updated every PR | progress.md and decisions.md at the end of each PR (CLAUDE.md rule); CLAUDE.md only when a rule changes, shown to Linus first. |
 | Setting comes from Footprint | 2026-10-08, Linus: the setting colour will come from Footprint, not from our own rule. Their documented payload has no setting yet, so we ask them to add it (add to the Footprint email). Until then the stand-in sends a test `setting`. |
 | Colourway is picked on its own screen | 2026-10-08, from the wireframes (S08): after the result, "Farbe wählen" shows the colourways that exist in the scanned size; sold out ones are greyed. Shop has three products (Galaxy, Reef, Sprout), one variant per EU size, variant title = size. Checkout runs on Shopify; the cart carries size, setting, measurement id and child id as attributes for the order webhook. |
+
+| Sign-in code is always by email | 2026-10-08, Linus: the verification code for sign-in always goes by email, same for every parent. WhatsApp is only for fit-check reminders. |
+| Account comes from the Shopify order | 2026-10-08, Linus: the parent never signs up; the order webhook creates the account (email from the order), the child and the shoe. After paying the parent is not signed in yet; S10 offers "Jetzt anmelden" (code by email). |
+| Back arrows inside the order flow go back a step | 2026-10-08, Linus: in Result > Farbe wählen > Kasse the arrow goes to the previous step, never Home. "Zahlung erledigt" and S10 have no back arrow. |

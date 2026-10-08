@@ -93,10 +93,22 @@ describe('Colourway and checkout hand-off', () => {
     expect(await screen.findByText('Classic Schuh, Sprout, EU 27')).toBeInTheDocument()
   })
 
-  it('says the checkout is not connected yet in the demo', async () => {
+  it('goes through payment done to the order confirmation (demo, no back arrow)', async () => {
     const user = userEvent.setup()
     renderWithScan('/checkout/go', { variantId: 'v', colourway: 'Reef' })
+    expect(screen.getByRole('button', { name: 'Zurück' })).toBeInTheDocument()
     await user.click(await screen.findByRole('button', { name: 'Weiter zur Kasse' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Im Demo ist die Kasse noch nicht verbunden')
+    expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Zurück zu Home' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Weiter' }))
+    expect(await screen.findByText('Classic Schuh, Reef, EU 27')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Jetzt anmelden' })).toHaveAttribute('href', '/sign-in')
+    await user.click(screen.getByRole('button', { name: 'Per WhatsApp erinnern' }))
+    expect(screen.getByRole('status')).toHaveTextContent('späteren Schritt')
+  })
+
+  it('sends order screens without an order back to Home', async () => {
+    renderAt('/order/confirmed')
+    expect(await screen.findByRole('heading', { name: /Hallo|Emil/ })).toBeInTheDocument()
   })
 })

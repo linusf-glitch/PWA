@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate, useLocation } from 'react-router'
+import { Navigate, useLocation, useNavigate } from 'react-router'
 import { z } from 'zod'
 
 import { Headline, Illustration } from '@/components/illustration/illustration'
@@ -17,6 +17,7 @@ const handoffSchema = scanResultSchema.extend({ variantId: z.string(), colourway
 // Size, setting and measurement travel along as cart attributes for the order webhook.
 export default function CheckoutHandoffPage() {
   const { selected } = useKids()
+  const navigate = useNavigate()
   const parsed = handoffSchema.safeParse(useLocation().state)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string>()
@@ -24,7 +25,8 @@ export default function CheckoutHandoffPage() {
   const { size, setting = 'yellow', colourway, variantId, measurement_id } = parsed.data
 
   async function goToCheckout() {
-    if (!readShopEnv()) return setMessage('Im Demo ist die Kasse noch nicht verbunden. Hier geht es später zu Shopify.')
+    // Demo (no Shopify keys): skip Shopify and show what comes after payment.
+    if (!readShopEnv()) return navigate('/order/done', { state: parsed.data })
     setBusy(true)
     setMessage(undefined)
     try {
@@ -39,7 +41,7 @@ export default function CheckoutHandoffPage() {
 
   return (
     <>
-      <PageHeader title="Kasse" kidSwitcher />
+      <PageHeader title="Kasse" kidSwitcher back="step" />
       <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 p-4 text-center lg:p-8">
         <Illustration name="shoe" size={110} draw />
         <Headline as="h2" size="h2" animate className="flex flex-col items-center">
