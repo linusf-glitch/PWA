@@ -5,6 +5,7 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 
 ## 2026-10-08
 
+- **The whole app is German, sign-in included** (Linus approved the restyle; German per the design system's voice rules). Errors sit in a soft red box with an icon and dark text (design system Alert rule).
 - **Demo mode without Supabase keys.** When the public Supabase URL/key are missing (Vercel previews today), signed-in screens open without sign-in and show a "Demo" banner. Safe because every screen shows sample data only; remove when screens read real data.
 - **App frame (backlog item 5).** Back arrows always go to Home (`/`), not browser history, so a screen opened from a link still has a way back. The selected child lives in one app-wide context; a link with `?kid=<id>` selects that child, unknown ids are ignored. The desktop sidebar and Home cards share one route list (`src/components/shell/nav.ts`). New screens use German copy ("Konto", "Wachstum", "Schuhe"); the sign-in screens are still English until their restyle. Sign out moved from Home to Konto. Children are sample data until the app reads them from Supabase.
 - **Home state order.** For the selected child: no shoes yet (first scan) > fit check answered "feels tight" > rescan due (14 days before the next fit check, placeholder) > season nudge > normal. Marketing (season) comes last. Other children only get a line when their state is not normal. `?demo=<state>` swaps the sample data for review and goes away with real data.

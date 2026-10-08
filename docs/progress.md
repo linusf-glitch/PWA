@@ -18,6 +18,7 @@ Update at the end of every session.
 - 2026-10-08: backlog item 3, design tokens + base components: Sizeless colours, Poppins (bundled), type scale, radius, shadows in src/index.css; Button restyled; SettingChip, SizeBadge, NavCard; /styleguide.html. Source: "Sizeless App" design system in Claude Design. Remaining components come with the screens that use them (see docs/design-system.md).
 - 2026-10-08: backlog item 5, part A (app frame, PR open): kid switcher (global, deep link `?kid=<id>`), Konto link, back arrow + title on every non-Home screen, desktop left sidebar from the same route list, placeholder pages for Wachstum, Schuhe, Scan, Konto (sign-out moved there). Sample children only. 
 - 2026-10-08: backlog item 5, part B (Home states): one dominant action per child (no shoes, fit check "feels tight", rescan due, season nudge, normal), a line for each other child that needs something, child overview (shoe with size + setting, growth, next fit check), empty Home for parents with no child yet. Review on a preview link with `?demo=fitcheck|season|rescan|onekid|empty`. Not built yet: Gift & invite (item 12), Buy without scanning (item 11), Add another child (item 13), desktop two-column Home.
+- 2026-10-08: PR #9 (app frame) and PR #10 (Home states) merged. Sign-in screens restyled with the design tokens and translated to German (Anmelden, Code eingeben); new FieldError for field errors (PR open).
 
 ## Next
 
@@ -29,5 +30,5 @@ Update at the end of every session.
 6. Reply to the flow doc comment on fit-check timing (delivery vs order date).
 7. Decide the skip-scan window (8 weeks is a placeholder).
 8. Five-parent test.
-9. Restyle the sign-in screens (and their text input) with the new design tokens. Then backlog item 5 (shell).
+9. Backlog item 5 done once the sign-in restyle PR is merged. Note: the Claude Design system is now "version 2" (cream background, pill buttons, apricot/lilac/sage tints); the app still uses the version 1 tokens. Updating them needs Linus's OK.
 10. Supabase setup for sign-in (Linus): Authentication > Sessions (long session), email sender (custom SMTP), email template must show the 6-digit code ({{ .Token }}); create the first auth user from the Shopify order webhook (backlog item 7).

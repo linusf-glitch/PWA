@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { FieldError, Input } from '@/components/ui/input'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { emailSchema } from '@/features/auth/schemas'
 
@@ -17,7 +17,7 @@ export default function SignInPage() {
     event.preventDefault()
     setError(null)
     if (!emailSchema.safeParse(email.trim()).success) {
-      setError('Please enter a valid email address.')
+      setError('Bitte gib eine gültige E-Mail-Adresse ein.')
       return
     }
     setBusy(true)
@@ -26,24 +26,27 @@ export default function SignInPage() {
     if (result.ok) {
       navigate('/sign-in/code', { state: { email: email.trim() } })
     } else if (result.reason === 'rate_limited') {
-      setError('Too many tries. Please wait a minute and try again.')
+      setError('Zu viele Versuche. Bitte warte eine Minute und versuch es dann noch einmal.')
     } else if (result.reason === 'not_configured') {
-      setError('Sign-in is not set up yet.')
+      setError('Die Anmeldung ist noch nicht eingerichtet.')
     } else {
-      setError("We couldn't send the code. Check your connection and try again.")
+      setError('Wir konnten den Code nicht senden. Prüf deine Verbindung und versuch es noch einmal.')
     }
   }
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 p-6">
+      <span aria-hidden="true" className="text-h3 tracking-wide text-primary">
+        SIZELESS
+      </span>
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Sign in</h1>
-        <p className="text-muted-foreground">We'll email you a 6-digit code. No password needed.</p>
+        <h1 className="text-h1">Anmelden</h1>
+        <p className="text-body text-muted-foreground">Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort nötig.</p>
       </div>
       <form onSubmit={onSubmit} noValidate className="space-y-4">
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium">
-            Email
+          <label htmlFor="email" className="block text-label">
+            E-Mail
           </label>
           <Input
             id="email"
@@ -57,13 +60,11 @@ export default function SignInPage() {
             aria-describedby={error ? 'email-error' : undefined}
           />
           {error && (
-            <p id="email-error" role="alert" className="text-sm text-destructive">
-              {error}
-            </p>
+            <FieldError id="email-error">{error}</FieldError>
           )}
         </div>
         <Button type="submit" size="lg" className="w-full" disabled={busy}>
-          {busy ? 'Sending…' : 'Send code'}
+          {busy ? 'Wird gesendet …' : 'Code senden'}
         </Button>
       </form>
     </main>
