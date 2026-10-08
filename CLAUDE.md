@@ -33,6 +33,6 @@ shadcn/ui is configured in components.json; add components with `npx shadcn@late
 - Never commit to main. Work on a branch, open a PR, keep PRs small.
 - Add or update tests for every behaviour change. Core e2e path must stay green: sign-in, scan, checkout, order webhook, account created.
 - No bottom tab bar on mobile. Home is a state machine with one dominant action. Global kid switcher. Back arrow on every non-Home screen.
-- Setting colour (green/yellow/red) is the shoe's adjustment setting, never the colourway.
+- Setting colour (turquoise/yellow/red) is the shoe's adjustment setting, never the colourway.
 - At the end of each session: update docs/progress.md and docs/decisions.md.
 - Never make changes outside the task without explicit approval.

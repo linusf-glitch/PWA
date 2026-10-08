@@ -9,7 +9,7 @@ Paste this whole file into a new session as the first message, or commit it to t
 - **Company:** Sizeless (sizeless-shoe.com, Shopify). Adjustable, growing kids' shoes for ages 2 to 6. Based in Düsseldorf, Europe/Berlin timezone.
 - **Owner:** Linus, co-founder (marketing/growth, fundraising, organisation). Not an engineer; builds with Claude Code.
 - **Goal:** a mobile-first, desktop-compatible PWA that turns a one-time foot scan into a recurring cycle:
-  scan -> size + adjustment setting colour (green/yellow/red; this is the setting of the shoe, NOT the shoe colourway) -> buy via Shopify -> growth chart -> WhatsApp fit checks and seasonal nudges -> rescan -> share card / gift link / referral.
+  scan -> size + adjustment setting colour (turquoise/yellow/red; this is the setting of the shoe, NOT the shoe colourway) -> buy via Shopify -> growth chart -> WhatsApp fit checks and seasonal nudges -> rescan -> share card / gift link / referral.
 - **Scan provider:** Footprint Technologies (Berlin) provides the foot scan (paper-based, via phone camera). Contact: Dr. Matthias Brendel. Offer: EUR 3,500 onboarding, first 6 months unlimited recommendations, one shoe last included (winter boot and house shoe need extra lasts).
 - **Out of MVP:** subscription (removed). Included: share card, gift link, referral.
 - **Why WhatsApp:** lower friction than a native app plus push permissions. Parents already use it. Message copy is personalised with the child's name.
@@ -136,7 +136,7 @@ Vite + React + TypeScript (strict), Tailwind, shadcn/ui, vite-plugin-pwa. Supaba
 - Never commit to main. Work on a branch, open a PR, keep PRs small.
 - Add or update tests for every behaviour change. Core e2e path must stay green: sign-in, scan, checkout, order webhook, account created.
 - No bottom tab bar on mobile. Home is a state machine with one dominant action. Global kid switcher. Back arrow on every non-Home screen.
-- Setting colour (green/yellow/red) is the shoe's adjustment setting, never the colourway.
+- Setting colour (turquoise/yellow/red) is the shoe's adjustment setting, never the colourway.
 - At the end of each session: update docs/progress.md and docs/decisions.md.
 - Never make changes outside the task without explicit approval.
 ```
@@ -186,7 +186,7 @@ Each Home state has exactly one large primary button, with everything else secon
 - Rescan due soon: primary "Rescan {Name}" with "due in about 2 weeks".
 - First-time or empty: see section 3.
 Secondary cards, all with a chevron and a clear label:
-- Current shoe (model, size, green/yellow/red setting chip) with link "See shoe history" -> History.
+- Current shoe (model, size, turquoise/yellow/red setting chip) with link "See shoe history" -> History.
 - Growth sparkline with link "See growth chart" -> Growth.
 - Next fit check (date).
 - Text link "Add another child".
@@ -247,7 +247,7 @@ Edit existing boards. Do not rebuild. Keep wf.css, the grey style and the file n
 
 4. RETURNING PARENT: BUY WITHOUT SCANNING
 - On Home (card "Need the next size?"), on Shoe history rows and on the season nudge: a secondary action "Buy next size without scanning" next to the primary "Rescan {Name}".
-- New board "Pick next size": shows the last size and date (EU 26, scanned 8 weeks ago), the suggested next size (EU 27) preselected, a size picker, the last setting shown as a hint ("Last setting: green. We can't confirm a new setting without a scan"), a primary "Buy EU 27", and a link "Not sure? Rescan instead".
+- New board "Pick next size": shows the last size and date (EU 26, scanned 8 weeks ago), the suggested next size (EU 27) preselected, a size picker, the last setting shown as a hint ("Last setting: turquoise. We can't confirm a new setting without a scan"), a primary "Buy EU 27", and a link "Not sure? Rescan instead".
 - After a skip-scan purchase, S10 variant: "Order confirmed. Rescan in a few weeks to check the setting." Do not offer share or gift (those come only after a rescan).
 - Rule note on the board: when the last scan is under about 8 weeks old, the skip-scan action is shown at the same weight as Rescan; when older, show "Rescan recommended" and keep the skip-scan link smaller.
 - Winter boot and house shoe nudges use the same "Pick next size" path when a recent scan exists.

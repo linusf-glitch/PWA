@@ -76,7 +76,7 @@ insert into public.child_guardians (child_id, user_id, role) values
   ('11111111-0000-0000-0000-000000000000', 'cccccccc-0000-0000-0000-000000000000', 'co_parent');
 
 insert into public.measurements (child_id, footprint_measurement_id, foot_length_left_mm, foot_length_right_mm, recommended_size_eu, setting_colour, scanned_at) values
-  ('11111111-0000-0000-0000-000000000000', 'fp-mia-1', 140.0, 141.5, 24, 'green', now()),
+  ('11111111-0000-0000-0000-000000000000', 'fp-mia-1', 140.0, 141.5, 24, 'turquoise', now()),
   ('22222222-0000-0000-0000-000000000000', 'fp-ben-1', 160.0, 159.0, 27, 'yellow', now());
 
 insert into public.orders (id, user_id, shopify_order_id, purchase_type, paid_at) values
@@ -84,7 +84,7 @@ insert into public.orders (id, user_id, shopify_order_id, purchase_type, paid_at
   ('b0000000-0000-0000-0000-000000000000', 'bbbbbbbb-0000-0000-0000-000000000000', 'shop-b-1', 'scan', now());
 
 insert into public.shoes (child_id, order_id, model, size_eu, setting_colour, purchased_at) values
-  ('11111111-0000-0000-0000-000000000000', 'a0000000-0000-0000-0000-000000000000', 'Explorer', 24, 'green', now()),
+  ('11111111-0000-0000-0000-000000000000', 'a0000000-0000-0000-0000-000000000000', 'Explorer', 24, 'turquoise', now()),
   ('22222222-0000-0000-0000-000000000000', 'b0000000-0000-0000-0000-000000000000', 'Explorer', 27, 'yellow', now());
 
 -- ---------------------------------------------------------------------------
@@ -233,4 +233,13 @@ select tests.as_user('dddddddd-0000-0000-0000-000000000000');
 select tests.check((select count(*) from public.children) = 0, 'an unknown user sees no children');
 
 select tests.as_owner();
+
+-- The setting scale is turquoise (smallest), yellow, red (largest); "green" no longer exists.
+select tests.check(
+  (select array_agg(e::text order by e::text) from unnest(enum_range(null::public.setting_colour)) e) = array['red', 'turquoise', 'yellow'],
+  'setting_colour has exactly turquoise, yellow and red');
+select tests.check(
+  (select enum_range(null::public.setting_colour)::text) = '{turquoise,yellow,red}',
+  'setting_colour keeps the order smallest to largest');
+
 \echo 'All RLS tests passed.'
