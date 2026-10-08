@@ -47,7 +47,7 @@ export default function ScanResultPage() {
         </div>
         <div className="flex w-full flex-col gap-3">
           <Button asChild size="lg" className="w-full">
-            <Link to="/checkout">Größe {size} kaufen</Link>
+            <Link to="/checkout" state={parsed.data}>Größe {size} kaufen</Link>
           </Button>
           <Button asChild variant="outline" className="w-full">
             <Link to="/scan">Noch einmal scannen</Link>

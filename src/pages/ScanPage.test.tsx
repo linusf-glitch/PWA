@@ -64,8 +64,39 @@ describe('Result and setting screens', () => {
     expect(screen.getByText('Die größte Einstellung.')).toBeInTheDocument()
   })
 
-  it('opens a placeholder for the checkout', async () => {
+  it('sends a checkout visit without a scan result back to the scan intro', async () => {
     renderAt('/checkout')
-    expect(await screen.findByRole('heading', { name: 'Kasse' })).toBeInTheDocument()
+    expect(await screen.findByRole('button', { name: 'Scan starten' })).toBeInTheDocument()
+  })
+})
+
+describe('Colourway and checkout hand-off', () => {
+  const state = { measurement_id: 'm1', article_number: 'SZ-CLASSIC', size: 27, setting: 'yellow' }
+  const renderWithScan = (path: string, extra = {}) =>
+    render(
+      <MemoryRouter initialEntries={[{ pathname: path, state: { ...state, ...extra } }]}>
+        <AuthProvider client={null}>
+          <App />
+        </AuthProvider>
+      </MemoryRouter>,
+    )
+
+  it('offers the colourways and greys out the sold out one (demo sample)', async () => {
+    const user = userEvent.setup()
+    renderWithScan('/checkout')
+    expect(await screen.findByText('Classic Schuh, EU 27')).toBeInTheDocument()
+    expect(await screen.findByRole('radio', { name: /Galaxy/ })).toBeDisabled()
+    expect(screen.getByRole('radio', { name: /Reef/ })).toBeChecked()
+    expect(screen.getByText(/Galaxy ist in Größe 27 gerade ausverkauft/)).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: /Sprout/ }))
+    await user.click(screen.getByRole('button', { name: 'Weiter zur Kasse' }))
+    expect(await screen.findByText('Classic Schuh, Sprout, EU 27')).toBeInTheDocument()
+  })
+
+  it('says the checkout is not connected yet in the demo', async () => {
+    const user = userEvent.setup()
+    renderWithScan('/checkout/go', { variantId: 'v', colourway: 'Reef' })
+    await user.click(await screen.findByRole('button', { name: 'Weiter zur Kasse' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Im Demo ist die Kasse noch nicht verbunden')
   })
 })
