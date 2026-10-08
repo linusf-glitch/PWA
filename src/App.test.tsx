@@ -41,6 +41,12 @@ describe('routing', () => {
     expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument()
   })
 
+  it('opens as a demo with sample data when Supabase is not set up', async () => {
+    renderApp(null)
+    expect(await screen.findByRole('heading', { name: 'Sizeless' })).toBeInTheDocument()
+    expect(screen.getByRole('note')).toHaveTextContent('Demo')
+  })
+
   it('signs out back to Sign in', async () => {
     const fake = makeFakeSupabase()
     const user = userEvent.setup()

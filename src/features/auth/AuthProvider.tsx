@@ -8,6 +8,8 @@ export type AuthResult = { ok: true } | { ok: false; reason: AuthFailure }
 
 type AuthApi = {
   session: Session | null
+  /** False when no Supabase URL/key is set (preview without keys): the app runs as a demo. */
+  configured: boolean
   /** True until we know whether a saved session exists. */
   loading: boolean
   sendCode: (email: string) => Promise<AuthResult>
@@ -91,8 +93,8 @@ export function AuthProvider({ client, children }: { client: SupabaseClient | nu
   }, [client])
 
   const value = useMemo(
-    () => ({ session, loading, sendCode, verifyCode, signOut }),
-    [session, loading, sendCode, verifyCode, signOut],
+    () => ({ session, configured: client !== null, loading, sendCode, verifyCode, signOut }),
+    [session, client, loading, sendCode, verifyCode, signOut],
   )
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
