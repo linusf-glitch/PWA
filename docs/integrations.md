@@ -23,5 +23,9 @@
 - WhatsApp Business API through a provider (Twilio or 360dialog).
 - Start Meta business verification early (long lead time).
 - Template approval needed. W2/W5 likely "utility", but Meta decides the category.
-- Quick-reply buttons; template messages outside the 24-hour window; consent for marketing messages; email fallback.
+- Quick-reply buttons; template messages outside the 24-hour window; email fallback.
+- Consent: one opt-in for fit checks + rescan reminders, a separate optional one for offers. The parent sends the first message (click-to-WhatsApp, pre-filled code links the number to the account). Never import phone numbers from Shopify for WhatsApp.
+- Opt-out: STOP reply and the stop button on marketing templates turn messages off at once; confirm once, then send nothing more.
+- Message text: child's first name and a signed link only; no sizes or scan data (Meta processes the content).
+- Meta and the provider are processors: data processing agreement with the provider, Meta's WhatsApp Business terms, both named in the privacy policy.
 - Every link carries a signed one-time token and opens Home with the right child selected.

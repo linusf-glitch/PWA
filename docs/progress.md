@@ -14,6 +14,7 @@ Update at the end of every session.
 - 2026-10-08: backlog item 2, schema v1 (SQL migration in supabase/migrations/), RLS on every table, 37 database checks incl. parent-isolation tests, CI job. Not applied to any real Supabase project: Linus creates the project (Frankfurt) and we apply it later.
 - 2026-10-08: Linus confirmed the Supabase project is in Frankfurt and ran schema v1 in it (not verified by Claude).
 - 2026-10-08: backlog item 4, email-code sign-in (PR open): Sign in, Code entry, wrong/expired code, resend with 60s wait, long session, route guard, Playwright e2e. Needs Linus to set the session length and an email sender in Supabase and add the public URL + anon key in Vercel before it works for real.
+- 2026-10-08: WhatsApp GDPR check done (not legal advice). Consent rules recorded in decisions.md. A lawyer must confirm the S10 texts and privacy policy before launch.
 
 ## Next
 

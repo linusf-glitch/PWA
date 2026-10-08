@@ -11,7 +11,7 @@ One GitHub issue each, worked in this order. Issues not created yet.
 7. **Shopify** cart + checkout hand-off; order-paid webhook (HMAC verified) creates account + child; S10.
 8. **Own desktop QR handoff** with session sync.
 9. **Growth chart + Shoe history**; rescan flow.
-10. **WhatsApp** opt-in at S10; fit-check template + signed links -> Home; scheduled job.
+10. **WhatsApp** opt-in at S10 (fit checks + separate offers box, consent log table: append-only record of every consent and withdrawal); fit-check template + signed links -> Home; scheduled job.
 11. **Skip-scan** "Pick next size" flow.
 12. **Season nudge**; share card, gift link, referral (after a rescan).
 13. **Account:** children, notifications, data export/delete, co-parent invite.
