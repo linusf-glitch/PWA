@@ -35,7 +35,7 @@ export default function ColourwayPage() {
 
   return (
     <>
-      <PageHeader title="Farbe wählen" kidSwitcher />
+      <PageHeader title="Farbe wählen" kidSwitcher back="step" />
       <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 lg:p-8">
         <section className="flex items-center gap-3 rounded-xl bg-card p-4">
           <Illustration name="shoe" size={72} className="shrink-0" />
