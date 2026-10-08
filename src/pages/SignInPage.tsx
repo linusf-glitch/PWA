@@ -18,7 +18,7 @@ export default function SignInPage() {
     event.preventDefault()
     setError(null)
     if (!emailSchema.safeParse(email.trim()).success) {
-      setError('Please enter a valid email address.')
+      setError('Bitte gib eine gültige E-Mail-Adresse ein.')
       return
     }
     setBusy(true)
@@ -27,11 +27,11 @@ export default function SignInPage() {
     if (result.ok) {
       navigate('/sign-in/code', { state: { email: email.trim() } })
     } else if (result.reason === 'rate_limited') {
-      setError('Too many tries. Please wait a minute and try again.')
+      setError('Zu viele Versuche. Bitte warte eine Minute und versuch es dann noch einmal.')
     } else if (result.reason === 'not_configured') {
-      setError('Sign-in is not set up yet.')
+      setError('Die Anmeldung ist noch nicht eingerichtet.')
     } else {
-      setError("We couldn't send the code. Check your connection and try again.")
+      setError("Wir konnten den Code nicht senden. Prüf deine Verbindung und versuch es noch einmal.")
     }
   }
 
@@ -39,13 +39,13 @@ export default function SignInPage() {
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 p-6">
       <div className="space-y-2">
         <Illustration name="footprints" size={120} boil />
-        <Headline animate>Sign in</Headline>
-        <p className="text-muted-foreground">We'll email you a 6-digit code. No password needed.</p>
+        <Headline animate>Anmelden</Headline>
+        <p className="text-muted-foreground">Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort nötig.</p>
       </div>
       <form onSubmit={onSubmit} noValidate className="space-y-4">
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-medium">
-            Email
+            E-Mail
           </label>
           <Input
             id="email"
@@ -65,7 +65,7 @@ export default function SignInPage() {
           )}
         </div>
         <Button type="submit" size="lg" className="w-full" disabled={busy}>
-          {busy ? 'Sending…' : 'Send code'}
+          {busy ? 'Wird gesendet …' : 'Code senden'}
         </Button>
       </form>
     </main>

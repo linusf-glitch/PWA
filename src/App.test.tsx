@@ -19,9 +19,9 @@ function renderApp(client: SupabaseClient | null, path = '/') {
 }
 
 async function goToCodeScreen(user: ReturnType<typeof userEvent.setup>, email = 'parent@example.com') {
-  await user.type(await screen.findByLabelText('Email'), email)
-  await user.click(screen.getByRole('button', { name: 'Send code' }))
-  await screen.findByRole('heading', { name: 'Enter your code' })
+  await user.type(await screen.findByLabelText('E-Mail'), email)
+  await user.click(screen.getByRole('button', { name: 'Code senden' }))
+  await screen.findByRole('heading', { name: 'Code eingeben' })
 }
 
 afterEach(() => {
@@ -31,14 +31,14 @@ afterEach(() => {
 describe('routing', () => {
   it('sends a signed-out visitor to Sign in', async () => {
     renderApp(makeFakeSupabase().client)
-    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Anmelden' })).toBeInTheDocument()
   })
 
   it('shows Home to a signed-in parent and keeps them off the sign-in screens', async () => {
     const fake = makeFakeSupabase()
     renderApp(makeFakeSupabase({ session: fake.fakeSession }).client, '/sign-in')
     expect(await screen.findByRole('heading', { name: 'Sizeless' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Anmelden' })).not.toBeInTheDocument()
   })
 
   it('opens as a demo with sample data when Supabase is not set up', async () => {
@@ -53,7 +53,7 @@ describe('routing', () => {
     renderApp(makeFakeSupabase({ session: fake.fakeSession }).client)
     await user.click((await screen.findAllByRole('link', { name: 'Konto' }))[0])
     await user.click(await screen.findByRole('button', { name: 'Abmelden' }))
-    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Anmelden' })).toBeInTheDocument()
   })
 })
 
@@ -110,9 +110,9 @@ describe('Sign in screen', () => {
     const { client, auth } = makeFakeSupabase()
     const user = userEvent.setup()
     renderApp(client, '/sign-in')
-    await user.type(await screen.findByLabelText('Email'), 'nope')
-    await user.click(screen.getByRole('button', { name: 'Send code' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent('valid email')
+    await user.type(await screen.findByLabelText('E-Mail'), 'nope')
+    await user.click(screen.getByRole('button', { name: 'Code senden' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('gültige E-Mail')
     expect(auth.signInWithOtp).not.toHaveBeenCalled()
   })
 
@@ -144,9 +144,9 @@ describe('Sign in screen', () => {
     })
     const user = userEvent.setup()
     renderApp(client, '/sign-in')
-    await user.type(await screen.findByLabelText('Email'), 'parent@example.com')
-    await user.click(screen.getByRole('button', { name: 'Send code' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent('Too many tries')
+    await user.type(await screen.findByLabelText('E-Mail'), 'parent@example.com')
+    await user.click(screen.getByRole('button', { name: 'Code senden' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Zu viele Versuche')
   })
 
   it('sends a sign-in link to the demo when Supabase is not configured', async () => {
@@ -159,15 +159,15 @@ describe('Sign in screen', () => {
 describe('Code entry screen', () => {
   it('goes back to Sign in if opened directly', async () => {
     renderApp(makeFakeSupabase().client, '/sign-in/code')
-    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Anmelden' })).toBeInTheDocument()
   })
 
   it('has a back arrow to Sign in', async () => {
     const user = userEvent.setup()
     renderApp(makeFakeSupabase().client, '/sign-in')
     await goToCodeScreen(user)
-    await user.click(screen.getByRole('link', { name: 'Back' }))
-    expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Zurück' }))
+    expect(await screen.findByRole('heading', { name: 'Anmelden' })).toBeInTheDocument()
   })
 
   it('signs in and shows Home when the 6th digit is typed', async () => {
@@ -175,7 +175,7 @@ describe('Code entry screen', () => {
     const user = userEvent.setup()
     renderApp(client, '/sign-in')
     await goToCodeScreen(user)
-    await user.type(screen.getByLabelText('6-digit code'), '123456')
+    await user.type(screen.getByLabelText('6-stelliger Code'), '123456')
     expect(await screen.findByRole('heading', { name: 'Sizeless' })).toBeInTheDocument()
     expect(auth.verifyOtp).toHaveBeenCalledWith({ email: 'parent@example.com', token: '123456', type: 'email' })
   })
@@ -188,9 +188,9 @@ describe('Code entry screen', () => {
     const user = userEvent.setup()
     renderApp(client, '/sign-in')
     await goToCodeScreen(user)
-    await user.type(screen.getByLabelText('6-digit code'), '000000')
-    expect(await screen.findByRole('alert')).toHaveTextContent('wrong or expired')
-    expect(screen.getByLabelText('6-digit code')).toHaveValue('')
+    await user.type(screen.getByLabelText('6-stelliger Code'), '000000')
+    expect(await screen.findByRole('alert')).toHaveTextContent('falsch oder abgelaufen')
+    expect(screen.getByLabelText('6-stelliger Code')).toHaveValue('')
     expect(screen.queryByRole('heading', { name: 'Sizeless' })).not.toBeInTheDocument()
   })
 
@@ -199,8 +199,8 @@ describe('Code entry screen', () => {
     const user = userEvent.setup()
     renderApp(client, '/sign-in')
     await goToCodeScreen(user)
-    await user.type(screen.getByLabelText('6-digit code'), '12ab34')
-    expect(screen.getByLabelText('6-digit code')).toHaveValue('1234')
+    await user.type(screen.getByLabelText('6-stelliger Code'), '12ab34')
+    expect(screen.getByLabelText('6-stelliger Code')).toHaveValue('1234')
     expect(auth.verifyOtp).not.toHaveBeenCalled()
   })
 
@@ -210,14 +210,14 @@ describe('Code entry screen', () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
     renderApp(client, '/sign-in')
     await goToCodeScreen(user)
-    const resend = screen.getByRole('button', { name: /Send a new code/ })
+    const resend = screen.getByRole('button', { name: /Neuen Code senden/ })
     expect(resend).toBeDisabled()
     act(() => {
       vi.advanceTimersByTime(61_000)
     })
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Send a new code' })).toBeEnabled())
-    await user.click(screen.getByRole('button', { name: 'Send a new code' }))
-    expect(await screen.findByRole('status')).toHaveTextContent('new code')
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Neuen Code senden' })).toBeEnabled())
+    await user.click(screen.getByRole('button', { name: 'Neuen Code senden' }))
+    expect(await screen.findByRole('status')).toHaveTextContent('neuer Code')
     expect(auth.signInWithOtp).toHaveBeenCalledTimes(2)
   })
 })

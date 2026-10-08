@@ -33,17 +33,17 @@ test('a parent signs in with an email code and stays signed in', async ({ page }
   await mockSupabase(page, { validCode: '123456' })
 
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Anmelden' })).toBeVisible()
 
-  await page.getByLabel('Email').fill('parent@example.com')
-  await page.getByRole('button', { name: 'Send code' }).click()
-  await expect(page.getByRole('heading', { name: 'Enter your code' })).toBeVisible()
+  await page.getByLabel('E-Mail').fill('parent@example.com')
+  await page.getByRole('button', { name: 'Code senden' }).click()
+  await expect(page.getByRole('heading', { name: 'Code eingeben' })).toBeVisible()
 
   // Wrong or expired code: message shown, still signed out.
-  await page.getByLabel('6-digit code').fill('000000')
-  await expect(page.getByRole('alert')).toContainText('wrong or expired')
+  await page.getByLabel('6-stelliger Code').fill('000000')
+  await expect(page.getByRole('alert')).toContainText('falsch oder abgelaufen')
 
-  await page.getByLabel('6-digit code').fill('123456')
+  await page.getByLabel('6-stelliger Code').fill('123456')
   await expect(page.getByRole('heading', { name: 'Sizeless' })).toBeVisible()
 
   // Long session: a reload keeps the parent signed in.
@@ -52,5 +52,5 @@ test('a parent signs in with an email code and stays signed in', async ({ page }
 
   await page.getByRole('link', { name: 'Konto' }).click()
   await page.getByRole('button', { name: 'Abmelden' }).click()
-  await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Anmelden' })).toBeVisible()
 })

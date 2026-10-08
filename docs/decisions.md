@@ -46,4 +46,5 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Footprint placeholder | The scan step uses a mock widget emitting the documented events until Footprint gives API/widget access. Email to Footprint drafted, not sent. |
 | Work in phases | 1 Foundation, 2 Look and feel, 3 Scan and buy, 4 Growth and history, 5 WhatsApp and reorder, 6 Account and launch. Progress reports show the phase list. |
 | Repo private, no branch protection yet | 2026-10-08. Repo made private by Linus. Branch protection (require PR + checks) deferred to launch; until then the rule "never commit to main" is by convention. |
+| Whole app is German, sign-in included | 2026-10-08. Linus approved translating the sign-in screens (Anmelden, Code eingeben). Informal "du". |
 | Docs are updated every PR | progress.md and decisions.md at the end of each PR (CLAUDE.md rule); CLAUDE.md only when a rule changes, shown to Linus first. |
