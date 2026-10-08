@@ -1,36 +1,78 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Poppins is bundled with the app (no Google Fonts request, GDPR). Latin subset covers German. */
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-500.css';
+@import '@fontsource/poppins/latin-600.css';
+
 @custom-variant dark (&:is(.dark *));
 
-/* shadcn/ui neutral defaults. Replaced by the Sizeless design tokens in backlog item 3. */
+/*
+ * Sizeless design tokens. Source: the "Sizeless App" design system in Claude Design
+ * (project/tokens.json). Keep values in sync with it; docs/design-system.md explains each group.
+ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --radius: 10px;
+
+  --background: #ffffff;
+  --foreground: #0a0f0e;
+  --card: #ffffff;
+  --card-foreground: #0a0f0e;
+  --popover: #ffffff;
+  --popover-foreground: #0a0f0e;
+  --primary: #087e8b;
+  --primary-foreground: #ffffff;
+  --primary-pressed: #065f69;
+  --secondary: #f1f3f3;
+  --secondary-foreground: #0a0f0e;
+  --muted: #f1f3f3;
+  --muted-foreground: #56635f;
+  --accent: #e6f3f3;
+  --accent-foreground: #283e36;
+  --destructive: #b4233c;
+  --destructive-foreground: #ffffff;
+  --destructive-soft: #fcebee;
+  --success: #18794e;
+  --success-soft: #e7f4ee;
+  --warning: #9a3f07;
+  --warning-soft: #fef3e2;
+  --info: #1d5fa8;
+  --info-soft: #e8f0fa;
+  --border: #e6e6e6;
+  --border-strong: #d5dcda;
+  --input: #7e8c88;
+  --ring: #087e8b;
+  --scrim: rgb(10 15 14 / 0.45);
+
+  --chart-1: #53b1b2;
+  --chart-2: #087e8b;
+  --chart-3: #283e36;
+  --chart-4: #a9d8d8;
+  --chart-5: #56635f;
+
+  /* Shoe adjustment SETTING colours (Türkis smallest, Gelb, Rot largest; Linus 2026-10-08). Not colourways, not status colours. Only SettingChip uses them. */
+  --setting-turquoise: #62d2d0;
+  --setting-turquoise-foreground: #0a0f0e;
+  --setting-turquoise-soft: #e3f6f6;
+  --setting-turquoise-text: #0b6466;
+  --setting-yellow: #f4d963;
+  --setting-yellow-foreground: #0a0f0e;
+  --setting-yellow-soft: #fdf6d3;
+  --setting-yellow-text: #6e5200;
+  --setting-red: #e57289;
+  --setting-red-foreground: #0a0f0e;
+  --setting-red-soft: #fbe6ea;
+  --setting-red-text: #a3203f;
+
+  --brand-teal: #087e8b;
+  --brand-teal-light: #53b1b2;
+  --brand-deep-green: #283e36;
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -39,6 +81,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-pressed: var(--primary-pressed);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -46,9 +89,80 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-scrim: var(--scrim);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-setting-turquoise: var(--setting-turquoise);
+  --color-setting-turquoise-foreground: var(--setting-turquoise-foreground);
+  --color-setting-turquoise-soft: var(--setting-turquoise-soft);
+  --color-setting-turquoise-text: var(--setting-turquoise-text);
+  --color-setting-yellow: var(--setting-yellow);
+  --color-setting-yellow-foreground: var(--setting-yellow-foreground);
+  --color-setting-yellow-soft: var(--setting-yellow-soft);
+  --color-setting-yellow-text: var(--setting-yellow-text);
+  --color-setting-red: var(--setting-red);
+  --color-setting-red-foreground: var(--setting-red-foreground);
+  --color-setting-red-soft: var(--setting-red-soft);
+  --color-setting-red-text: var(--setting-red-text);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-light: var(--brand-teal-light);
+  --color-brand-deep-green: var(--brand-deep-green);
+
+  /* rounded-md: buttons, inputs, badges, alerts. rounded-lg / rounded-xl: cards and sheets. */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: 16px;
+  --radius-xl: 16px;
+
+  --shadow-card: 0 1px 2px rgb(10 15 14 / 0.06), 0 2px 8px rgb(10 15 14 / 0.04);
+  --shadow-sheet: 0 -4px 24px rgb(10 15 14 / 0.12);
+
+  /* Type styles from the design system: text-display, text-h1 ... text-caption. */
+  --text-display: 32px;
+  --text-display--line-height: 38px;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 600;
+  --text-h1: 28px;
+  --text-h1--line-height: 34px;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h1--font-weight: 600;
+  --text-h2: 22px;
+  --text-h2--line-height: 28px;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+  --text-h3: 18px;
+  --text-h3--line-height: 24px;
+  --text-h3--letter-spacing: -0.005em;
+  --text-h3--font-weight: 600;
+  --text-body: 16px;
+  --text-body--line-height: 24px;
+  --text-body-small: 14px;
+  --text-body-small--line-height: 20px;
+  --text-label: 14px;
+  --text-label--line-height: 20px;
+  --text-label--font-weight: 500;
+  --text-button: 16px;
+  --text-button--line-height: 24px;
+  --text-button--font-weight: 600;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 500;
 }
 
 @layer base {
@@ -56,6 +170,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background font-sans text-body text-foreground antialiased;
   }
 }
