@@ -23,9 +23,10 @@ Update at the end of every session.
 - 2026-10-08: look and feel step 3 of 3 (PR open): drawings on Home (hero drawing per state, tinted overview cards with sticker tiles), sign-in and code screens, empty and placeholder pages; logo text no longer teal. Sign-in copy is still English (translation to German not yet decided).
 - 2026-10-08: docs catch-up: decisions.md and CLAUDE.md now cover the playful look, sticker drawings, #9ECACD, Footprint placeholder, phases, private repo.
 - 2026-10-08: sign-in and code screens translated to German (PR open); tests updated.
+- 2026-10-08: phase 3 start, backlog item 6 part A (PR open): Scan intro screen (child name + age, what you need, one "Scan starten" button), Footprint stand-in widget that fires the documented fpt-* window events (validated with Zod), plain size result. Real widget and result screen S05/S06 follow.
 
 ## Phases
-1 Foundation: done. 2 Look and feel: done with this PR. 3 Scan and buy (backlog 6-8): next. 4 Growth and history (9). 5 WhatsApp and reorder (10-12). 6 Account and launch (13-14, real sign-in setup, domain app.sizeless-shoe.com, Vercel Pro, lawyer check, security review, beta).
+1 Foundation: done. 2 Look and feel: done with this PR. 3 Scan and buy (backlog 6-8): in progress (Scan intro done, result screen next). 4 Growth and history (9). 5 WhatsApp and reorder (10-12). 6 Account and launch (13-14, real sign-in setup, domain app.sizeless-shoe.com, Vercel Pro, lawyer check, security review, beta).
 
 ## Next
 
