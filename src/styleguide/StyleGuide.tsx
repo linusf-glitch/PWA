@@ -1,5 +1,8 @@
 import { Footprints, TrendingUp } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
+
+import { Confetti, Doodle, Headline, Illustration, SvgDefs } from '@/components/illustration/illustration'
+import { DRAWINGS, type DrawingName } from '@/components/illustration/drawings'
 
 import { NavCard } from '@/components/sizeless/nav-card'
 import { SettingChip } from '@/components/sizeless/setting-chip'
@@ -52,9 +55,39 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   )
 }
 
+function Drawings() {
+  const [play, setPlay] = useState(0)
+  return (
+    <Section title="Drawings and motion">
+      <div className="relative flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
+        <Headline key={`h${play}`} as="h2" animate>
+          Mias Füße sind gewachsen.
+        </Headline>
+        <div className="grid grid-cols-4 gap-3">
+          {(Object.keys(DRAWINGS) as DrawingName[]).map((name) => (
+            <Illustration key={`${name}${play}`} name={name} size={72} draw />
+          ))}
+        </div>
+        <div className="flex items-center gap-3">
+          <Illustration key={`b${play}`} name="hand" size={120} boil />
+          <Doodle name="star" color="lilac" />
+          <Doodle name="squiggle" color="apricot" />
+          <Doodle name="dots" color="sage" />
+          <Doodle name="spark" color="apricot" />
+        </div>
+        <Confetti play={play} />
+        <Button variant="outline" onClick={() => setPlay((n) => n + 1)}>
+          Nochmal abspielen
+        </Button>
+      </div>
+    </Section>
+  )
+}
+
 export default function StyleGuide() {
   return (
     <main className="mx-auto flex max-w-[560px] flex-col gap-12 px-4 py-8">
+      <SvgDefs />
       <header className="flex flex-col gap-2">
         <p className="text-caption text-muted-foreground">Sizeless App · Design system</p>
         <h1 className="text-display">Styleguide</h1>
@@ -91,6 +124,8 @@ export default function StyleGuide() {
           </div>
         </div>
       </Section>
+
+      <Drawings />
 
       <Section title="Buttons">
         <Button size="lg" className="w-full">

@@ -17,7 +17,8 @@ Check everything on a phone: `/styleguide.html` on any Vercel preview (or `npm r
 - **Spacing:** Tailwind's default 4px grid (`p-4` = 16px screen padding). Touch targets at least 44px (`min-h-11`); primary button 56px (`min-h-14`).
 - **Radius:** `rounded-md` 10px (buttons, inputs, badges, alerts), `rounded-lg` / `rounded-xl` 16px (cards, sheets), `rounded-full` (chips, avatars, kid switcher).
 - **Shadows:** `shadow-card`, `shadow-lift`, `shadow-sheet`, `shadow-button` (warm, offset). Focus: 2px teal ring with a 2px gap in the page colour.
-- **Next (separate PRs):** step 2 drawings and motion (illustrations, squiggle headline, confetti, reduced-motion safe); step 3 apply to Home, sign-in and other screens.
+- **Drawings and motion (step 2):** `src/components/illustration/`: `Illustration` in sticker style (white die-cut border, flat fills, ink line; shoe, footprints, measure, hand, sprout, ruler, stars, network, sock, tape, balloon), `Doodle`, `Headline` (squiggle), `Confetti`, `SvgDefs` (mounted once in `src/main.tsx`). Drawings also use the brand yellow #FFD23F (Linus asked for it, 2026-10-08), only inside drawings, never on UI or chips; it sits close to the Gelb setting yellow, so keep the words and shapes on SettingChip. Drawings are decoration only (`aria-hidden`), never in the setting colours; one boiling hero drawing per screen at most; draw-in plays once. Motion CSS (draw, pop, bounce-in, burst, shimmer) is at the end of `src/index.css`; under `prefers-reduced-motion` they become a short fade or stop. Examples on `/styleguide.html`.
+- **Next:** step 3 applies the look to Home, sign-in and the other screens.
 
 ## Components
 
