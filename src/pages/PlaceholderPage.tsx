@@ -8,7 +8,7 @@ export default function PlaceholderPage({ title }: { title: string }) {
     <>
       <PageHeader title={title} kidSwitcher />
       <main className="mx-auto max-w-2xl p-6 text-muted-foreground">
-        Diese Seite für {selected.name} kommt in einem späteren Schritt.
+        Diese Seite{selected && ` für ${selected.name}`} kommt in einem späteren Schritt.
       </main>
     </>
   )

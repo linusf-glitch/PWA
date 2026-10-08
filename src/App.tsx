@@ -27,9 +27,10 @@ function RequireAuth() {
 }
 
 function PublicOnly() {
-  const { session, loading } = useAuth()
+  const { session, configured, loading } = useAuth()
   if (loading) return null
-  return session ? <Navigate to="/" replace /> : <Outlet />
+  // In demo mode there is nothing to sign in to, so old /sign-in links land on the demo too.
+  return session || !configured ? <Navigate to="/" replace /> : <Outlet />
 }
 
 export default function App() {
