@@ -223,3 +223,45 @@ describe('Code entry screen', () => {
     expect(auth.signInWithOtp).toHaveBeenCalledTimes(2)
   })
 })
+
+describe('Home states', () => {
+  const signedIn = () => makeFakeSupabase({ session: makeFakeSupabase().fakeSession }).client
+
+  it('shows the normal rescan action with the shoe, growth and fit check', async () => {
+    renderApp(signedIn())
+    expect(await screen.findByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/scan')
+    expect(screen.getByRole('link', { name: /Classic-Schuh/ })).toHaveTextContent(/EU 26.*Türkis/)
+    expect(screen.getByRole('link', { name: /3 Messungen/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Passform-Check/ })).toBeInTheDocument()
+  })
+
+  it('offers a line for another child that needs something, which switches to that child', async () => {
+    const user = userEvent.setup()
+    renderApp(signedIn())
+    await user.click(await screen.findByRole('button', { name: /Lotta: erster Scan fällig/ }))
+    expect(screen.getByRole('link', { name: 'Füße von Lotta scannen' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Noch keine Schuhe/ })).toBeInTheDocument()
+    // Emil is normal, so he gets no line.
+    expect(screen.queryByRole('button', { name: /Emil:/ })).not.toBeInTheDocument()
+  })
+
+  it.each([
+    ['fitcheck', 'Jetzt neu scannen'],
+    ['season', 'Für Winterstiefel scannen'],
+    ['rescan', 'Emil neu scannen'],
+  ])('shows the %s state from a demo link', async (demo, action) => {
+    renderApp(signedIn(), `/?demo=${demo}`)
+    expect(await screen.findByRole('link', { name: action })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: /scannen|scan/i }).filter((l) => l.closest('section[data-state]'))).toHaveLength(1)
+  })
+
+  it('asks who to measure when there is no child yet', async () => {
+    const user = userEvent.setup()
+    renderApp(signedIn(), '/?demo=empty')
+    expect(await screen.findByRole('heading', { name: 'Wen messen wir?' })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'Kind hinzufügen' })[0]).toBeInTheDocument()
+    await user.type(screen.getByLabelText('Vorname'), 'Mia')
+    expect(screen.getByRole('link', { name: 'Füße von Mia scannen' })).toBeInTheDocument()
+  })
+})
+

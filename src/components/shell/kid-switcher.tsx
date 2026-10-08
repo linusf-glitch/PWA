@@ -1,6 +1,7 @@
-import { Check, ChevronDown } from 'lucide-react'
+import { Check, ChevronDown, Plus } from 'lucide-react'
 import { useEffect, useId, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router'
 
 import { formatAge } from '@/features/kids/kids'
 import { useKids } from '@/features/kids/useKids'
@@ -33,6 +34,24 @@ export function KidSwitcher({ compact = false, className }: { compact?: boolean;
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [open])
+
+  if (!selected) {
+    // No child yet (gift or referral recipient): the first scan creates one.
+    return (
+      <Link
+        to="/scan"
+        className={cn(
+          'flex min-h-11 items-center gap-2 rounded-full py-1 pr-3 pl-1 text-label outline-none active:bg-muted focus-visible:ring-2 focus-visible:ring-ring',
+          className,
+        )}
+      >
+        <span aria-hidden="true" className="flex size-8 items-center justify-center rounded-full border border-dashed">
+          <Plus className="size-4" />
+        </span>
+        Kind hinzufügen
+      </Link>
+    )
+  }
 
   return (
     <>
