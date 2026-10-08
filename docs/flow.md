@@ -20,7 +20,7 @@ Source: the "Sizeless PWA Wireframes" canvas, https://claude.ai/artifact/XqDsU12
 - Growth and Shoes keep a secondary "Rescan {Name}" button, so the scan is reachable from everywhere.
 - **Every scan starts on our own Scan intro** (S02 first visit, S03 known child, S14 rescan). "Start scan" is the Footprint widget button. Footprint owns instructions, checklist, camera permission and its own error screens. One mode only: a parent holds the phone.
 - **Sign-in:** email + 6-digit code. No sign-up (account comes from the first order's checkout email), no passwords, no Apple or Google.
-- **Skip-scan:** "Buy next size without scanning" sits next to Rescan on Home, Shoes and the season nudge. Same weight when the last scan is recent; a small link when it is old (thresholds: see "Canvas vs decisions", item 3).
+- **Skip-scan:** "Buy next size without scanning" sits next to Rescan on Home, Shoes and the season nudge. Same weight when the last scan is recent; a small link when it is old (6 weeks / 8 weeks / 6 months: see "Canvas vs decisions", item 3).
 - **Setting ≠ colourway.** Dot + label = adjustment setting (Turquoise / Yellow / Red). Colourway = the shoe's colour, chosen only on S08 / S18.
 - **WhatsApp opt-in only after purchase (S10).** Exception on the canvas: S05 out of range (item 4 below).
 - **Sharing** (gift link, referral): from the Home "Gift & invite" card and header Share, and on rescan results. Never between result and checkout, never on the first-order path, never after a skip-scan order. In Account it is locked until the first rescan ("Available after your first rescan").
@@ -307,7 +307,7 @@ Every WhatsApp link carries a signed token and opens the PWA on Home with the ri
 
 ## Back targets (canvas, mobile)
 
-See item 1 below: decisions.md currently says every back arrow goes to Home.
+See "Canvas vs decisions" item 1: inside a flow, back goes to the previous step.
 
 | Screen | Back arrow goes to |
 |---|---|
@@ -354,14 +354,14 @@ Deep screens return to their parent; parents return to Home.
 
 ## Canvas vs decisions
 
-Where they differ, decisions.md wins unless Linus decides otherwise. Items marked **open** need Linus.
+Where they differ, decisions.md wins unless Linus decided otherwise. Linus answered the open items on 2026-10-08 (recorded in decisions.md).
 
-1. **Back arrows (open).** Canvas: deep screens go back to their parent (S06 → S05, S08 → S05, S09 hand-off → S08, S07 → S10, shoe detail → Shoes, Growth all kids → Growth, co-parent → Account). decisions.md (app frame, 2026-10-08): every back arrow goes to Home.
-2. **Home state order (open).** Canvas: link expired > empty > fit check > rescan due > season > no shoes > normal. decisions.md: no shoes > fit check > rescan due > season > normal. The difference: where "no shoes yet" sits. The canvas also adds "link expired" and "empty" as Home states, and "last scan older than 6 months" as a second trigger for rescan due.
-3. **How old a scan may be (open).** The canvas uses three numbers: under 6 weeks = scan is reused (winter boot result, "Buy again in this size", no-shoes child must rescan); 8 weeks = skip-scan gets demoted to a small link, gift landing shows "may have grown"; 6 months = Home shows "Rescan recommended". decisions.md only has "~8 weeks" for skip-scan, and progress.md lists the window as still to decide.
-4. **WhatsApp before purchase (open).** S05 "out of range" offers "Remind me when {Name}'s feet grow" (WhatsApp) before any purchase. decisions.md: WhatsApp opt-in only at S10.
-5. **Language toggle (open).** S01, S18, S19 show an EN · DE toggle. decisions.md: the whole app is German.
-6. **Unknown email on sign-in (decided).** Canvas shows "We couldn't find a profile for this email". decisions.md: unknown emails get the same answer as known ones (no account lookup leak). Follow decisions.md.
+1. **Back arrows (decided).** Inside a flow (scan, buy, checkout, sign-in, share, account), the back arrow goes to the previous step of that flow, as in the "Back targets" table; leaving the flow must never force a restart (for example a back arrow must not throw the parent from the result back to Home and make them rescan). Screens that are reached from Home (Growth, Shoes, Account, Share, Rescan intro, Pick next size) go back to Home. This replaces the "every back arrow goes to Home" line in decisions.md (app frame). Screens already built that go to Home too early (S06, S08, S09 hand-off) need a small follow-up.
+2. **Home state order (decided: Claude's recommendation).** Use the canvas order: link expired > empty > fit check pending > rescan due (including last scan older than 6 months) > season nudge > no shoes yet > normal. Reason: it is the more complete list and the states rarely overlap. This replaces the order in decisions.md ("Home state order"), where "no shoes yet" came first.
+3. **Scan age limits (decided).** All three limits from the canvas: under 6 weeks = a scan is reused (winter boot result, "Buy again in this size"; a child with no shoes whose scan is older must rescan before buying); about 8 weeks = skip-scan is demoted to a small link and the gift landing shows "may have grown"; over 6 months = Home shows "Rescan recommended". The 8-week number is still a placeholder to confirm.
+4. **WhatsApp opt-in (decided).** Only after purchase (S10). The S05 "size too small" result must not offer WhatsApp; it offers "Measure again" and an email reminder instead (exact wording still to be drawn).
+5. **Language toggle (decided: on hold).** The EN · DE toggle on the start screens (S01, S18, S19) is kept in the design but translation comes later. Build German only for now; no toggle yet.
+6. **Unknown email on sign-in (decided).** Canvas shows "We couldn't find a profile for this email". decisions.md: unknown emails get the same answer as known ones. Follow decisions.md.
 7. **Desktop waiting / finished (canvas contradicts itself).** The desktop flow map says the live waiting state is out of the MVP; the S21 Waiting and Finished boards show it. decisions.md says "result syncs back". Treat Waiting/Finished as in scope unless Linus says otherwise.
 8. **Setting colour name (decided).** Canvas: Green. decisions.md: Turquoise (Türkis), #9ECACD. Follow decisions.md.
-9. **S10 consent boxes (decided).** Canvas: a "Remind me on WhatsApp" button plus one optional marketing checkbox. decisions.md (WhatsApp consent): fit-check opt-in and marketing are two separate unticked choices, confirmed by sending the first WhatsApp message. Follow decisions.md; the canvas layout already matches if the button counts as the fit-check choice.
+9. **S10 consent boxes (decided).** Canvas: a "Remind me on WhatsApp" button plus one optional marketing checkbox. decisions.md (WhatsApp consent): fit-check opt-in and marketing are two separate unticked choices, confirmed by sending the first WhatsApp message. Follow decisions.md.
