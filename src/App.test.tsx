@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { MemoryRouter } from 'react-router'
@@ -41,12 +41,67 @@ describe('routing', () => {
     expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument()
   })
 
+  it('opens as a demo with sample data when Supabase is not set up', async () => {
+    renderApp(null)
+    expect(await screen.findByRole('heading', { name: 'Sizeless' })).toBeInTheDocument()
+    expect(screen.getByRole('note')).toHaveTextContent('Demo')
+  })
+
   it('signs out back to Sign in', async () => {
     const fake = makeFakeSupabase()
     const user = userEvent.setup()
     renderApp(makeFakeSupabase({ session: fake.fakeSession }).client)
-    await user.click(await screen.findByRole('button', { name: 'Sign out' }))
+    await user.click((await screen.findAllByRole('link', { name: 'Konto' }))[0])
+    await user.click(await screen.findByRole('button', { name: 'Abmelden' }))
     expect(await screen.findByRole('heading', { name: 'Sign in' })).toBeInTheDocument()
+  })
+})
+
+describe('app frame', () => {
+  const signedIn = () => makeFakeSupabase({ session: makeFakeSupabase().fakeSession }).client
+
+  it('carries the chosen child from Home to other screens and back', async () => {
+    const user = userEvent.setup()
+    renderApp(signedIn())
+    // The sidebar repeats the switcher (hidden by CSS on mobile), so take the first.
+    await user.click((await screen.findAllByRole('button', { name: /Kind wechseln, Emil ausgewählt/ }))[0])
+    await user.click(within(screen.getByRole('dialog', { name: 'Kind auswählen' })).getByRole('button', { name: /Lotta/ }))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await user.click(screen.getAllByRole('link', { name: /Wachstum/ })[0])
+    expect(await screen.findByRole('heading', { name: 'Wachstum' })).toBeInTheDocument()
+    expect(screen.getByText(/für Lotta/)).toBeInTheDocument()
+    await user.click(screen.getByRole('link', { name: 'Zurück zu Home' }))
+    expect(await screen.findByRole('link', { name: 'Füße von Lotta scannen' })).toBeInTheDocument()
+  })
+
+  it('selects the child named in a link', async () => {
+    renderApp(signedIn(), '/shoes?kid=lotta')
+    expect(await screen.findByText(/für Lotta/)).toBeInTheDocument()
+  })
+
+  it('ignores an unknown child in a link', async () => {
+    renderApp(signedIn(), '/?kid=nobody')
+    expect((await screen.findAllByRole('button', { name: /Emil ausgewählt/ }))[0]).toBeInTheDocument()
+  })
+
+  it('closes the kid switcher with Escape without changing the child', async () => {
+    const user = userEvent.setup()
+    renderApp(signedIn())
+    await user.click((await screen.findAllByRole('button', { name: /Emil ausgewählt/ }))[0])
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: /Emil ausgewählt/ })[0]).toBeInTheDocument()
+  })
+
+  it('has a back arrow on every screen except Home', async () => {
+    for (const path of ['/growth', '/shoes', '/scan', '/account']) {
+      const { unmount } = renderApp(signedIn(), path)
+      expect(await screen.findByRole('link', { name: 'Zurück zu Home' })).toHaveAttribute('href', '/')
+      unmount()
+    }
+    renderApp(signedIn(), '/')
+    await screen.findByRole('heading', { name: 'Sizeless' })
+    expect(screen.queryByRole('link', { name: 'Zurück zu Home' })).not.toBeInTheDocument()
   })
 })
 

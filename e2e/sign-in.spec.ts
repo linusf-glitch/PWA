@@ -50,6 +50,7 @@ test('a parent signs in with an email code and stays signed in', async ({ page }
   await page.reload()
   await expect(page.getByRole('heading', { name: 'Sizeless' })).toBeVisible()
 
-  await page.getByRole('button', { name: 'Sign out' }).click()
+  await page.getByRole('link', { name: 'Konto' }).click()
+  await page.getByRole('button', { name: 'Abmelden' }).click()
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible()
 })
