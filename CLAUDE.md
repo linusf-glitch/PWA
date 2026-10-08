@@ -20,9 +20,10 @@ Node 22 (see .nvmrc), npm.
 - `npm run typecheck`: tsc in strict mode
 - `npm test`: unit tests (Vitest + Testing Library)
 - `npm run test:db`: database migrations + row-level-security tests on a throwaway local Postgres (needs PostgreSQL 15+ installed)
-- e2e (Playwright): not set up yet, arrives with sign-in (backlog item 4)
+- `npm run e2e`: Playwright end-to-end tests (Supabase mocked). First time: `npx playwright install chromium`. Where a browser is already installed, set `PLAYWRIGHT_CHROMIUM_PATH` to it.
+- Settings: copy `.env.example` to `.env.local` and fill in the public Supabase URL and anon key. Never put the service_role key in a `VITE_` variable.
 
-CI (.github/workflows/ci.yml) runs lint, typecheck, test and build on every PR.
+CI (.github/workflows/ci.yml) runs lint, typecheck, test, build and e2e on every PR.
 shadcn/ui is configured in components.json; add components with `npx shadcn@latest add <name>`.
 
 ## Rules
