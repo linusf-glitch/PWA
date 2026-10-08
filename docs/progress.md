@@ -19,6 +19,7 @@ Update at the end of every session.
 - 2026-10-08: backlog item 5, part A (app frame, PR open): kid switcher (global, deep link `?kid=<id>`), Konto link, back arrow + title on every non-Home screen, desktop left sidebar from the same route list, placeholder pages for Wachstum, Schuhe, Scan, Konto (sign-out moved there). Sample children only. Part B (Home states) next, then the sign-in restyle (Linus said yes to both).
 - 2026-10-08: look and feel step 1 of 3 (draft PR): warm design system v2 tokens, pill Button, Input, tinted NavCard, sticker SizeBadge, styleguide. Step 2 (drawings, motion) and step 3 (apply to screens, after the Home states PR merges) follow.
 - 2026-10-08: backlog item 5, part B (Home states): one dominant action per child (no shoes, fit check "feels tight", rescan due, season nudge, normal), a line for each other child that needs something, child overview (shoe with size + setting, growth, next fit check), empty Home for parents with no child yet. Review on a preview link with `?demo=fitcheck|season|rescan|onekid|empty`. Not built yet: Gift & invite (item 12), Buy without scanning (item 11), Add another child (item 13), desktop two-column Home.
+- 2026-10-08: look and feel step 2 of 3 (PR open): hand-drawn illustration components (8 drawings, doodles, squiggle headline, confetti), motion keyframes with reduced-motion fallbacks, styleguide section. Not yet used on real screens (step 3).
 
 ## Next
 
