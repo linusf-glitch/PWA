@@ -23,4 +23,4 @@ Update at the end of every session.
 6. Reply to the flow doc comment on fit-check timing (delivery vs order date).
 7. Decide the skip-scan window (8 weeks is a placeholder).
 8. Five-parent test.
-9. Backlog item 2: Supabase schema v1 + RLS (docs/backlog.md).
+9. Backlog item 3: design tokens + base components (docs/backlog.md). Needs the design system first.
