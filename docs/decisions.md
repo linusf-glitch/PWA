@@ -5,6 +5,7 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 
 ## 2026-10-08
 
+- **Schema v1 shape.** `profiles` is the "users" table, linked to Supabase `auth.users`. Children belong to parents through `child_guardians` (many-to-many), so co-parent access needs no later migration. Parents get read access plus a few narrow updates; every other write is server-only (service role). Parents cannot delete rows directly; deletion will be a server function. Migrations are plain SQL files in `supabase/migrations/`, tested against a local Postgres in CI.
 - **Repo starts with docs only.** No app code until the starter docs are reviewed.
 
 ## Recorded 2026-10-08 (from the handoff)
