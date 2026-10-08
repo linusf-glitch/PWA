@@ -11,7 +11,7 @@ Database: Supabase Postgres, EU region (Frankfurt). Row-level security on every 
 | profiles | Parent account (the "users" table) | 1:1 with Supabase `auth.users`; created automatically on sign-up. Holds email, display name, Shopify customer id. |
 | children | One row per child | Name, birth date. Has no owner column: access goes through `child_guardians`. |
 | child_guardians | Which parent may see which child | `owner` or `co_parent`. Makes co-parent access (one child, two parents) work without changes later. |
-| measurements | Foot scan results from Footprint | Footprint measurement id (unique), left/right length, recommended EU size, setting colour (green/yellow/red), scan time. |
+| measurements | Foot scan results from Footprint | Footprint measurement id (unique), left/right length, recommended EU size, setting colour (turquoise/yellow/red), scan time. |
 | orders | Shopify orders from the "order paid" webhook | Belongs to a parent. Scan-based or skip-scan. Shopify order id is unique, so a repeated webhook cannot create a duplicate. |
 | shoes | Shoes bought per child | Model, size, setting colour, purchase time. Links to the order and the scan it came from. |
 | notification_preferences | WhatsApp / email consent | One row per parent. Fit checks and marketing are separate switches. The database stamps the consent time, the app cannot set it. |

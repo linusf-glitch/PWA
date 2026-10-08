@@ -7,7 +7,7 @@
 ## Goal
 
 Turn a one-time foot scan into a recurring cycle:
-scan -> size + adjustment setting colour (green/yellow/red; the shoe's setting, NOT the colourway) -> buy via Shopify -> growth chart -> WhatsApp fit checks and seasonal nudges -> rescan -> share card / gift link / referral.
+scan -> size + adjustment setting colour (turquoise/yellow/red; the shoe's setting, NOT the colourway) -> buy via Shopify -> growth chart -> WhatsApp fit checks and seasonal nudges -> rescan -> share card / gift link / referral.
 
 Out of MVP: subscription. In MVP: share card, gift link, referral.
 
