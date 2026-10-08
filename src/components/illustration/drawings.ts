@@ -64,7 +64,7 @@ export const DRAWINGS = {
   hand: [
     shoeG('s', 'y', 'translate(30 6) scale(.62)'),
     {
-      fills: [['p', `${HAND} Z`], ['p', `${F1} Z`], ['p', `${F2} Z`], ['p', `${F3} Z`], ['p', `${THUMB} Z`]],
+      fills: [['n', `${HAND} Z`], ['n', `${F1} Z`], ['n', `${F2} Z`], ['n', `${F3} Z`], ['n', `${THUMB} Z`]],
       lines: [HAND, F1, F2, F3, THUMB],
     },
   ],

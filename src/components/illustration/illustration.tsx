@@ -101,9 +101,9 @@ export function Doodle({ name = 'star', color = 'apricot', size = 28, className,
 }
 
 /** Headline with a hand-drawn squiggle underneath. `animate` draws it once. */
-export function Headline({ children, as: Tag = 'h1', animate, className }: { children: React.ReactNode; as?: 'h1' | 'h2'; animate?: boolean; className?: string }) {
+export function Headline({ children, as: Tag = 'h1', size = 'display', animate, className }: { children: React.ReactNode; as?: 'h1' | 'h2'; size?: 'display' | 'h2'; animate?: boolean; className?: string }) {
   return (
-    <Tag className={`text-display text-ink ${className ?? ''}`}>
+    <Tag className={`${size === 'h2' ? 'text-h2' : 'text-display'} text-ink ${className ?? ''}`}>
       {children}
       <svg className={cn('sz-squig', animate && 'sz-squig-draw')} viewBox="0 0 112 12" width={112} height={12} aria-hidden="true" focusable="false">
         <path d="M3 7C12 2 17 11 27 6S44 2 55 7 72 11 83 6 100 3 109 7" pathLength={1} />

@@ -41,3 +41,9 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Subscription out of MVP | Removed. Share card, gift link, referral stay in. |
 | Setting colour != colourway | Turquoise/yellow/red (smallest to largest) is the shoe's adjustment setting, never the shoe colour. Was green until 2026-10-08. |
 | Warm playful look (design system v2) | 2026-10-08. Linus found v1 too plain and too teal ("doctor's platform"). Cream background, warm ink, apricot/lilac/sage accents, pill buttons, rounder cards, sticker size badge. Teal only for the primary button, links and focus. Setting colours stay in SettingChip only; turquoise setting is #9ECACD (Linus chose the design system's grey-blue). Drawings and motion follow in step 2, screens in step 3. |
+| Sticker-style drawings | 2026-10-08. Linus's references (not pixel art): smooth flat shapes, white cut-out border, ink line, soft shadow. Original drawings only, in apricot/lilac/sage plus the logo yellow #FFD23F, which is allowed inside drawings only (it is close to the Gelb setting yellow; chips keep word and shape). |
+| Turquoise setting shade | 2026-10-08. Smallest setting is the design system's grey-blue #9ECACD (Linus chose it over #62D2D0). |
+| Footprint placeholder | The scan step uses a mock widget emitting the documented events until Footprint gives API/widget access. Email to Footprint drafted, not sent. |
+| Work in phases | 1 Foundation, 2 Look and feel, 3 Scan and buy, 4 Growth and history, 5 WhatsApp and reorder, 6 Account and launch. Progress reports show the phase list. |
+| Repo private, no branch protection yet | 2026-10-08. Repo made private by Linus. Branch protection (require PR + checks) deferred to launch; until then the rule "never commit to main" is by convention. |
+| Docs are updated every PR | progress.md and decisions.md at the end of each PR (CLAUDE.md rule); CLAUDE.md only when a rule changes, shown to Linus first. |
