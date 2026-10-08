@@ -6,4 +6,13 @@ Mobile-first web app for Sizeless (adjustable kids' shoes): foot scan, size and 
 - Full background: [docs/handoff.md](docs/handoff.md).
 - Work plan: [docs/backlog.md](docs/backlog.md).
 
-No app code yet. Docs only.
+## Run it locally
+
+Needs Node 22.
+
+```
+npm install
+npm run dev
+```
+
+Other commands are listed in [CLAUDE.md](CLAUDE.md#commands).
