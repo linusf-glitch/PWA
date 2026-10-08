@@ -48,4 +48,4 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Repo private, no branch protection yet | 2026-10-08. Repo made private by Linus. Branch protection (require PR + checks) deferred to launch; until then the rule "never commit to main" is by convention. |
 | Whole app is German, sign-in included | 2026-10-08. Linus approved translating the sign-in screens (Anmelden, Code eingeben). Informal "du". |
 | Docs are updated every PR | progress.md and decisions.md at the end of each PR (CLAUDE.md rule); CLAUDE.md only when a rule changes, shown to Linus first. |
-| Setting source is open | 2026-10-08. Footprint's documented payload has size but no setting. The stand-in sends a test `setting`; ask Footprint (or decide our own size-to-setting mapping) before the real widget goes in. |
+| Setting comes from Footprint | 2026-10-08, Linus: the setting colour will come from Footprint, not from our own rule. Their documented payload has no setting yet, so we ask them to add it (add to the Footprint email). Until then the stand-in sends a test `setting`. |
