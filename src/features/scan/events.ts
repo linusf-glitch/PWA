@@ -15,6 +15,8 @@ export const scanResultSchema = z.object({
   size: z.coerce.number().int().min(15).max(45),
   error_code: z.string().optional(),
   article_number: z.string(),
+  // ponytail: not in Footprint's documented payload. Only the stand-in sends it; replace with the real source of the setting once Footprint answers.
+  setting: z.enum(['turquoise', 'yellow', 'red']).optional(),
 })
 export type ScanResult = z.infer<typeof scanResultSchema>
 

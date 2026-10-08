@@ -7,6 +7,8 @@ import CodeEntryPage from '@/pages/CodeEntryPage'
 import HomePage from '@/pages/HomePage'
 import PlaceholderPage from '@/pages/PlaceholderPage'
 import ScanPage from '@/pages/ScanPage'
+import ScanResultPage from '@/pages/ScanResultPage'
+import SettingExplainPage from '@/pages/SettingExplainPage'
 import SignInPage from '@/pages/SignInPage'
 
 function RequireAuth() {
@@ -43,6 +45,9 @@ export default function App() {
           <Route path="/growth" element={<PlaceholderPage title="Wachstum" />} />
           <Route path="/shoes" element={<PlaceholderPage title="Schuhe" />} />
           <Route path="/scan" element={<ScanPage />} />
+          <Route path="/scan/result" element={<ScanResultPage />} />
+          <Route path="/scan/setting" element={<SettingExplainPage />} />
+          <Route path="/checkout" element={<PlaceholderPage title="Kasse" />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>
