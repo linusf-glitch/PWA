@@ -13,7 +13,7 @@ export function AppShell() {
     <KidsProvider>
       <div className="min-h-dvh lg:flex">
         <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-4 border-r p-4 lg:flex">
-          <span className="px-2 py-3 text-h3 tracking-wide text-primary">SIZELESS</span>
+          <span className="px-2 py-3 text-h3 tracking-wide text-foreground">SIZELESS</span>
           <KidSwitcher className="w-full rounded-lg border" />
           <nav aria-label="Hauptmenü" className="flex flex-col gap-1">
             {NAV.map(({ to, label, icon: Icon }) => (

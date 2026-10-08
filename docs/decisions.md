@@ -39,3 +39,4 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Not used | Cursor, Convex (Supabase preferred: standard Postgres, EU, built-in OTP). |
 | Subscription out of MVP | Removed. Share card, gift link, referral stay in. |
 | Setting colour != colourway | Turquoise/yellow/red (smallest to largest) is the shoe's adjustment setting, never the shoe colour. Was green until 2026-10-08. |
+| Warm playful look (design system v2) | 2026-10-08. Linus found v1 too plain and too teal ("doctor's platform"). Cream background, warm ink, apricot/lilac/sage accents, pill buttons, rounder cards, sticker size badge. Teal only for the primary button, links and focus. Setting colours stay in SettingChip only; turquoise setting is #9ECACD (Linus chose the design system's grey-blue). Drawings and motion follow in step 2, screens in step 3. |

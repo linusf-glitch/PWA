@@ -92,7 +92,7 @@ export function KidSwitcher({ compact = false, className }: { compact?: boolean;
                     <span className="text-label font-semibold">{kid.name}</span>
                     <span className="text-caption text-muted-foreground">{formatAge(kid.birthDate)}</span>
                   </span>
-                  {kid.id === selected.id && <Check aria-hidden="true" className="size-5 text-primary" />}
+                  {kid.id === selected.id && <Check aria-hidden="true" className="size-5 text-foreground" />}
                 </button>
               ))}
             </div>

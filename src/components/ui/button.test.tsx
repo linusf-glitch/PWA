@@ -10,9 +10,9 @@ describe('Button', () => {
     expect(button).not.toHaveClass('uppercase')
   })
 
-  it('has the large 56px size for the one dominant action', () => {
+  it('has the large 60px size for the one dominant action', () => {
     render(<Button size="lg">Füße von Mia neu scannen</Button>)
-    expect(screen.getByRole('button')).toHaveClass('min-h-14')
+    expect(screen.getByRole('button')).toHaveClass('min-h-15')
   })
 
   it('keeps every size at least 44px tall', () => {
@@ -23,6 +23,18 @@ describe('Button', () => {
       </>,
     )
     for (const button of screen.getAllByRole('button')) expect(button).toHaveClass('min-h-11')
+  })
+
+  it('is a round pill, and the secondary is an ink outline', () => {
+    render(
+      <>
+        <Button>A</Button>
+        <Button variant="outline">B</Button>
+      </>,
+    )
+    const [primary, secondary] = screen.getAllByRole('button')
+    expect(primary).toHaveClass('rounded-full')
+    expect(secondary).toHaveClass('border-ink', 'bg-card')
   })
 
   it('keeps a narrow padding for links', () => {
