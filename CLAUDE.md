@@ -11,7 +11,19 @@ Mobile-first PWA for Sizeless (adjustable kids' shoes). Foot scan by Footprint T
 Vite + React + TypeScript (strict), Tailwind, shadcn/ui, vite-plugin-pwa. Supabase (EU region): Postgres, Auth (email OTP), RLS. Vercel hosting. Shopify Storefront API + webhooks. WhatsApp Business API via provider.
 
 ## Commands
-(fill in once scaffolded: dev, build, lint, typecheck, test, e2e)
+Node 22 (see .nvmrc), npm.
+- `npm install` once after cloning
+- `npm run dev`: local dev server
+- `npm run build`: typecheck + production build (includes the service worker)
+- `npm run preview`: serve the production build locally
+- `npm run lint`: oxlint, warnings fail
+- `npm run typecheck`: tsc in strict mode
+- `npm test`: unit tests (Vitest + Testing Library)
+- `npm run test:db`: database migrations + row-level-security tests on a throwaway local Postgres (needs PostgreSQL 15+ installed)
+- e2e (Playwright): not set up yet, arrives with sign-in (backlog item 4)
+
+CI (.github/workflows/ci.yml) runs lint, typecheck, test and build on every PR.
+shadcn/ui is configured in components.json; add components with `npx shadcn@latest add <name>`.
 
 ## Rules
 - If the spec is unclear or two docs conflict, ASK. Do not guess.

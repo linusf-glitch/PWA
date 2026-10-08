@@ -27,7 +27,7 @@ Database: Supabase Postgres, EU region (Frankfurt). Row-level security on every 
 
 ## Tests
 
-`npm run test:db` is not available yet on this branch; run `./scripts/test-db.sh`. It starts a throwaway local Postgres, applies the migrations and runs `supabase/tests/rls.test.sql`. It proves, among other things, that parent A cannot read or change parent B's children, scans, shoes, orders, profile or preferences. CI runs it on every change under `supabase/`. `supabase/tests/00_supabase_stub.sql` imitates the parts of Supabase the migration needs (roles, `auth.users`, `auth.uid()`) and is for local tests only.
+`npm run test:db` (same as `./scripts/test-db.sh`). It starts a throwaway local Postgres, applies the migrations and runs `supabase/tests/rls.test.sql`. It proves, among other things, that parent A cannot read or change parent B's children, scans, shoes, orders, profile or preferences. CI runs it on every change under `supabase/`. `supabase/tests/00_supabase_stub.sql` imitates the parts of Supabase the migration needs (roles, `auth.users`, `auth.uid()`) and is for local tests only.
 
 ## Open points
 
