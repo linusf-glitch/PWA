@@ -3,7 +3,9 @@ import { Navigate, Outlet, Route, Routes } from 'react-router'
 import { AppShell } from '@/components/shell/app-shell'
 import { useAuth } from '@/features/auth/AuthProvider'
 import AccountPage from '@/pages/AccountPage'
+import CheckoutHandoffPage from '@/pages/CheckoutHandoffPage'
 import CodeEntryPage from '@/pages/CodeEntryPage'
+import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
 import PlaceholderPage from '@/pages/PlaceholderPage'
 import ScanPage from '@/pages/ScanPage'
@@ -47,7 +49,8 @@ export default function App() {
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />
-          <Route path="/checkout" element={<PlaceholderPage title="Kasse" />} />
+          <Route path="/checkout" element={<ColourwayPage />} />
+          <Route path="/checkout/go" element={<CheckoutHandoffPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>

@@ -25,9 +25,10 @@ Update at the end of every session.
 - 2026-10-08: sign-in and code screens translated to German (PR open); tests updated.
 - 2026-10-08: phase 3 start, backlog item 6 part A (PR open): Scan intro screen (child name + age, what you need, one "Scan starten" button), Footprint stand-in widget that fires the documented fpt-* window events (validated with Zod), plain size result. Real widget and result screen S05/S06 follow.
 - 2026-10-08: backlog item 6 part B (PR open): clickable scan path: Home > Scan intro > stand-in scan (2.5 s "Wir messen", Abbrechen) > Result S05 (size, setting chip + one-line explanation, "Größe n kaufen", "Noch einmal scannen", confetti) > Setting explanation S06 > Kasse placeholder. The stand-in sends size = current shoe + 1 and setting Gelb; the setting is NOT in Footprint's documented payload, so where it comes from is an open question for Footprint.
+- 2026-10-08: backlog item 7 part A (PR open): Shopify cart and checkout. S08 "Farbe wählen" (Galaxy, Reef, Sprout, sold out ones greyed), S09 hand-off "Weiter zur sicheren Kasse" creates a Storefront API cart (size, setting, measurement id, child id as cart attributes) and redirects to Shopify's checkout. Demo mode (no keys) shows sample colourways and a "Kasse noch nicht verbunden" note. Needs VITE_SHOPIFY_STORE_DOMAIN and VITE_SHOPIFY_STOREFRONT_TOKEN in Vercel. Not built yet: "Tell me when it's back" for sold out, return screen after payment, order webhook, S10.
 
 ## Phases
-1 Foundation: done. 2 Look and feel: done with this PR. 3 Scan and buy (backlog 6-8): in progress (Scan intro and result screen done with stand-in; Shopify cart/checkout, order webhook, S10, desktop QR next). 4 Growth and history (9). 5 WhatsApp and reorder (10-12). 6 Account and launch (13-14, real sign-in setup, domain app.sizeless-shoe.com, Vercel Pro, lawyer check, security review, beta).
+1 Foundation: done. 2 Look and feel: done with this PR. 3 Scan and buy (backlog 6-8): in progress (Scan intro, result screen, colourway and checkout hand-off done; order webhook, return screen, S10, desktop QR next). 4 Growth and history (9). 5 WhatsApp and reorder (10-12). 6 Account and launch (13-14, real sign-in setup, domain app.sizeless-shoe.com, Vercel Pro, lawyer check, security review, beta).
 
 ## Next
 
