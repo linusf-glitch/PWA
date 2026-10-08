@@ -63,7 +63,7 @@ function Drawings() {
         <Headline key={`h${play}`} as="h2" animate>
           Mias Füße sind gewachsen.
         </Headline>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-3">
           {(Object.keys(DRAWINGS) as DrawingName[]).map((name) => (
             <Illustration key={`${name}${play}`} name={name} size={72} draw />
           ))}

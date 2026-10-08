@@ -212,8 +212,10 @@
 }
 
 /* Drawings and motion (design system v2: illustration.md, motion.md). Light CSS/SVG only. */
-.sz-ill { display: block; flex: none; overflow: visible; }
-.sz-ln, .sz-ln-dashed { fill: none; stroke: var(--ink); stroke-width: var(--sw, 2.5); stroke-linecap: round; stroke-linejoin: round; }
+.sz-ill { display: block; flex: none; overflow: visible; filter: drop-shadow(0 2px 2px rgb(43 34 32 / 0.2)); }
+/* Sticker die-cut: a white border around the filled shapes, behind the ink line. */
+.sz-cut path { fill: #fff; stroke: #fff; stroke-width: 11; stroke-linejoin: round; }
+.sz-ln, .sz-ln-dashed { fill: none; stroke: var(--ink); stroke-width: var(--sw, 3); stroke-linecap: round; stroke-linejoin: round; }
 .sz-ln-dashed { stroke-dasharray: 3 7; }
 .sz-dot { fill: var(--ink); }
 .sz-fl-a, .sz-fl-apricot { fill: var(--accent-apricot); }

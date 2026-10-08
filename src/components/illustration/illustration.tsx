@@ -16,6 +16,10 @@ export function SvgDefs() {
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="2" result="n" />
           <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G" />
         </filter>
+        <filter id="sz-wobble-s" x="-4%" y="-4%" width="108%" height="108%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="5" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
         <filter id="sz-boil" x="-4%" y="-4%" width="108%" height="108%">
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="2" result="n">
             <animate attributeName="seed" values="2;7;12" dur="0.375s" calcMode="discrete" repeatCount="indefinite" />
@@ -50,10 +54,15 @@ export function Illustration({ name, size = 160, draw, boil, className }: Illust
       focusable="false"
       style={style}
     >
-      <g filter={boil && !reduced() ? 'url(#sz-boil)' : 'url(#sz-wobble)'}>
+      <g filter={boil && !reduced() ? 'url(#sz-boil)' : 'url(#sz-wobble-s)'}>
         {(DRAWINGS[name] as Group[]).map((g, gi) => (
           <g key={gi} transform={g.t}>
-            <g className="sz-ill-fills" transform="translate(3 2.5)">
+            <g className="sz-cut">
+              {g.fills.map(([, d], i) => (
+                <path key={i} d={d} />
+              ))}
+            </g>
+            <g className="sz-ill-fills">
               {g.fills.map(([k, d], i) => (
                 <path key={i} className={`sz-fl-${k}`} d={d} />
               ))}
