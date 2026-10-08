@@ -13,23 +13,31 @@
  * (project/tokens.json). Keep values in sync with it; docs/design-system.md explains each group.
  */
 :root {
-  --radius: 10px;
+  --radius: 14px;
 
-  --background: #ffffff;
-  --foreground: #0a0f0e;
-  --card: #ffffff;
-  --card-foreground: #0a0f0e;
-  --popover: #ffffff;
-  --popover-foreground: #0a0f0e;
+  /* Warm paper palette (design system version 2). Teal is an accent: only the primary button, links and focus. */
+  --ink: #2b2220;
+  --background: #fff7ee;
+  --foreground: var(--ink);
+  --card: #fffdf9;
+  --card-foreground: var(--ink);
+  --popover: #fffdf9;
+  --popover-foreground: var(--ink);
   --primary: #087e8b;
   --primary-foreground: #ffffff;
   --primary-pressed: #065f69;
-  --secondary: #f1f3f3;
-  --secondary-foreground: #0a0f0e;
-  --muted: #f1f3f3;
-  --muted-foreground: #56635f;
-  --accent: #e6f3f3;
-  --accent-foreground: #283e36;
+  --secondary: #fbe8d4;
+  --secondary-foreground: var(--ink);
+  --muted: #f6e7d6;
+  --muted-foreground: #66554f;
+  --accent: var(--accent-apricot-soft);
+  --accent-foreground: var(--ink);
+  --accent-apricot: #e5793a;
+  --accent-apricot-soft: #ffe4cf;
+  --accent-lilac: #a58be0;
+  --accent-lilac-soft: #ece4fa;
+  --accent-sage: #8fae6b;
+  --accent-sage-soft: #e6eed6;
   --destructive: #b4233c;
   --destructive-foreground: #ffffff;
   --destructive-soft: #fcebee;
@@ -39,35 +47,50 @@
   --warning-soft: #fef3e2;
   --info: #1d5fa8;
   --info-soft: #e8f0fa;
-  --border: #e6e6e6;
-  --border-strong: #d5dcda;
-  --input: #7e8c88;
+  --border: #efddcb;
+  --border-strong: #dcc5ad;
+  --input: #7d6a5f;
   --ring: #087e8b;
-  --scrim: rgb(10 15 14 / 0.45);
+  --scrim: rgb(43 34 32 / 0.45);
 
-  --chart-1: #53b1b2;
-  --chart-2: #087e8b;
-  --chart-3: #283e36;
-  --chart-4: #a9d8d8;
-  --chart-5: #56635f;
+  --chart-1: var(--ink);
+  --chart-2: var(--ink);
+  --chart-3: var(--accent-apricot);
+  --chart-4: var(--accent-lilac);
+  --chart-5: var(--muted-foreground);
 
-  /* Shoe adjustment SETTING colours (Türkis smallest, Gelb, Rot largest; Linus 2026-10-08). Not colourways, not status colours. Only SettingChip uses them. */
-  --setting-turquoise: #62d2d0;
+  /* Shoe adjustment SETTING colours (Türkis smallest, Gelb, Rot largest). Not colourways, not status
+     colours, not illustration fills. Only SettingChip uses them. */
+  --setting-turquoise: #9ecacd;
   --setting-turquoise-foreground: #0a0f0e;
-  --setting-turquoise-soft: #e3f6f6;
-  --setting-turquoise-text: #0b6466;
-  --setting-yellow: #f4d963;
+  --setting-turquoise-soft: #e3f1f2;
+  --setting-turquoise-text: #0b5560;
+  --setting-yellow: #f5da66;
   --setting-yellow-foreground: #0a0f0e;
-  --setting-yellow-soft: #fdf6d3;
+  --setting-yellow-soft: #fff8dc;
   --setting-yellow-text: #6e5200;
-  --setting-red: #e57289;
+  --setting-red: #e8738a;
   --setting-red-foreground: #0a0f0e;
-  --setting-red-soft: #fbe6ea;
-  --setting-red-text: #a3203f;
+  --setting-red-soft: #fdeaee;
+  --setting-red-text: #a3213f;
 
+  /* Logo colours: logo and marketing only, never app UI. */
   --brand-teal: #087e8b;
   --brand-teal-light: #53b1b2;
   --brand-deep-green: #283e36;
+  --brand-ink: #0a0f0e;
+  --brand-red: #ef4266;
+  --brand-green: #53c0a6;
+  --brand-yellow: #ffd23f;
+
+  /* Motion tokens (used from the next step: drawings and animation). */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --duration-draw: 600ms;
+  --duration-boil: 125ms;
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
@@ -122,15 +145,29 @@
   --color-brand-teal: var(--brand-teal);
   --color-brand-teal-light: var(--brand-teal-light);
   --color-brand-deep-green: var(--brand-deep-green);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-red: var(--brand-red);
+  --color-brand-green: var(--brand-green);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-ink: var(--ink);
+  --color-accent-apricot: var(--accent-apricot);
+  --color-accent-apricot-soft: var(--accent-apricot-soft);
+  --color-accent-lilac: var(--accent-lilac);
+  --color-accent-lilac-soft: var(--accent-lilac-soft);
+  --color-accent-sage: var(--accent-sage);
+  --color-accent-sage-soft: var(--accent-sage-soft);
 
-  /* rounded-md: buttons, inputs, badges, alerts. rounded-lg / rounded-xl: cards and sheets. */
+  /* rounded-md: text fields, badge, alerts. rounded-lg: cards and tiles. rounded-xl: sheets. Buttons and chips are rounded-full. */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: var(--radius);
-  --radius-lg: 16px;
-  --radius-xl: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
 
-  --shadow-card: 0 1px 2px rgb(10 15 14 / 0.06), 0 2px 8px rgb(10 15 14 / 0.04);
-  --shadow-sheet: 0 -4px 24px rgb(10 15 14 / 0.12);
+  --shadow-card: 0 2px 0 rgb(120 80 50 / 0.08), 0 8px 20px rgb(120 80 50 / 0.08);
+  --shadow-lift: 0 3px 0 rgb(120 80 50 / 0.1), 0 14px 28px rgb(120 80 50 / 0.14);
+  --shadow-sheet: 0 -6px 28px rgb(43 34 32 / 0.14);
+  --shadow-button: 0 4px 0 var(--primary-pressed);
+  --shadow-button-pressed: 0 1px 0 var(--primary-pressed);
 
   /* Type styles from the design system: text-display, text-h1 ... text-caption. */
   --text-display: 32px;

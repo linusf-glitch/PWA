@@ -12,13 +12,19 @@ import { Button } from '@/components/ui/button'
 const COLOURS: Array<[string, string]> = [
   ['primary', 'bg-primary'],
   ['primary-pressed', 'bg-primary-pressed'],
-  ['brand-teal-light', 'bg-brand-teal-light'],
-  ['brand-deep-turquoise', 'bg-brand-deep-turquoise'],
-  ['foreground', 'bg-foreground'],
+  ['ink / foreground', 'bg-ink'],
+  ['background', 'bg-background'],
+  ['card', 'bg-card'],
   ['muted-foreground', 'bg-muted-foreground'],
   ['secondary / muted', 'bg-muted'],
-  ['accent', 'bg-accent'],
+  ['accent-apricot', 'bg-accent-apricot'],
+  ['accent-apricot-soft', 'bg-accent-apricot-soft'],
+  ['accent-lilac', 'bg-accent-lilac'],
+  ['accent-lilac-soft', 'bg-accent-lilac-soft'],
+  ['accent-sage', 'bg-accent-sage'],
+  ['accent-sage-soft', 'bg-accent-sage-soft'],
   ['border', 'bg-border'],
+  ['border-strong', 'bg-border-strong'],
   ['input', 'bg-input'],
   ['destructive', 'bg-destructive'],
   ['success', 'bg-success'],
@@ -64,20 +70,22 @@ export default function StyleGuide() {
             Füße von Mia neu scannen
           </Button>
           <div className="flex flex-col gap-3">
-            <NavCard eyebrow="Aktueller Schuh" title="Sizeless Sneaker" onClick={() => {}}>
+            <NavCard tone="apricot" eyebrow="Aktueller Schuh" title="Sizeless Sneaker" onClick={() => {}}>
               <SizeBadge size={27} />
               <SettingChip setting="turquoise" size="sm" />
             </NavCard>
             <NavCard
+              tone="lilac"
               eyebrow="Wachstum"
               title="+4 mm seit März"
               media={<TrendingUp aria-hidden="true" className="size-6 text-chart-2" />}
               onClick={() => {}}
             />
             <NavCard
+              tone="sage"
               eyebrow="Nächster Passform-Check"
               title="In 3 Wochen"
-              media={<Footprints aria-hidden="true" className="size-6 text-primary" />}
+              media={<Footprints aria-hidden="true" className="size-6 text-ink" />}
               onClick={() => {}}
             />
           </div>
