@@ -16,7 +16,7 @@ export default function SettingExplainPage() {
   const navigate = useNavigate()
   return (
     <>
-      <PageHeader title="Einstellung" />
+      <PageHeader title="Einstellung" back="step" />
       <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 lg:p-8">
         <div className="flex items-start justify-between gap-3">
           <p className="text-body">
