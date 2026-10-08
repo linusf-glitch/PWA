@@ -149,12 +149,10 @@ describe('Sign in screen', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Too many tries')
   })
 
-  it('says sign-in is not set up when Supabase is not configured', async () => {
-    const user = userEvent.setup()
+  it('sends a sign-in link to the demo when Supabase is not configured', async () => {
     renderApp(null, '/sign-in')
-    await user.type(await screen.findByLabelText('Email'), 'parent@example.com')
-    await user.click(screen.getByRole('button', { name: 'Send code' }))
-    expect(await screen.findByRole('alert')).toHaveTextContent('not set up')
+    expect(await screen.findByRole('heading', { name: 'Sizeless' })).toBeInTheDocument()
+    expect(screen.getByRole('note')).toHaveTextContent('Demo')
   })
 })
 
