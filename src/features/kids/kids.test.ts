@@ -53,5 +53,12 @@ describe('homeState', () => {
     expect(homeState(mockKids(null, today)[1], today)).toBe('noShoes')
     expect(mockKids('empty', today)).toEqual([])
     expect(mockKids('onekid', today)).toHaveLength(1)
+    expect(mockKids('family', today).map((k) => homeState(k, today))).toEqual([
+      'fitCheck',
+      'noShoes',
+      'rescanDue',
+      'season',
+      'normal',
+    ])
   })
 })

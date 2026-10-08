@@ -55,3 +55,4 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 | Sign-in code is always by email | 2026-10-08, Linus: the verification code for sign-in always goes by email, same for every parent. WhatsApp is only for fit-check reminders. |
 | Account comes from the Shopify order | 2026-10-08, Linus: the parent never signs up; the order webhook creates the account (email from the order), the child and the shoe. After paying the parent is not signed in yet; S10 offers "Jetzt anmelden" (code by email). |
 | Back arrows inside the order flow go back a step | 2026-10-08, Linus: in Result > Farbe wählen > Kasse the arrow goes to the previous step, never Home. "Zahlung erledigt" and S10 have no back arrow. |
+| Sample data lives in demo mode | 2026-10-08, Linus: sample data to play with is the demo mode on the live link (`?demo=family` and the other `?demo=` links), not rows in Supabase. A Supabase seed file waits until real sign-in works. |
