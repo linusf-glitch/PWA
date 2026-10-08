@@ -16,6 +16,7 @@ Update at the end of every session.
 - 2026-10-08: backlog item 4, email-code sign-in (PR open): Sign in, Code entry, wrong/expired code, resend with 60s wait, long session, route guard, Playwright e2e. Needs Linus to set the session length and an email sender in Supabase and add the public URL + anon key in Vercel before it works for real.
 - 2026-10-08: WhatsApp GDPR check done (not legal advice). Consent rules recorded in decisions.md. A lawyer must confirm the S10 texts and privacy policy before launch.
 - 2026-10-08: backlog item 3, design tokens + base components: Sizeless colours, Poppins (bundled), type scale, radius, shadows in src/index.css; Button restyled; SettingChip, SizeBadge, NavCard; /styleguide.html. Source: "Sizeless App" design system in Claude Design. Remaining components come with the screens that use them (see docs/design-system.md).
+- 2026-10-08: backlog item 5, part A (app frame, PR open): kid switcher (global, deep link `?kid=<id>`), Konto link, back arrow + title on every non-Home screen, desktop left sidebar from the same route list, placeholder pages for Wachstum, Schuhe, Scan, Konto (sign-out moved there). Sample children only. Part B (Home states) next, then the sign-in restyle (Linus said yes to both).
 
 ## Next
 

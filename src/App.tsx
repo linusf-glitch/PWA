@@ -1,8 +1,11 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router'
 
+import { AppShell } from '@/components/shell/app-shell'
 import { useAuth } from '@/features/auth/AuthProvider'
+import AccountPage from '@/pages/AccountPage'
 import CodeEntryPage from '@/pages/CodeEntryPage'
 import HomePage from '@/pages/HomePage'
+import PlaceholderPage from '@/pages/PlaceholderPage'
 import SignInPage from '@/pages/SignInPage'
 
 function RequireAuth() {
@@ -21,7 +24,13 @@ export default function App() {
   return (
     <Routes>
       <Route element={<RequireAuth />}>
-        <Route path="/" element={<HomePage />} />
+        <Route element={<AppShell />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/growth" element={<PlaceholderPage title="Wachstum" />} />
+          <Route path="/shoes" element={<PlaceholderPage title="Schuhe" />} />
+          <Route path="/scan" element={<PlaceholderPage title="Scan" />} />
+          <Route path="/account" element={<AccountPage />} />
+        </Route>
       </Route>
       <Route element={<PublicOnly />}>
         <Route path="/sign-in" element={<SignInPage />} />

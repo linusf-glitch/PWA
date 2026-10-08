@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 
 import { NavCard } from './nav-card'
 
@@ -18,7 +19,11 @@ describe('NavCard', () => {
   })
 
   it('renders a link when given href', () => {
-    render(<NavCard title="Wachstum von Mia" href="/growth" />)
+    render(
+      <MemoryRouter>
+        <NavCard title="Wachstum von Mia" href="/growth" />
+      </MemoryRouter>,
+    )
     expect(screen.getByRole('link', { name: /Wachstum von Mia/ })).toHaveAttribute('href', '/growth')
   })
 })
