@@ -20,7 +20,7 @@ export function ScanWidget({ sample }: { sample: { size: number; setting: ShoeSe
       setScanning(false)
       window.dispatchEvent(
         new CustomEvent(FPT_EVENTS.addToCart, {
-          detail: { measurement_id: 'test-measurement', article_number: 'SZ-CLASSIC', ...sample },
+          detail: { measurement_id: `test-${crypto.randomUUID()}`, article_number: 'SZ-CLASSIC', ...sample },
         }),
       )
     }, SCAN_MS)
