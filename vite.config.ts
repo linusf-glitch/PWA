@@ -30,12 +30,21 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Cache the app shell only. API responses (Supabase, Shopify) are never cached.
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
+        // Cache the app shell only (incl. the bundled Poppins font). API responses (Supabase, Shopify) are never cached.
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest,woff2}'],
         navigateFallback: '/index.html',
       },
     }),
   ],
+  build: {
+    // Second page: the internal styleguide at /styleguide.html (design tokens + base components).
+    rolldownOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        styleguide: fileURLToPath(new URL('./styleguide.html', import.meta.url)),
+      },
+    },
+  },
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
