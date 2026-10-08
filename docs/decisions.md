@@ -5,6 +5,8 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 
 ## 2026-10-08
 
+- **Sign-in is Supabase email codes (approved by Linus).** Shopify Customer Account API sign-in is not used: the database privacy rules are built on Supabase accounts, and two systems would need syncing. Shopify stays checkout and orders. Sign-in never creates accounts (`shouldCreateUser: false`); accounts come from the first order. Unknown emails get the same answer as known ones. Wrong and expired codes share one message because Supabase returns the same error for both. Long session = Supabase refresh token kept in the browser.
+- **Browser env vars are public only.** `VITE_SUPABASE_URL` and the anon key, validated with Zod. The service_role key never goes in a `VITE_` variable.
 - **Tooling for the skeleton.** npm (not pnpm/yarn), Node 22. Linting with oxlint, the current Vite template default, instead of ESLint. Unit tests with Vitest + Testing Library. Tailwind v4 via its Vite plugin (no tailwind.config file). shadcn/ui "new-york" style, neutral colours until the design tokens land (backlog item 3).
 - **Service worker caches the app shell only.** Never API responses (Supabase, Shopify), so no child data sits in the browser cache.
 - **Schema v1 shape.** `profiles` is the "users" table, linked to Supabase `auth.users`. Children belong to parents through `child_guardians` (many-to-many), so co-parent access needs no later migration. Parents get read access plus a few narrow updates; every other write is server-only (service role). Parents cannot delete rows directly; deletion will be a server function. Migrations are plain SQL files in `supabase/migrations/`, tested against a local Postgres in CI.

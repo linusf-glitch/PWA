@@ -12,6 +12,8 @@ Update at the end of every session.
 - 2026-10-08: repo starter docs added (PR #1).
 - 2026-10-08: backlog item 1, app skeleton: Vite + React + TS strict, Tailwind v4, shadcn/ui setup with Button, PWA manifest + service worker, Vitest, oxlint, GitHub Actions CI. Placeholder Home and placeholder icons. Vercel preview deploys come from Linus connecting the repo in Vercel (no config in the repo).
 - 2026-10-08: backlog item 2, schema v1 (SQL migration in supabase/migrations/), RLS on every table, 37 database checks incl. parent-isolation tests, CI job. Not applied to any real Supabase project: Linus creates the project (Frankfurt) and we apply it later.
+- 2026-10-08: Linus confirmed the Supabase project is in Frankfurt and ran schema v1 in it (not verified by Claude).
+- 2026-10-08: backlog item 4, email-code sign-in (PR open): Sign in, Code entry, wrong/expired code, resend with 60s wait, long session, route guard, Playwright e2e. Needs Linus to set the session length and an email sender in Supabase and add the public URL + anon key in Vercel before it works for real.
 
 ## Next
 
@@ -24,3 +26,4 @@ Update at the end of every session.
 7. Decide the skip-scan window (8 weeks is a placeholder).
 8. Five-parent test.
 9. Backlog item 3: design tokens + base components (docs/backlog.md). Needs the design system first.
+10. Supabase setup for sign-in (Linus): Authentication > Sessions (long session), email sender (custom SMTP), email template must show the 6-digit code ({{ .Token }}); create the first auth user from the Shopify order webhook (backlog item 7).
