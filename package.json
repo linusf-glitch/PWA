@@ -13,7 +13,8 @@
     "lint": "oxlint --deny-warnings",
     "typecheck": "tsc -b",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:db": "./scripts/test-db.sh"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.4.0",

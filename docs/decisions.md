@@ -7,6 +7,7 @@ Entries below were recorded from the handoff on 2026-10-08; most were made in ea
 
 - **Tooling for the skeleton.** npm (not pnpm/yarn), Node 22. Linting with oxlint, the current Vite template default, instead of ESLint. Unit tests with Vitest + Testing Library. Tailwind v4 via its Vite plugin (no tailwind.config file). shadcn/ui "new-york" style, neutral colours until the design tokens land (backlog item 3).
 - **Service worker caches the app shell only.** Never API responses (Supabase, Shopify), so no child data sits in the browser cache.
+- **Schema v1 shape.** `profiles` is the "users" table, linked to Supabase `auth.users`. Children belong to parents through `child_guardians` (many-to-many), so co-parent access needs no later migration. Parents get read access plus a few narrow updates; every other write is server-only (service role). Parents cannot delete rows directly; deletion will be a server function. Migrations are plain SQL files in `supabase/migrations/`, tested against a local Postgres in CI.
 - **Repo starts with docs only.** No app code until the starter docs are reviewed.
 
 ## Recorded 2026-10-08 (from the handoff)

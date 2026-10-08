@@ -1,0 +1,24 @@
+name: Database
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/**'
+      - 'scripts/test-db.sh'
+      - '.github/workflows/db.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/**'
+      - 'scripts/test-db.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  rls:
+    name: Migrations and RLS tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/test-db.sh

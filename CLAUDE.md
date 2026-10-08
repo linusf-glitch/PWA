@@ -19,6 +19,7 @@ Node 22 (see .nvmrc), npm.
 - `npm run lint`: oxlint, warnings fail
 - `npm run typecheck`: tsc in strict mode
 - `npm test`: unit tests (Vitest + Testing Library)
+- `npm run test:db`: database migrations + row-level-security tests on a throwaway local Postgres (needs PostgreSQL 15+ installed)
 - e2e (Playwright): not set up yet, arrives with sign-in (backlog item 4)
 
 CI (.github/workflows/ci.yml) runs lint, typecheck, test and build on every PR.

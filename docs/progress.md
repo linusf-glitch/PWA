@@ -11,6 +11,7 @@ Update at the end of every session.
 - Subdomain app.sizeless-shoe.com created (2026-10-08), not yet pointed at Vercel.
 - 2026-10-08: repo starter docs added (PR #1).
 - 2026-10-08: backlog item 1, app skeleton: Vite + React + TS strict, Tailwind v4, shadcn/ui setup with Button, PWA manifest + service worker, Vitest, oxlint, GitHub Actions CI. Placeholder Home and placeholder icons. Vercel preview deploys come from Linus connecting the repo in Vercel (no config in the repo).
+- 2026-10-08: backlog item 2, schema v1 (SQL migration in supabase/migrations/), RLS on every table, 37 database checks incl. parent-isolation tests, CI job. Not applied to any real Supabase project: Linus creates the project (Frankfurt) and we apply it later.
 
 ## Next
 
