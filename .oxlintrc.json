@@ -16,6 +16,8 @@
   },
   "ignorePatterns": [
     "dist",
-    "dev-dist"
+    "dev-dist",
+    "playwright-report",
+    "test-results"
   ]
 }
