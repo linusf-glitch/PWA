@@ -2,6 +2,8 @@ import { createHmac, timingSafeEqual } from 'node:crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { z } from 'zod'
 
+import { hashToken, TOKEN_PATTERN } from './return-token.js'
+
 // Shopify "order paid" webhook (docs/integrations.md): verify the signature, validate the order,
 // create the parent's account from the order email, then record child, scan and shoe.
 // Orders that did not come from the app (no size/setting on a line item) are ignored.
@@ -26,6 +28,8 @@ const shoeSchema = z.object({
   measurement_id: z.string().min(1).max(200).optional(),
   kid_name: z.string().trim().min(1).max(60).default('Kind'),
   // Birth month, YYYY-MM (the app only asks for month and year).
+  // Random token for the return link after payment; only its hash is stored.
+  _return_token: z.string().regex(TOKEN_PATTERN).optional().catch(undefined),
   kid_birth: z.string().regex(/^(19|20)\d{2}-(0[1-9]|1[0-2])$/).optional().catch(undefined),
 })
 
@@ -40,6 +44,7 @@ export type PaidOrder = {
   /** First of the birth month, YYYY-MM-01. */
   birthDate?: string
   measurementId?: string
+  returnTokenHash?: string
   sizeEu: number
   setting: 'turquoise' | 'yellow' | 'red'
   model: string
@@ -78,6 +83,7 @@ export function parseOrder(rawBody: string): PaidOrder | null {
       kidName: shoe.data.kid_name,
       birthDate: shoe.data.kid_birth && `${shoe.data.kid_birth}-01`,
       measurementId: shoe.data.measurement_id,
+      returnTokenHash: shoe.data._return_token && hashToken(shoe.data._return_token),
       sizeEu: shoe.data.size,
       setting: shoe.data.setting,
       model: line.title,
@@ -132,6 +138,15 @@ export function supabaseStore(client: SupabaseClient): Store {
         p_model: o.model,
       })
       if (error) throw error
+      // Also on a repeated webhook, so a failed first attempt is repaired by Shopify's retry.
+      if (o.returnTokenHash) {
+        const { error: tokenError } = await client
+          .from('orders')
+          .update({ return_token_hash: o.returnTokenHash })
+          .eq('shopify_order_id', o.shopifyOrderId)
+          .is('return_token_hash', null)
+        if (tokenError) throw tokenError
+      }
       return data === true
     },
   }

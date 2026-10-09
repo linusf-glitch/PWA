@@ -79,6 +79,34 @@ describe('First visit (S02)', () => {
   })
 })
 
+describe('Return link (/return)', () => {
+  const token = 'abcdefghijklmnopqrstuvwxyz012345'
+  afterEach(() => vi.unstubAllGlobals())
+
+  it('shows the confirmation for a valid token without a login', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ kid_name: 'Emil', size: 27, setting: 'yellow', model: 'Sizeless Reef' }) })
+    vi.stubGlobal('fetch', fetchMock)
+    renderAt(`/return?t=${token}`)
+    expect(await screen.findByText('Sizeless Reef, EU 27')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Bestellung bestätigt' })).toBeInTheDocument()
+    expect(fetchMock).toHaveBeenCalledWith(`/api/order-return?t=${token}`)
+  })
+
+  it('says the link is invalid when the server does not know the token', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }))
+    renderAt(`/return?t=${token}`)
+    expect(await screen.findByText(/abgelaufen oder nicht gültig/)).toBeInTheDocument()
+  })
+
+  it('does not call the server without a token', async () => {
+    const fetchMock = vi.fn()
+    vi.stubGlobal('fetch', fetchMock)
+    renderAt('/return')
+    expect(await screen.findByText(/abgelaufen oder nicht gültig/)).toBeInTheDocument()
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+})
+
 describe('Result and setting screens', () => {
   it('sends a visit without a scan result back to the scan intro', async () => {
     renderAt('/scan/result')

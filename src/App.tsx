@@ -9,6 +9,7 @@ import HomePage from '@/pages/HomePage'
 import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
 import PaymentDonePage from '@/pages/PaymentDonePage'
 import PlaceholderPage from '@/pages/PlaceholderPage'
+import ReturnPage from '@/pages/ReturnPage'
 import ScanPage from '@/pages/ScanPage'
 import ScanResultPage from '@/pages/ScanResultPage'
 import SettingExplainPage from '@/pages/SettingExplainPage'
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/account" element={<AccountPage />} />
         </Route>
       </Route>
+      <Route path="/return" element={<ReturnPage />} />
       <Route element={<PublicOnly />}>
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-in/code" element={<CodeEntryPage />} />

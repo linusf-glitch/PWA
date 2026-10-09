@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { createHmac } from 'node:crypto'
+import { createHash, createHmac } from 'node:crypto'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -107,6 +107,38 @@ describe('handleOrderPaid', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
     const body = order(appProps)
     expect((await handleOrderPaid(body, sign(body), SECRET, store)).status).toBe(500)
+  })
+})
+
+describe('return token', () => {
+  const TOKEN = 'abcdefghijklmnopqrstuvwxyz012345'
+  const recorded = async (value: string) => {
+    const { store, recordOrder } = fakeStore()
+    const body = order([...appProps, { name: '_return_token', value }])
+    await handleOrderPaid(body, sign(body), SECRET, store)
+    return recordOrder.mock.calls[0]?.[1]
+  }
+
+  it('keeps only the hash of the token', async () => {
+    const o = await recorded(TOKEN)
+    expect(o?.returnTokenHash).toBe(createHash('sha256').update(TOKEN).digest('hex'))
+    expect(JSON.stringify(o)).not.toContain(TOKEN)
+  })
+
+  it('ignores a malformed token but still records the order', async () => {
+    const o = await recorded('short')
+    expect(o?.returnTokenHash).toBeUndefined()
+    expect(o?.sizeEu).toBe(27)
+  })
+
+  it('saves the hash on the order, also when the order was already recorded', async () => {
+    const eq = vi.fn().mockReturnValue({ is: vi.fn().mockResolvedValue({ error: null }) })
+    const update = vi.fn().mockReturnValue({ eq })
+    const client = { rpc: async () => ({ data: false, error: null }), from: () => ({ update }) } as unknown as SupabaseClient
+    const o = { returnTokenHash: 'h', shopifyOrderId: '1', kidName: 'Emil', sizeEu: 27, setting: 'yellow', model: 'M', totalMinor: 1, currency: 'EUR', paidAt: '2026-10-08T17:00:00Z' } as PaidOrder
+    expect(await supabaseStore(client).recordOrder('u', o)).toBe(false)
+    expect(update).toHaveBeenCalledWith({ return_token_hash: 'h' })
+    expect(eq).toHaveBeenCalledWith('shopify_order_id', '1')
   })
 })
 

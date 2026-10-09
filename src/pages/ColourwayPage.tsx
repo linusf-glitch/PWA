@@ -8,6 +8,7 @@ import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
 import { scanResultSchema } from '@/features/scan/events'
 import { useKids } from '@/features/kids/useKids'
+import { newReturnToken } from '@/features/shop/order'
 import { createCheckoutUrl, fetchColourways, type Colourway } from '@/features/shop/shop'
 import { readShopEnv } from '@/lib/env'
 
@@ -53,6 +54,7 @@ export default function ColourwayPage() {
           size: String(scan.size),
           setting: scan.setting ?? 'yellow',
           measurement_id: scan.measurement_id,
+          _return_token: newReturnToken(),
           ...(selected && { kid_name: selected.name, kid_birth: selected.birthDate.slice(0, 7) }),
         }),
       )
