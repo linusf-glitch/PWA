@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
+import { cn } from '@/lib/utils'
 
 import { checkConsent, CONSENT_TEXT_VERSION, type Channel, type ConsentErrors } from './consent'
 
@@ -72,9 +73,9 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
           <Button
             key={c}
             type="button"
-            variant={channel === c ? 'default' : 'outline'}
+            variant="outline"
             aria-pressed={channel === c}
-            className="flex-1"
+            className={cn('flex-1', channel === c && 'ring-2 ring-ink')}
             onClick={() => {
               setChannel(c)
               setContact(c === 'whatsapp' ? '+49 ' : '')
@@ -115,7 +116,7 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
           Das hat nicht geklappt. Bitte versuch es gleich noch einmal.
         </p>
       )}
-      <Button disabled={busy} onClick={submit}>
+      <Button variant="outline" disabled={busy} onClick={submit}>
         Bestätigen
       </Button>
     </div>
