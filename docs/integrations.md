@@ -15,7 +15,7 @@
 
 - Shopify stays the system for products, checkout, orders, customers.
 - The PWA puts the size in a cart through the Storefront API and redirects to checkout.
-- "Order paid" webhook (verify the HMAC signature) creates the account + child profile.
+- "Order paid" webhook (verify the HMAC signature) creates the account + child profile. Built in `api/shopify-order-paid.ts` (logic in `server/order-webhook.ts`): checks the signature, ignores orders without the app's cart attributes (size, setting, measurement_id, kid_name), creates the auth user from the order email (or finds it), then calls the database function `record_paid_order` (one transaction, idempotent on the Shopify order id). Server-only Vercel env variables: `SHOPIFY_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` (plus the existing `VITE_SUPABASE_URL`). Shopify side: Settings > Notifications > Webhooks > Create webhook, event "Order payment", format JSON, URL `https://<app domain>/api/shopify-order-paid`; the signing secret shown there is `SHOPIFY_WEBHOOK_SECRET`.
 - Sign-in: check the Shopify Customer Account API first; fallback is Supabase Auth email OTP.
 
 ## WhatsApp
