@@ -2,8 +2,8 @@ import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 
-// Toggle (not in the design system yet, styled like `Checkbox`: ink when on, no teal). The label text sits
-// left, the 48x28 track right; the whole row is the target (44px). A native checkbox with role="switch"
+// Toggle (design system "Checkbox, Radio, Switch": muted track, ink when on, white thumb, no teal). The label text sits
+// left, the 44x26 track right; the whole row is the target (44px). A native checkbox with role="switch"
 // stays behind it for forms and screen readers.
 function Switch({ className, children, ...props }: Omit<React.ComponentProps<'input'>, 'type' | 'role'>) {
   return (
@@ -12,9 +12,9 @@ function Switch({ className, children, ...props }: Omit<React.ComponentProps<'in
       <input type="checkbox" role="switch" className="peer sr-only" {...props} />
       <span
         aria-hidden="true"
-        className="relative mt-px h-7 w-12 shrink-0 rounded-full bg-card shadow-[inset_0_0_0_1.5px_var(--input)] transition-[background-color,box-shadow] duration-200 ease-out group-hover:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-checked:bg-ink group-has-checked:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-focus-visible:ring-4 group-has-focus-visible:ring-ring/45 group-has-disabled:bg-muted motion-reduce:transition-none"
+        className="relative mt-px h-[26px] w-11 shrink-0 rounded-full bg-muted shadow-[inset_0_0_0_1.5px_var(--input)] transition-[background-color,box-shadow] duration-200 ease-out group-hover:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-checked:bg-ink group-has-checked:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-focus-visible:ring-4 group-has-focus-visible:ring-ring/45 group-has-disabled:opacity-50 motion-reduce:transition-none"
       >
-        <span className="absolute top-1 left-1 size-5 rounded-full bg-ink transition-[translate,background-color] duration-200 ease-out group-has-checked:translate-x-5 group-has-checked:bg-primary-foreground motion-reduce:transition-none" />
+        <span className="absolute top-[3px] left-[3px] size-5 rounded-full bg-card shadow-[0_0_0_1px_rgb(43_34_32/0.18),0_1px_2px_rgb(43_34_32/0.18)] transition-[translate] duration-[180ms] ease-[cubic-bezier(.34,1.3,.64,1)] group-has-checked:translate-x-[18px] motion-reduce:transition-none" />
       </span>
     </label>
   )
