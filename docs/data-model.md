@@ -14,6 +14,7 @@ Database: Supabase Postgres, EU region (Frankfurt). Row-level security on every 
 | measurements | Foot scan results from Footprint | Footprint measurement id (unique), left/right length, recommended EU size, setting colour (turquoise/yellow/red), scan time. |
 | orders | Shopify orders from the "order paid" webhook | Belongs to a parent. Scan-based or skip-scan. Shopify order id is unique, so a repeated webhook cannot create a duplicate. `return_token_hash` (SHA-256 of the cart token) powers the public return link; the token itself is never stored. |
 | shoes | Shoes bought per child | Model, size, setting colour, purchase time. Links to the order and the scan it came from. |
+| consent_log | Proof of every consent and withdrawal | Append-only (rows never change). Who, which channel (WhatsApp/email), which purpose (fit checks / marketing), action (requested/confirmed/withdrawn), the contact, the consent text version and the source. Written by the server; a parent reads only their own rows. |
 | notification_preferences | WhatsApp / email consent | One row per parent. Fit checks and marketing are separate switches. The database stamps the consent time, the app cannot set it. |
 
 `setting_colour` is the shoe's adjustment setting, never the colourway.

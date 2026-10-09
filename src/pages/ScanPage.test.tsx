@@ -92,6 +92,54 @@ describe('Return link (/return)', () => {
     expect(fetchMock).toHaveBeenCalledWith(`/api/order-return?t=${token}`)
   })
 
+  async function openReturn(fetchMock: ReturnType<typeof vi.fn>) {
+    vi.stubGlobal('fetch', fetchMock)
+    renderAt(`/return?t=${token}`)
+    await screen.findByText('Sizeless Reef, EU 27')
+  }
+  const order = { ok: true, json: async () => ({ kid_name: 'Emil', size: 27, setting: 'yellow', model: 'Sizeless Reef' }) }
+
+  it('asks for WhatsApp consent: the number field opens on the same screen and the request is sent with the token', async () => {
+    const user = userEvent.setup()
+    const fetchMock = vi.fn().mockResolvedValueOnce(order).mockResolvedValueOnce({ ok: true, json: async () => ({}) })
+    await openReturn(fetchMock)
+    expect(screen.queryByLabelText('WhatsApp-Nummer')).not.toBeInTheDocument()
+    await user.click(screen.getByRole('checkbox', { name: /Fit-Checks/ }))
+    await user.click(screen.getByRole('button', { name: 'Per WhatsApp' }))
+    const number = screen.getByLabelText('WhatsApp-Nummer')
+    expect(number).toHaveValue('+49 ')
+    await user.type(number, '151 1234567')
+    await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
+    expect(await screen.findByText(/Antworte mit JA/)).toBeInTheDocument()
+    const [url, init] = fetchMock.mock.calls[1]
+    expect(url).toBe('/api/consent-request')
+    expect(JSON.parse(init.body)).toEqual({ token, channel: 'whatsapp', contact: '+491511234567', fit_checks: true, marketing: false, text_version: 's10-2026-10-09' })
+  })
+
+  it('opens an email field for email and rejects a bad address without calling the server', async () => {
+    const user = userEvent.setup()
+    const fetchMock = vi.fn().mockResolvedValueOnce(order)
+    await openReturn(fetchMock)
+    await user.click(screen.getByRole('checkbox', { name: /Tipps und Angebote/ }))
+    await user.click(screen.getByRole('button', { name: 'Per E-Mail' }))
+    await user.type(screen.getByLabelText('E-Mail-Adresse'), 'kein-mail')
+    await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
+    expect(screen.getByText('Bitte gib eine gültige E-Mail-Adresse an.')).toBeInTheDocument()
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+
+  it('shows an error and keeps the form when the server fails', async () => {
+    const user = userEvent.setup()
+    const fetchMock = vi.fn().mockResolvedValueOnce(order).mockResolvedValueOnce({ ok: false })
+    await openReturn(fetchMock)
+    await user.click(screen.getByRole('checkbox', { name: /Fit-Checks/ }))
+    await user.click(screen.getByRole('button', { name: 'Per E-Mail' }))
+    await user.type(screen.getByLabelText('E-Mail-Adresse'), 'mama@example.com')
+    await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
+    expect(await screen.findByText('Das hat nicht geklappt. Bitte versuch es gleich noch einmal.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Bestätigen' })).toBeEnabled()
+  })
+
   it('says the link is invalid when the server does not know the token', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }))
     renderAt(`/return?t=${token}`)
@@ -159,8 +207,12 @@ describe('Colourway and checkout hand-off', () => {
     await user.click(screen.getByRole('link', { name: 'Weiter' }))
     expect(await screen.findByText('Classic Schuh, Reef, EU 27')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Jetzt anmelden' })).toHaveAttribute('href', '/sign-in')
-    await user.click(screen.getByRole('button', { name: 'Per WhatsApp erinnern' }))
-    expect(screen.getByRole('status')).toHaveTextContent('späteren Schritt')
+    // Nothing is ticked by default; a request needs a box and a channel (demo: nothing is sent).
+    expect(screen.getByRole('checkbox', { name: /Fit-Checks/ })).not.toBeChecked()
+    expect(screen.getByRole('checkbox', { name: /Tipps und Angebote/ })).not.toBeChecked()
+    await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
+    expect(screen.getByText('Wähle mindestens eine Option.')).toBeInTheDocument()
+    expect(screen.getByText('Wähle WhatsApp oder E-Mail.')).toBeInTheDocument()
   })
 
   it('sends order screens without an order back to Home', async () => {

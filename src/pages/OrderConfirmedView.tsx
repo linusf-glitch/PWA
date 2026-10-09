@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Confetti, Headline } from '@/components/illustration/illustration'
@@ -7,12 +6,12 @@ import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip, type ShoeSetting } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
+import { ConsentForm } from '@/features/consent/ConsentForm'
 
 // S10 Order confirmed: the profile is saved, how to sign in, and the WhatsApp opt-in (only here,
 // after purchase). No back arrow: the order is done. Shown from the router state (demo) and from the
 // return link (ReturnPage).
-export function OrderConfirmedView({ name, shoeTitle, colourway, setting }: { name?: string; shoeTitle: string; colourway: string; setting: ShoeSetting }) {
-  const [note, setNote] = useState(false)
+export function OrderConfirmedView({ name, shoeTitle, colourway, setting, token }: { name?: string; shoeTitle: string; colourway: string; setting: ShoeSetting; token?: string }) {
   return (
     <>
       <PageHeader title="Bestellung bestätigt" back="none" />
@@ -40,22 +39,7 @@ export function OrderConfirmedView({ name, shoeTitle, colourway, setting }: { na
           <h3 id="wa" className="text-h3">
             Wissen, wann {name ? `${name}s` : 'die'} Füße wachsen
           </h3>
-          <p className="text-body-small">
-            Etwa 6 Wochen nach der Lieferung fragen wir per WhatsApp, ob der Schuh noch passt. Du antwortest mit einem Tipp.
-          </p>
-          <Button onClick={() => setNote(true)}>Per WhatsApp erinnern</Button>
-          <label className="flex min-h-11 items-start gap-2 text-body-small">
-            <input type="checkbox" className="mt-1 size-5" />
-            Ich möchte auch saisonale Tipps und Angebote per WhatsApp (freiwillig).
-          </label>
-          <Button variant="link" onClick={() => setNote(true)}>
-            Lieber per E-Mail erinnern
-          </Button>
-          {note && (
-            <p role="status" className="text-body-small">
-              Die WhatsApp- und E-Mail-Erinnerung wird in einem späteren Schritt verbunden.
-            </p>
-          )}
+          <ConsentForm name={name} token={token} />
         </section>
 
         <div className="flex flex-col gap-3">

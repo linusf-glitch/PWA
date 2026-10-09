@@ -43,5 +43,5 @@ export default function ReturnPage() {
         </main>
       </>
     )
-  return <OrderConfirmedView name={state.name} shoeTitle={`${state.model}, EU ${state.size}`} colourway={state.model} setting={state.setting} />
+  return <OrderConfirmedView name={state.name} shoeTitle={`${state.model}, EU ${state.size}`} colourway={state.model} setting={state.setting} token={token ?? undefined} />
 }

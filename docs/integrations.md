@@ -28,7 +28,7 @@
 - Start Meta business verification early (long lead time).
 - Template approval needed. W2/W5 likely "utility", but Meta decides the category.
 - Quick-reply buttons; template messages outside the 24-hour window; email fallback.
-- Consent: one opt-in for fit checks + rescan reminders, a separate optional one for offers. The parent sends the first message (click-to-WhatsApp, pre-filled code links the number to the account). Never import phone numbers from Shopify for WhatsApp.
+- Consent: one opt-in for fit checks + rescan reminders, a separate optional one for offers. The parent types their number (or email) on S10; we log a `requested` row and send one confirmation message; consent counts after the parent replies JA (or clicks the email link), logged as `confirmed`. Built so far: the S10 form, `POST /api/consent-request` (`api/consent-request.ts`, identified by the return-link token, validates Zod, writes `consent_log` rows). Not built: sending the confirmation (needs the WhatsApp provider and an email sender), the JA/link handling, STOP, Account > WhatsApp. Never import phone numbers from Shopify for WhatsApp.
 - Opt-out: STOP reply and the stop button on marketing templates turn messages off at once; confirm once, then send nothing more.
 - Message text: child's first name and a signed link only; no sizes or scan data (Meta processes the content).
 - Meta and the provider are processors: data processing agreement with the provider, Meta's WhatsApp Business terms, both named in the privacy policy.
