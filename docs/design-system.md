@@ -10,7 +10,7 @@ Check everything on a phone: `/styleguide.html` on any Vercel preview (or `npm r
 ## Tokens (src/index.css)
 
 - **Colours** use shadcn names, so `bg-primary`, `text-muted-foreground` etc. work everywhere. Extra: `primary-pressed`, `success` / `warning` / `info` / `destructive` with `-soft` backgrounds, `border-strong`, `scrim`, `chart-1..5`, `brand-*`.
-- **Look (design system v2, 2026-10-08):** warm and playful, because the brand is for kids. Cream page (#FFF7EE), lighter warm cards, warm ink text (#2B2220), apricot/lilac/sage accents (strong + soft tint) for card tints and later illustrations. Teal is an accent only: the single primary button, links and the focus ring. Pill buttons, 24px card radius, sticker-style size badge.
+- **Look (design system v2, 2026-10-08; 2.2 on 2026-10-09):** warm and playful, because the brand is for kids. White page and cards (2.2; was cream #FFF7EE), warm ink text (#2B2220), apricot/lilac/sage accents (strong + soft tint) for card tints and later illustrations. Teal is an accent only: the single primary button, links and the focus ring. Pill buttons, 24px card radius, sticker-style size badge.
 - **Primary = dark teal #087E8B** with white text (4.8:1). Light teal is never behind white text (2.5:1, fails); use it for lines, progress, tints.
 - **Setting colours** `setting-turquoise|yellow|red` (+ `-foreground`, `-soft`, `-text`): the shoe's adjustment setting (Türkis = smallest, Gelb, Rot = largest), never the colourway, never a status. Shades follow the setting scale Linus supplied (pastel yellow #F4D963 and red #E57289 sampled from it; turquoise changed to the design system's grey-blue #9ECACD on 2026-10-08, chosen by Linus). Only `SettingChip` may use them; a unit test fails if any other file does.
 - **Type:** Poppins 400/500/600, bundled with the app (`@fontsource/poppins`, latin subset), not loaded from Google (GDPR). Utilities: `text-display` 32/38, `text-h1` 28/34, `text-h2` 22/28, `text-h3` 18/24, `text-body` 16/24, `text-body-small` 14/20, `text-label` 14/20 medium, `text-button` 16/24 semibold, `text-caption` 12/16. Body never below 16px. Sentence case, never uppercase.
@@ -23,7 +23,7 @@ Check everything on a phone: `/styleguide.html` on any Vercel preview (or `npm r
 ## Components
 
 Built (backlog item 3):
-- `Button` (`src/components/ui/button.tsx`): `default` = teal primary, `outline` = secondary, `link`, `ghost`, `destructive`. Home's one dominant action: `size="lg" className="w-full"`. Disabled turns muted grey.
+- `Button` (`src/components/ui/button.tsx`): `default` = teal gel primary, `outline` = white gel secondary, `link`, `ghost`, `destructive`. Home's one dominant action: `size="lg" className="w-full"`. Disabled turns muted grey. Floating chrome (header bars, back button, kid switcher, sheet, sidebar) uses `.sz-glass-bar`, `.sz-glass` or `.sz-glass-strong` from src/index.css; content stays solid.
 - `SettingChip` (`src/components/sizeless/setting-chip.tsx`): Türkis ● / Gelb ▲ / Rot ■, `tone="solid|soft"`, `size="md|sm"`.
 - `SizeBadge`: "EU 27".
 - `NavCard`: tappable Home card with eyebrow, title, extra line and chevron; a link with `href`, otherwise a button.

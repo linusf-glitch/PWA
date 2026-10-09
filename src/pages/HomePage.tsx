@@ -19,7 +19,7 @@ export default function HomePage() {
   const { kids, selected, select } = useKids()
   return (
     <>
-      <header className="sticky top-0 z-10 flex min-h-14 items-center gap-2 border-b bg-background/95 px-4 pt-[env(safe-area-inset-top)] backdrop-blur lg:hidden">
+      <header className="sz-glass-bar sticky top-0 z-10 flex min-h-14 items-center gap-2 px-4 pt-[env(safe-area-inset-top)] lg:hidden">
         <h1 className="text-h3 tracking-wide text-foreground">
           <span aria-hidden="true">SIZELESS</span>
           <span className="sr-only">Sizeless</span>
