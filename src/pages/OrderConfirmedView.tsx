@@ -23,7 +23,7 @@ export function OrderConfirmedView({ name, shoeTitle, colourway, setting, token 
               Danke für deine Bestellung
             </Headline>
             <p className="text-body">
-              Bestellung bestätigt. {name ? `${name}s` : 'Das'} Profil ist gespeichert. Wenn du dich anmelden willst, schicken wir dir einen Code per E-Mail.
+              Bestellung bestätigt. {name ? `${name}s` : 'Das'} Profil ist gespeichert.
             </p>
           </div>
           <ShoeSticker colour={shoeColourFor(colourway)} size={110} tilt={-8} animate className="mt-2 shrink-0" />
@@ -42,14 +42,15 @@ export function OrderConfirmedView({ name, shoeTitle, colourway, setting, token 
           <ConsentForm name={name} token={token} />
         </section>
 
-        <div className="flex flex-col gap-3">
-          <Button asChild size="lg" className="w-full">
+        <section aria-labelledby="konto" className="flex flex-col gap-3 border-t border-border pt-6">
+          <h3 id="konto" className="text-h3">
+            Dein Konto
+          </h3>
+          <p className="text-body-small text-muted-foreground">Wir schicken dir einen Code per E-Mail, damit du dein Profil jederzeit öffnen kannst.</p>
+          <Button asChild variant="outline" size="lg" className="w-full ring-4 ring-ring/45">
             <Link to="/sign-in">Jetzt anmelden</Link>
           </Button>
-          <Button asChild variant="outline" className="w-full">
-            <Link to="/">Zu Home</Link>
-          </Button>
-        </div>
+        </section>
       </main>
     </>
   )
