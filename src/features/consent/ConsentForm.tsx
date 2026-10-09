@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
 
 import { checkConsent, CONSENT_TEXT_VERSION, type Channel, type ConsentErrors } from './consent'
 
-// S10 opt-in: two separate unticked boxes (fit checks / tips and offers; a pre-ticked box is no valid
+// S10 opt-in: two separate toggles, both off (fit checks / tips and offers; a pre-set toggle is no valid
 // consent), WhatsApp pre-selected with its number field open, email one tap away on the same screen. This only requests; consent counts once the parent confirms (JA reply or link).
 export function ConsentForm({ name, token }: { name?: string; token?: string }) {
   const [fitChecks, setFitChecks] = useState(false)
@@ -54,12 +54,12 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
     <div className="flex flex-col gap-3">
       <fieldset className="flex flex-col gap-2">
         <legend className="sr-only">Was möchtest du bekommen?</legend>
-        <Checkbox checked={fitChecks} onChange={(e) => setFitChecks(e.target.checked)}>
+        <Switch checked={fitChecks} onChange={(e) => setFitChecks(e.target.checked)}>
           <strong>Fit-Checks für {kid}:</strong> etwa alle 6 Wochen fragen wir, ob die Schuhe passen, und erinnern dich ans Neuscannen.
-        </Checkbox>
-        <Checkbox checked={marketing} onChange={(e) => setMarketing(e.target.checked)}>
+        </Switch>
+        <Switch checked={marketing} onChange={(e) => setMarketing(e.target.checked)}>
           <strong>Tipps und Angebote:</strong> saisonale Schuhe und gelegentliche Angebote, höchstens 2 pro Monat.
-        </Checkbox>
+        </Switch>
         {errors.choice && (
           <p role="alert" className="text-body-small text-destructive">
             {errors.choice}

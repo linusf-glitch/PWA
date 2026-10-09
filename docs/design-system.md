@@ -24,7 +24,8 @@ Check everything on a phone: `/styleguide.html` on any Vercel preview (or `npm r
 
 Built (backlog item 3):
 - `Button` (`src/components/ui/button.tsx`): `default` = flat teal primary (14px corners, 52px for `lg`), `outline` = white secondary with a hairline rim, `link`, `ghost`, `destructive`. Home's one dominant action: `size="lg" className="w-full"`. Disabled turns muted grey. Floating chrome (header bars, back button, kid switcher, sheet, sidebar) uses `.sz-glass-bar`, `.sz-glass` or `.sz-glass-strong` from src/index.css; content stays solid.
-- `Checkbox` (`src/components/ui/checkbox.tsx`): tick mark from the design system, 22px box, ink fill with a white tick that draws in 180ms; children are the label text. Radio and Switch are not built yet.
+- `Checkbox` (`src/components/ui/checkbox.tsx`): tick mark from the design system, 22px box, ink fill with a white tick that draws in 180ms; children are the label text. Radio is not built yet.
+- `Switch` (`src/components/ui/switch.tsx`): toggle for the two S10 consent choices (Linus, 2026-10-09). The design system has no toggle yet, so it is styled like `Checkbox` (ink track when on, no teal); proposal to add it there is open. Native checkbox with `role="switch"`, label left, track right.
 - `SettingChip` (`src/components/sizeless/setting-chip.tsx`): three joined steps like a podium, the active one tall and in full colour, then the word Klein / Mittel / Groß. `size="sm|md|lg"`, `prefix`, `animate` (the active step grows once).
 - `BentoTile` (`src/components/sizeless/bento-tile.tsx`): one cell of the Home bento grid (`grid grid-cols-2 gap-3 grid-flow-dense`), `span="wide"`, `tone`, `icon`, `eyebrow`, `title`, `value`, `art`, `href`.
 - `SizeBadge`: "EU 27".
