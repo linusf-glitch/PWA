@@ -23,7 +23,12 @@
 
 ### Return link after payment (the way back from Shopify)
 - The app puts a random token in the cart (line property `_return_token`; the underscore hides it from the customer in checkout). The order webhook stores only its SHA-256 hash in `orders.return_token_hash`. `GET /api/order-return?t=<token>` (`api/order-return.ts`) finds the order by that hash and returns only child first name, size, setting and product, for 30 days after payment. The app page is `/return?t=<token>` (public, no login; shows "Bestellung bestätigt").
-- Shopify side, order confirmation email (Settings > Notifications > Customer notifications > Order confirmation > Edit code), add a button where it suits: `{% for line in line_items %}{% if line.properties._return_token %}<a href="https://pwa-amber-three.vercel.app/return?t={{ line.properties._return_token }}">Zu Sizeless</a>{% endif %}{% endfor %}` (replace the host with app.sizeless-shoe.com once it points at Vercel). The thank-you page button needs a checkout UI extension (next step; Basic plan allows it).
+- Shopify side, order confirmation email (Settings > Notifications > Customer notifications > Order confirmation > Edit code), add a button where it suits: `{% for line in line_items %}{% if line.properties._return_token %}<a href="https://pwa-amber-three.vercel.app/return?t={{ line.properties._return_token }}">Zu Sizeless</a>{% endif %}{% endfor %}` (replace the host with app.sizeless-shoe.com once it points at Vercel). The thank-you page button is the checkout UI extension in `shopify/` (below).
+
+### Thank-you page button (Shopify app "Sizeless Rückkehr")
+- Code: `shopify/` (extension-only Shopify app, one checkout UI extension `return-button`, target `purchase.thank-you.block.render`). It reads `_return_token` from the order's cart line and shows "Zurück zu deinem Profil" linking to `/return?t=<token>`; without a token it links to `/sign-in`. The link host is the `APP` constant in `shopify/extensions/return-button/src/Checkout.jsx` (change to app.sizeless-shoe.com later).
+- Setup (Linus): create the app at dev.shopify.com (no embed, no scopes), then in `shopify/`: `npm install`, `npx shopify app config link` (pick the app), `npx shopify app deploy`, install the app on the store, then Settings > Checkout > Customize > Thank you page > add the block "Zurück zu Sizeless" > Save.
+- Not verified on a live store yet: that hidden `_` line properties are visible to the extension (if not, the button falls back to sign-in).
 
 ## WhatsApp
 

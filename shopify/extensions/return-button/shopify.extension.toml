@@ -1,0 +1,11 @@
+api_version = "2026-07"
+
+[[extensions]]
+name = "Zurück zu Sizeless"
+handle = "return-button"
+type = "ui_extension"
+uid = "sizeless-return-button"
+
+[[extensions.targeting]]
+module = "./src/Checkout.jsx"
+target = "purchase.thank-you.block.render"
