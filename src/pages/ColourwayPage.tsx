@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
 
-import { Illustration } from '@/components/illustration/illustration'
+import { shoeColourFor } from '@/components/illustration/shoe-colour'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
@@ -38,7 +39,7 @@ export default function ColourwayPage() {
       <PageHeader title="Farbe wählen" kidSwitcher back="step" />
       <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 lg:p-8">
         <section className="flex items-center gap-3 rounded-xl bg-card p-4">
-          <Illustration name="shoe" size={72} className="shrink-0" />
+          <ShoeSticker colour={shoeColourFor(chosen)} size={84} className="shrink-0" />
           <div className="flex flex-col gap-1">
             <p className="text-h3">Classic Schuh, EU {scan.size}</p>
             <SettingChip setting={scan.setting ?? 'yellow'} />
@@ -79,7 +80,9 @@ export default function ColourwayPage() {
                   {c.image ? (
                     <img src={c.image} alt="" className="aspect-square w-full rounded-lg object-cover" />
                   ) : (
-                    <Illustration name="shoe" size={72} />
+                    <span className="flex aspect-square w-full items-center justify-center">
+                      <ShoeSticker colour={shoeColourFor(c.name)} size={84} />
+                    </span>
                   )}
                   <span className="text-label">{c.name}</span>
                   {!c.available && <span className="text-caption">Ausverkauft</span>}

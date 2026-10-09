@@ -1,7 +1,8 @@
+import { Footprints } from 'lucide-react'
 import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
+import { Headline } from '@/components/illustration/illustration'
 import { PageHeader } from '@/components/shell/page-header'
 import { formatAge } from '@/features/kids/kids'
 import { useKids } from '@/features/kids/useKids'
@@ -38,7 +39,9 @@ export default function ScanPage() {
             </Headline>
             {selected && <p className="text-body-small text-muted-foreground">{formatAge(selected.birthDate)}</p>}
           </div>
-          <Illustration name="measure" size={96} draw className="shrink-0" />
+          <span aria-hidden="true" className="flex size-15 shrink-0 items-center justify-center rounded-[20px] bg-accent-apricot-soft">
+            <Footprints className="size-7" />
+          </span>
         </section>
         <section aria-labelledby="needs" className="flex flex-col gap-2">
           <h3 id="needs" className="text-h3">

@@ -1,4 +1,4 @@
-import { Illustration } from '@/components/illustration/illustration'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { useKids } from '@/features/kids/useKids'
 
@@ -9,7 +9,7 @@ export default function PlaceholderPage({ title }: { title: string }) {
     <>
       <PageHeader title={title} kidSwitcher />
       <main className="mx-auto flex max-w-2xl flex-col items-center gap-4 p-6 text-center text-muted-foreground">
-        <Illustration name="sprout" size={140} draw />
+        <ShoeSticker size={150} tilt={-8} animate className="my-4" />
         <p>Diese Seite{selected && ` für ${selected.name}`} kommt in einem späteren Schritt.</p>
       </main>
     </>

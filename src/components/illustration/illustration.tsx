@@ -1,82 +1,19 @@
 import type { CSSProperties } from 'react'
 
 import { cn } from '@/lib/utils'
-import { DRAWINGS, star, type DrawingName, type Group } from './drawings'
 
-// Decorative drawings (hidden from screen readers). Mount <SvgDefs /> once near the root: it holds the
-// hand-drawn wobble filters. See docs/design-system.md for where drawings go and the motion rules.
+// Small decoration only (design system 2.2 has no hand-drawn illustrations): the squiggle under a
+// headline and the confetti burst. The shoe itself is ShoeSticker (./shoe-sticker.tsx).
 
 const reduced = () => typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-export function SvgDefs() {
-  return (
-    <svg width="0" height="0" focusable="false" aria-hidden="true" className="absolute">
-      <defs>
-        <filter id="sz-wobble" x="-4%" y="-4%" width="108%" height="108%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="2" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-        <filter id="sz-wobble-s" x="-4%" y="-4%" width="108%" height="108%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="1" seed="5" result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-        <filter id="sz-boil" x="-4%" y="-4%" width="108%" height="108%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="2" result="n">
-            <animate attributeName="seed" values="2;7;12" dur="0.375s" calcMode="discrete" repeatCount="indefinite" />
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-    </svg>
-  )
-}
-
-type IllustrationProps = {
-  name: DrawingName
-  size?: number
-  /** Draw the lines in once (empty states, scan result). */
-  draw?: boolean
-  /** Re-draw the line at 8 fps. One hero drawing per screen at most. */
-  boil?: boolean
-  className?: string
-}
-
-export function Illustration({ name, size = 160, draw, boil, className }: IllustrationProps) {
-  let index = 0
-  const style = { '--sw': Math.max(2.5, (2.4 * 160) / size) } as CSSProperties
-  return (
-    <svg
-      className={cn('sz-ill', draw && 'sz-draw', className)}
-      width={size}
-      height={size}
-      viewBox="0 0 160 160"
-      aria-hidden="true"
-      focusable="false"
-      style={style}
-    >
-      <g filter={boil && !reduced() ? 'url(#sz-boil)' : 'url(#sz-wobble-s)'}>
-        {(DRAWINGS[name] as Group[]).map((g, gi) => (
-          <g key={gi} transform={g.t}>
-            <g className="sz-cut">
-              {g.fills.map(([, d], i) => (
-                <path key={i} d={d} />
-              ))}
-            </g>
-            <g className="sz-ill-fills">
-              {g.fills.map(([k, d], i) => (
-                <path key={i} className={`sz-fl-${k}`} d={d} />
-              ))}
-            </g>
-            {g.dashed?.map((d, i) => <path key={`s${i}`} className="sz-ln-dashed" d={d} />)}
-            {g.lines.map((d, i) => (
-              <path key={i} className="sz-ln" d={d} pathLength={1} style={{ '--i': index++ } as CSSProperties} />
-            ))}
-            {g.dots?.map(([x, y, r], i) => <circle key={`d${i}`} className="sz-dot" cx={x} cy={y} r={r} />)}
-          </g>
-        ))}
-      </g>
-    </svg>
-  )
+const star = (x: number, y: number, r: number) => {
+  const pts = Array.from({ length: 10 }, (_, i) => {
+    const a = -Math.PI / 2 + (i * Math.PI) / 5
+    const rr = (i % 2 ? r * 0.48 : r) * (1 + (((i * 37) % 7) - 3) * 0.012)
+    return `${(x + rr * Math.cos(a)).toFixed(1)} ${(y + rr * Math.sin(a)).toFixed(1)}`
+  })
+  return `M${pts.join(' L')} Z`
 }
 
 type Accent = 'apricot' | 'lilac' | 'sage' | 'ink'

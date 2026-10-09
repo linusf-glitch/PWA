@@ -2,29 +2,27 @@ import { render, screen } from '@testing-library/react'
 
 import { SettingChip, type ShoeSetting } from './setting-chip'
 
-const cases: Array<[ShoeSetting, string, string]> = [
-  ['turquoise', 'Türkis', 'circle'],
-  ['yellow', 'Gelb', 'triangle'],
-  ['red', 'Rot', 'square'],
+const cases: Array<[ShoeSetting, string, number]> = [
+  ['turquoise', 'Klein', 1],
+  ['yellow', 'Mittel', 2],
+  ['red', 'Groß', 3],
 ]
 
 describe('SettingChip', () => {
-  it.each(cases)('shows the %s setting with its word and shape, not colour alone', (setting, word, shape) => {
+  it.each(cases)('shows the %s setting as a word and the tall step, not colour alone', (setting, word, n) => {
     const { container } = render(<SettingChip setting={setting} />)
-    expect(screen.getByText(word)).toBeInTheDocument()
-    expect(container.querySelector(`svg[data-shape="${shape}"]`)).not.toBeNull()
-    expect(container.querySelector('[data-slot="setting-chip"]')).toHaveClass(`bg-setting-${setting}`)
+    const chip = container.querySelector('[data-slot="setting-chip"]')!
+    expect(chip).toHaveTextContent(`Einstellung ${word}, Stufe ${n} von 3`)
+    const steps = chip.querySelectorAll('[data-step]')
+    expect(steps).toHaveLength(3)
+    expect(chip.querySelectorAll('[data-on]')).toHaveLength(1)
+    expect(steps[n - 1]).toHaveAttribute('data-on')
+    expect(steps[n - 1]).toHaveClass(`bg-setting-${setting}`)
   })
 
-  it('reads as a setting for screen readers', () => {
-    render(<SettingChip setting="yellow" />)
-    expect(screen.getByText('Einstellung', { exact: false })).toHaveClass('sr-only')
-  })
-
-  it('uses the soft colours in dense lists', () => {
-    const { container } = render(<SettingChip setting="red" tone="soft" />)
-    const chip = container.querySelector('[data-slot="setting-chip"]')
-    expect(chip).toHaveClass('bg-setting-red-soft', 'text-setting-red-text')
-    expect(chip).not.toHaveClass('bg-setting-red')
+  it('takes a prefix and grows the active step once when animated', () => {
+    const { container } = render(<SettingChip setting="yellow" prefix="Einstellung" size="lg" animate />)
+    expect(screen.getByText('Einstellung Mittel')).toBeInTheDocument()
+    expect(container.querySelector('[data-on]')).toHaveClass('sz-rise')
   })
 })

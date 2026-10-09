@@ -1,13 +1,13 @@
-import { ChevronRight, Lock, UserRound } from 'lucide-react'
+import { CalendarDays, ChevronRight, Lock, TrendingUp, UserRound } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
-import type { DrawingName } from '@/components/illustration/drawings'
+import { Headline } from '@/components/illustration/illustration'
+import { shoeColourFor } from '@/components/illustration/shoe-colour'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { KidSwitcher } from '@/components/shell/kid-switcher'
-import { NavCard } from '@/components/sizeless/nav-card'
+import { BentoTile } from '@/components/sizeless/bento-tile'
 import { SettingChip } from '@/components/sizeless/setting-chip'
-import { SizeBadge } from '@/components/sizeless/size-badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { daysUntil, formatDate, homeState, type HomeState, type Kid } from '@/features/kids/kids'
@@ -20,9 +20,8 @@ export default function HomePage() {
   return (
     <>
       <header className="sz-glass-bar sticky top-0 z-10 flex min-h-14 items-center gap-2 px-4 pt-[env(safe-area-inset-top)] lg:hidden">
-        <h1 className="text-h3 tracking-wide text-foreground">
-          <span aria-hidden="true">SIZELESS</span>
-          <span className="sr-only">Sizeless</span>
+        <h1>
+          <img src="/sizeless-logo.png" alt="Sizeless" className="h-[26px] w-auto" />
         </h1>
         <KidSwitcher className="ml-auto" />
         <Link
@@ -78,14 +77,6 @@ const OTHER_KID_LINE: Record<HomeState, string> = {
   normal: '',
 }
 
-const HERO_DRAWING: Record<HomeState, DrawingName> = {
-  noShoes: 'footprints',
-  fitCheck: 'measure',
-  rescanDue: 'ruler',
-  season: 'sock',
-  normal: 'hand',
-}
-
 function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
   const copy = {
     noShoes: {
@@ -120,60 +111,54 @@ function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
   }[state]
 
   return (
-    <section data-state={state} className="flex flex-col gap-3 rounded-xl bg-accent p-5">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex flex-col gap-3">
-          <p className="text-caption font-semibold text-accent-foreground">{copy.eyebrow}</p>
-          {'title' in copy && <h2 className="text-h2">{copy.title}</h2>}
-          <p className="text-body">{copy.text}</p>
-        </div>
-        <Illustration name={HERO_DRAWING[state]} size={92} boil={state === 'normal'} className="-mt-1 -mr-1 shrink-0" />
-      </div>
-      <Button asChild size="lg" className="w-full">
+    <section data-state={state} className="flex flex-col gap-3 pt-2">
+      {'title' in copy && <p className="text-caption font-semibold text-muted-foreground">{copy.eyebrow}</p>}
+      <Headline as="h2" size="h2" animate>
+        {'title' in copy ? copy.title : copy.eyebrow}
+      </Headline>
+      <p className="text-body">{copy.text}</p>
+      <Button asChild size="lg" className="mt-2 w-full">
         <Link to="/scan">{copy.action}</Link>
       </Button>
     </section>
   )
 }
 
+// Bento overview (design system 2.2): one idea per tile. Apricot = shoe, sage = growth, lilac = calendar.
 function Overview({ kid }: { kid: Kid }) {
   return (
     <section aria-labelledby="overview" className="flex flex-col gap-3">
       <h2 id="overview" className="mt-2 text-caption text-muted-foreground">
         Übersicht für {kid.name}
       </h2>
-      <NavCard
-        href="/shoes"
-        eyebrow="Schuhe"
-        title={kid.shoe ? `${kid.shoe.model}-Schuh` : 'Noch keine Schuhe'}
-        tone="apricot"
-        media={<Illustration name="shoe" size={48} />}
-      >
-        {kid.shoe && (
-          <>
-            <SizeBadge size={kid.shoe.size} />
-            <SettingChip setting={kid.shoe.setting} size="sm" />
-          </>
-        )}
-      </NavCard>
-      <NavCard
-        href="/growth"
-        eyebrow="Wachstum"
-        title={kid.measurements === 1 ? '1 Messung' : `${kid.measurements} Messungen`}
-        tone="lilac"
-        media={<Illustration name="sprout" size={48} />}
-      />
-      {kid.nextFitCheck && (
-        <NavCard
-          href="/account"
-          eyebrow="Nächster Passform-Check"
-          title={`ca. ${formatDate(kid.nextFitCheck)}`}
-          tone="sage"
-          media={<Illustration name="tape" size={48} />}
+      <div className="grid grid-flow-dense grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+        <BentoTile
+          span="wide"
+          tone="apricot"
+          href="/shoes"
+          eyebrow="Aktueller Schuh"
+          title={kid.shoe ? `Größe ${kid.shoe.size}` : 'Noch keine Schuhe'}
+          art={<ShoeSticker colour={shoeColourFor(kid.shoe?.model)} size={136} tilt={-8} />}
+          className="min-h-[150px] pr-36"
         >
-          Wir fragen per WhatsApp
-        </NavCard>
-      )}
+          {kid.shoe && <SettingChip setting={kid.shoe.setting} className="mt-2" />}
+        </BentoTile>
+        <BentoTile
+          span={kid.nextFitCheck ? undefined : 'wide'}
+          tone="sage"
+          href="/growth"
+          icon={<TrendingUp />}
+          eyebrow="Wachstum"
+          value={kid.measurements}
+        >
+          <span className="text-body-small">{kid.measurements === 1 ? 'Messung' : 'Messungen'}</span>
+        </BentoTile>
+        {kid.nextFitCheck && (
+          <BentoTile tone="lilac" href="/account" icon={<CalendarDays />} eyebrow="Nächster Passform-Check" title={`ca. ${formatDate(kid.nextFitCheck)}`}>
+            <span className="mt-auto text-body-small text-muted-foreground">Wir fragen per WhatsApp</span>
+          </BentoTile>
+        )}
+      </div>
     </section>
   )
 }

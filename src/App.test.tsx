@@ -228,8 +228,8 @@ describe('Home states', () => {
   it('shows the normal rescan action with the shoe, growth and fit check', async () => {
     renderApp(signedIn())
     expect(await screen.findByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/scan')
-    expect(screen.getByRole('link', { name: /Classic-Schuh/ })).toHaveTextContent(/EU 26.*Türkis/)
-    expect(screen.getByRole('link', { name: /3 Messungen/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Aktueller Schuh/ })).toHaveTextContent(/Größe 26.*Klein/)
+    expect(screen.getByRole('link', { name: /Wachstum.*3.*Messungen/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Passform-Check/ })).toBeInTheDocument()
   })
 

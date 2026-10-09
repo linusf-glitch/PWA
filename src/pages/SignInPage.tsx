@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
+import { Headline } from '@/components/illustration/illustration'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -38,7 +39,11 @@ export default function SignInPage() {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-6 p-6">
       <div className="space-y-2">
-        <Illustration name="footprints" size={120} boil />
+        <span className="sz-sticker-row justify-start py-2">
+          <ShoeSticker colour="purple" size={96} tilt={-6} />
+          <ShoeSticker colour="blue" size={96} tilt={4} />
+          <ShoeSticker colour="green" size={96} tilt={-4} />
+        </span>
         <Headline animate>Anmelden</Headline>
         <p className="text-muted-foreground">Wir schicken dir einen 6-stelligen Code per E-Mail. Kein Passwort nötig.</p>
       </div>

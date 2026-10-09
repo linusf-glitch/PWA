@@ -1,6 +1,8 @@
 import { Link, Navigate, useLocation } from 'react-router'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
+import { Headline } from '@/components/illustration/illustration'
+import { shoeColourFor } from '@/components/illustration/shoe-colour'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { Button } from '@/components/ui/button'
 import { useKids } from '@/features/kids/useKids'
@@ -11,12 +13,13 @@ import { orderSchema } from '@/features/shop/order'
 export default function PaymentDonePage() {
   const { selected } = useKids()
   const state = useLocation().state
-  if (!orderSchema.safeParse(state).success) return <Navigate to="/" replace />
+  const order = orderSchema.safeParse(state)
+  if (!order.success) return <Navigate to="/" replace />
   return (
     <>
       <PageHeader title="Zahlung erledigt" back="none" />
       <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 p-4 text-center lg:p-8">
-        <Illustration name="stars" size={120} draw />
+        <ShoeSticker colour={shoeColourFor(order.data.colourway)} size={150} tilt={-8} animate />
         <Headline as="h2" size="h2" animate className="flex flex-col items-center">
           Danke für deine Bestellung
         </Headline>

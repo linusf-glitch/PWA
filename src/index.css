@@ -255,19 +255,13 @@
 }
 }
 
-/* Drawings and motion (design system v2: illustration.md, motion.md). Light CSS/SVG only. */
-.sz-ill { display: block; flex: none; overflow: visible; filter: drop-shadow(0 2px 2px rgb(43 34 32 / 0.2)); }
-/* Sticker die-cut: a white border around the filled shapes, behind the ink line. */
-.sz-cut path { fill: #fff; stroke: #fff; stroke-width: 11; stroke-linejoin: round; }
-.sz-ln, .sz-ln-dashed { fill: none; stroke: var(--ink); stroke-width: var(--sw, 3); stroke-linecap: round; stroke-linejoin: round; }
-.sz-ln-dashed { stroke-dasharray: 3 7; }
-.sz-dot { fill: var(--ink); }
-.sz-fl-a, .sz-fl-apricot { fill: var(--accent-apricot); }
-.sz-fl-l, .sz-fl-lilac { fill: var(--accent-lilac); }
-.sz-fl-s, .sz-fl-sage { fill: var(--accent-sage); }
-.sz-fl-y { fill: var(--brand-yellow); }
-.sz-fl-n { fill: var(--card); }
-.sz-fl-p { fill: var(--accent-apricot-soft); }
+/* Stickers, decoration and motion (design system 2.2: illustration.md, motion.md). Light CSS/SVG only. */
+.sz-sticker { display: block; flex: none; overflow: visible; transform: rotate(var(--tilt, -6deg)); filter: drop-shadow(0 2px 0 rgb(43 34 32 / 0.08)) drop-shadow(0 6px 10px rgb(43 34 32 / 0.12)); }
+.sz-sticker-row { display: flex; align-items: center; justify-content: center; }
+.sz-sticker-row .sz-sticker + .sz-sticker { margin-left: -18px; }
+.sz-fl-apricot { fill: var(--accent-apricot); }
+.sz-fl-lilac { fill: var(--accent-lilac); }
+.sz-fl-sage { fill: var(--accent-sage); }
 .sz-fl-ink { fill: var(--ink); }
 .sz-ln-apricot, .sz-ln-lilac, .sz-ln-sage, .sz-ln-ink { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .sz-ln-apricot { stroke: var(--accent-apricot); }
@@ -286,22 +280,21 @@
 
 @keyframes sz-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sz-draw { 0% { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-@keyframes sz-pop { 0% { transform: rotate(-1.5deg) scale(0.7); opacity: 0; } 60% { transform: rotate(-1.5deg) scale(1.1); opacity: 1; } 100% { transform: rotate(-1.5deg) scale(1); opacity: 1; } }
+@keyframes sz-pop { 0% { transform: rotate(var(--tilt, -1.5deg)) scale(0.7); opacity: 0; } 60% { transform: rotate(var(--tilt, -1.5deg)) scale(1.1); opacity: 1; } 100% { transform: rotate(var(--tilt, -1.5deg)) scale(1); opacity: 1; } }
+@keyframes sz-rise { 0% { transform: scaleY(0.5); } 60% { transform: scaleY(1.08); } 100% { transform: none; } }
 @keyframes sz-bounce-in { 0% { transform: translateY(10px) scale(0.8); opacity: 0; } 55% { transform: translateY(-5px) scale(1.06); opacity: 1; } 100% { transform: none; opacity: 1; } }
 @keyframes sz-burst { 0% { transform: translate(-50%, -50%) scale(0.3) rotate(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--r)); opacity: 0; } }
 @keyframes sz-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 
-.sz-draw .sz-ln { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) both; animation-delay: calc(var(--i, 0) * 70ms); }
-.sz-draw .sz-ill-fills { animation: sz-fade var(--duration-slow) var(--ease-soft) 350ms both; }
 .sz-squig-draw path { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) 150ms both; }
 .sz-pop { animation: sz-pop var(--duration-slow) var(--ease-spring) both; }
+.sz-rise { animation: sz-rise var(--duration-slow) var(--ease-spring) both; }
 .sz-bounce-in { animation: sz-bounce-in var(--duration-slow) var(--ease-spring) both; }
 .sz-skel { border-radius: var(--radius); background: linear-gradient(100deg, var(--muted) 30%, var(--card) 50%, var(--muted) 70%); background-size: 200% 100%; animation: sz-shimmer 1.6s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sz-draw .sz-ln, .sz-squig-draw path { animation: none; stroke-dasharray: none; opacity: 1; }
-  .sz-draw .sz-ill-fills { animation: sz-fade var(--duration-base) both; }
-  .sz-pop, .sz-bounce-in { animation: sz-fade var(--duration-base) both; }
+  .sz-squig-draw path { animation: none; stroke-dasharray: none; opacity: 1; }
+  .sz-pop, .sz-bounce-in, .sz-rise { animation: sz-fade var(--duration-base) both; }
   .sz-skel { animation: none; }
   .sz-confetti { display: none; }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Illustration } from '@/components/illustration/illustration'
+import { ScanLine } from 'lucide-react'
 import type { ShoeSetting } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
 
@@ -36,7 +36,9 @@ export function ScanWidget({ sample }: { sample: { size: number; setting: ShoeSe
   }
   return (
     <div role="group" aria-label="Test-Scan" className="flex flex-col items-center gap-3 rounded-lg border-[1.5px] border-dashed border-border-strong bg-card p-4 text-center">
-      <Illustration name="measure" size={96} />
+      <span aria-hidden="true" className="flex size-15 items-center justify-center rounded-[20px] bg-muted">
+        <ScanLine className="size-7" />
+      </span>
       <p role="status" className="text-body">
         Wir messen die Füße …
       </p>

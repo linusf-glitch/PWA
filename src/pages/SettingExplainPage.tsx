@@ -1,6 +1,6 @@
+import { SlidersHorizontal } from 'lucide-react'
 import { useNavigate } from 'react-router'
 
-import { Illustration } from '@/components/illustration/illustration'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip, type ShoeSetting } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
@@ -20,10 +20,12 @@ export default function SettingExplainPage() {
       <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 lg:p-8">
         <div className="flex items-start justify-between gap-3">
           <p className="text-body">
-            Ein Sizeless-Schuh wächst mit. Du stellst ihn auf eine von drei Einstellungen. Die Farbe zeigt dir, welche. Sie
-            hat nichts mit der Farbe des Schuhs zu tun.
+            Ein Sizeless-Schuh wächst mit. Du stellst ihn auf eine von drei Einstellungen: Klein, Mittel oder Groß. Die Farbe
+            der Stufe hilft dir beim Wiederfinden. Sie hat nichts mit der Farbe des Schuhs zu tun.
           </p>
-          <Illustration name="tape" size={88} className="shrink-0" />
+          <span aria-hidden="true" className="flex size-15 shrink-0 items-center justify-center rounded-[20px] bg-muted">
+            <SlidersHorizontal className="size-7" />
+          </span>
         </div>
         <ul className="flex flex-col gap-3">
           {ROWS.map(([setting, text]) => (

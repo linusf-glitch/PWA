@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router'
 import { z } from 'zod'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
+import { Headline } from '@/components/illustration/illustration'
+import { shoeColourFor } from '@/components/illustration/shoe-colour'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
@@ -43,7 +45,7 @@ export default function CheckoutHandoffPage() {
     <>
       <PageHeader title="Kasse" kidSwitcher back="step" />
       <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 p-4 text-center lg:p-8">
-        <Illustration name="shoe" size={110} draw />
+        <ShoeSticker colour={shoeColourFor(colourway)} size={150} tilt={-8} animate label={`Sizeless-Schuh ${colourway}`} />
         <Headline as="h2" size="h2" animate className="flex flex-col items-center">
           Weiter zur sicheren Kasse
         </Headline>

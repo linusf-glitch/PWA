@@ -1,9 +1,9 @@
-import { Footprints, TrendingUp } from 'lucide-react'
+import { CalendarDays, TrendingUp } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
-import { Confetti, Doodle, Headline, Illustration, SvgDefs } from '@/components/illustration/illustration'
-import { DRAWINGS, type DrawingName } from '@/components/illustration/drawings'
-
+import { Confetti, Doodle, Headline } from '@/components/illustration/illustration'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
+import { BentoTile } from '@/components/sizeless/bento-tile'
 import { NavCard } from '@/components/sizeless/nav-card'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { SizeBadge } from '@/components/sizeless/size-badge'
@@ -58,18 +58,18 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 function Drawings() {
   const [play, setPlay] = useState(0)
   return (
-    <Section title="Drawings and motion">
+    <Section title="Stickers and motion">
       <div className="relative flex flex-col gap-4 rounded-lg border border-border bg-card p-4">
         <Headline key={`h${play}`} as="h2" animate>
           Mias Füße sind gewachsen.
         </Headline>
-        <div className="grid grid-cols-4 gap-3">
-          {(Object.keys(DRAWINGS) as DrawingName[]).map((name) => (
-            <Illustration key={`${name}${play}`} name={name} size={72} draw />
-          ))}
+        <div className="sz-sticker-row py-2">
+          <ShoeSticker key={`p${play}`} colour="purple" size={110} tilt={-6} animate />
+          <ShoeSticker key={`b${play}`} colour="blue" size={110} tilt={4} animate />
+          <ShoeSticker key={`g${play}`} colour="green" size={110} tilt={-4} animate />
         </div>
+        <p className="text-caption text-muted-foreground">Galaxy = Lila, Reef = Blau, Sprout = Grün</p>
         <div className="flex items-center gap-3">
-          <Illustration key={`b${play}`} name="hand" size={120} boil />
           <Doodle name="star" color="lilac" />
           <Doodle name="squiggle" color="apricot" />
           <Doodle name="dots" color="sage" />
@@ -87,7 +87,6 @@ function Drawings() {
 export default function StyleGuide() {
   return (
     <main className="mx-auto flex max-w-[560px] flex-col gap-12 px-4 py-8">
-      <SvgDefs />
       <header className="flex flex-col gap-2">
         <p className="text-caption text-muted-foreground">Sizeless App · Design system</p>
         <h1 className="text-display">Styleguide</h1>
@@ -102,26 +101,16 @@ export default function StyleGuide() {
           <Button size="lg" className="w-full">
             Füße von Mia neu scannen
           </Button>
-          <div className="flex flex-col gap-3">
-            <NavCard tone="apricot" eyebrow="Aktueller Schuh" title="Sizeless Sneaker" onClick={() => {}}>
-              <SizeBadge size={27} />
-              <SettingChip setting="turquoise" size="sm" />
-            </NavCard>
-            <NavCard
-              tone="lilac"
-              eyebrow="Wachstum"
-              title="+4 mm seit März"
-              media={<TrendingUp aria-hidden="true" className="size-6 text-chart-2" />}
-              onClick={() => {}}
-            />
-            <NavCard
-              tone="sage"
-              eyebrow="Nächster Passform-Check"
-              title="In 3 Wochen"
-              media={<Footprints aria-hidden="true" className="size-6 text-ink" />}
-              onClick={() => {}}
-            />
+          <div className="grid grid-flow-dense grid-cols-2 gap-3">
+            <BentoTile span="wide" tone="apricot" eyebrow="Aktueller Schuh" title="Größe 27" art={<ShoeSticker size={136} tilt={-8} />} className="min-h-[150px] pr-36">
+              <SettingChip setting="turquoise" className="mt-2" />
+            </BentoTile>
+            <BentoTile tone="sage" icon={<TrendingUp />} eyebrow="Seit März" value="+4 mm" />
+            <BentoTile tone="lilac" icon={<CalendarDays />} eyebrow="Nächster Check in" value="3 Wochen" />
           </div>
+          <NavCard tone="apricot" eyebrow="Liste" title="Sneaker, Größe 26" media={<ShoeSticker size={56} />} onClick={() => {}}>
+            <SettingChip setting="yellow" size="sm" />
+          </NavCard>
         </div>
       </Section>
 
@@ -148,10 +137,11 @@ export default function StyleGuide() {
           <SettingChip setting="red" />
         </div>
         <div className="flex flex-wrap gap-3">
-          <SettingChip setting="turquoise" tone="soft" size="sm" />
-          <SettingChip setting="yellow" tone="soft" size="sm" />
-          <SettingChip setting="red" tone="soft" size="sm" />
+          <SettingChip setting="turquoise" size="sm" />
+          <SettingChip setting="yellow" size="sm" />
+          <SettingChip setting="red" size="sm" />
         </div>
+        <SettingChip setting="turquoise" size="lg" prefix="Einstellung" animate />
       </Section>
 
       <Section title="Size badge">
