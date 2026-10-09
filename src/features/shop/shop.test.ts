@@ -1,5 +1,6 @@
 import { afterEach, vi } from 'vitest'
 
+import { newReturnToken } from './order'
 import { createCheckoutUrl, demoColourways, fetchColourways } from './shop'
 
 const env = { VITE_SHOPIFY_STORE_DOMAIN: 'shop.myshopify.com', VITE_SHOPIFY_STOREFRONT_TOKEN: 'tok' }
@@ -56,5 +57,13 @@ describe('shop', () => {
     Object.entries(env).forEach(([k, v]) => vi.stubEnv(k, v))
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ data: { cartCreate: { cart: null, userErrors: [{ message: 'nope' }] } } }) }))
     await expect(createCheckoutUrl('gid://v', {})).rejects.toThrow()
+  })
+})
+
+describe('newReturnToken', () => {
+  it('is long, URL-safe and different every time', () => {
+    const a = newReturnToken()
+    expect(a).toMatch(/^[A-Za-z0-9_-]{20,100}$/)
+    expect(newReturnToken()).not.toBe(a)
   })
 })
