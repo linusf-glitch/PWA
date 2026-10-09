@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, cleanup, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { afterEach, beforeEach, vi } from 'vitest'
@@ -213,6 +213,19 @@ describe('Colourway and checkout hand-off', () => {
     await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
     expect(screen.getByText('Wähle mindestens eine Option.')).toBeInTheDocument()
     expect(screen.getByText('Wähle WhatsApp oder E-Mail.')).toBeInTheDocument()
+  })
+
+  it('shows the test payment button only when VITE_TEST_TOOLS is true', async () => {
+    const user = userEvent.setup()
+    renderWithScan('/checkout')
+    await screen.findByRole('button', { name: 'Weiter zur Kasse' })
+    expect(screen.queryByRole('button', { name: 'Test: Zahlung simulieren' })).not.toBeInTheDocument()
+    cleanup()
+    vi.stubEnv('VITE_TEST_TOOLS', 'true')
+    renderWithScan('/checkout')
+    await user.click(await screen.findByRole('button', { name: 'Test: Zahlung simulieren' }))
+    expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
+    vi.unstubAllEnvs()
   })
 
   it('sends order screens without an order back to Home', async () => {
