@@ -54,3 +54,4 @@ Update at the end of every session.
 8. Five-parent test.
 9. Restyle the sign-in screens (and their text input) with the new design tokens. Then backlog item 5 (shell).
 10. Supabase setup for sign-in (Linus): Authentication > Sessions (long session), email sender (custom SMTP), email template must show the 6-digit code ({{ .Token }}); create the first auth user from the Shopify order webhook (backlog item 7).
+- 2026-10-09: test button "Test: Zahlung simulieren" on Farbe wählen, visible only with `VITE_TEST_TOOLS=true` (Vercel Preview). See docs/integrations.md.
