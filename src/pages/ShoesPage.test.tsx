@@ -23,7 +23,7 @@ describe('Shoes (S16)', () => {
     expect(screen.getByRole('heading', { name: 'Zu klein geworden' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Größe 26/ })).toHaveAttribute('href', '/shoes/in-use')
     expect(screen.getByRole('link', { name: /Größe 25/ })).toHaveAttribute('href', '/shoes/outgrown-0')
-    expect(screen.getByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/scan')
+    expect(screen.getByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/rescan')
   })
 
   it('says so when the child has no shoes yet', async () => {

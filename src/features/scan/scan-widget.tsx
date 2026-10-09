@@ -11,7 +11,9 @@ const SCAN_MS = 2500
 // ponytail: stand-in for the Footprint widget until we get API/widget access. It "measures" for a
 // moment, then fires the same window event the real widget documents, so the pages around it do
 // not change when the real one arrives. Replace this component, keep events.ts.
-export function ScanWidget({ sample, onBeforeStart }: { sample: { size: number; setting: ShoeSetting }; onBeforeStart?: () => boolean }) {
+export type ScanSample = { size: number; setting: ShoeSetting } | { error: true }
+
+export function ScanWidget({ sample, onBeforeStart }: { sample: ScanSample; onBeforeStart?: () => boolean }) {
   const [scanning, setScanning] = useState(false)
 
   useEffect(() => {
@@ -20,7 +22,7 @@ export function ScanWidget({ sample, onBeforeStart }: { sample: { size: number; 
       setScanning(false)
       window.dispatchEvent(
         new CustomEvent(FPT_EVENTS.addToCart, {
-          detail: { measurement_id: `test-${crypto.randomUUID()}`, article_number: 'SZ-CLASSIC', ...sample },
+          detail: 'error' in sample ? { error_code: 'test-error' } : { measurement_id: `test-${crypto.randomUUID()}`, article_number: 'SZ-CLASSIC', ...sample },
         }),
       )
     }, SCAN_MS)

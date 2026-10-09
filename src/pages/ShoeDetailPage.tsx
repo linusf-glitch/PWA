@@ -54,7 +54,7 @@ export default function ShoeDetailPage() {
         </p>
         {!replaced && (
           <Button asChild size="lg" variant={outgrown ? 'default' : 'outline'} className="w-full">
-            <Link to="/scan">{outgrown ? 'Erst neu scannen' : `Füße von ${selected.name} neu scannen`}</Link>
+            <Link to={selected.shoe ? '/rescan' : '/scan'}>{outgrown ? 'Erst neu scannen' : `Füße von ${selected.name} neu scannen`}</Link>
           </Button>
         )}
       </main>

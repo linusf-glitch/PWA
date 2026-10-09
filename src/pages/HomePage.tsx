@@ -89,7 +89,7 @@ function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
       </Headline>
       <p className="text-body">{copy.text}</p>
       <Button asChild size="lg" className="mt-2 w-full">
-        <Link to="/scan">{copy.action}</Link>
+        <Link to={kid.shoe ? '/rescan' : '/scan'}>{copy.action}</Link>
       </Button>
     </section>
   )
