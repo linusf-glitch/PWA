@@ -5,7 +5,8 @@ Mobile-first PWA for Sizeless (adjustable kids' shoes). Foot scan by Footprint T
 ## Read first, every session
 1. docs/progress.md (what's done and next)
 2. docs/decisions.md (do not contradict)
-3. The doc for the task at hand (product-spec, data-model, integrations, security)
+3. docs/flow.md (the user flow from the wireframes: screen order, buttons, states)
+4. The doc for the task at hand (product-spec, data-model, integrations, security)
 
 ## Stack
 Vite + React + TypeScript (strict), Tailwind, shadcn/ui, vite-plugin-pwa. Supabase (EU region): Postgres, Auth (email OTP), RLS. Vercel hosting. Shopify Storefront API + webhooks. WhatsApp Business API via provider.
@@ -27,6 +28,7 @@ CI (.github/workflows/ci.yml) runs lint, typecheck, test, build and e2e on every
 shadcn/ui is configured in components.json; add components with `npx shadcn@latest add <name>`.
 
 ## Rules
+- Before building a screen, read its wireframe board and docs/flow.md. Never ask what the wireframes answer.
 - If the spec is unclear or two docs conflict, ASK. Do not guess.
 - One task per session. Plan first, wait for approval, then code.
 - Row-level security on every table. No secrets in client code. Verify webhook signatures. Validate all external input with Zod. No PII in logs.
