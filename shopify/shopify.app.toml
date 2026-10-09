@@ -1,0 +1,16 @@
+# Extension-only Shopify app "Sizeless Rückkehr": one button on the thank-you page that leads back to the PWA.
+# client_id is filled in by `shopify app config link` (it is not a secret); until then this file only describes the layout.
+name = "Sizeless Rückkehr"
+client_id = ""
+extension_directories = ["extensions/*"]
+application_url = "https://pwa-amber-three.vercel.app"
+embedded = false
+
+[access_scopes]
+scopes = ""
+
+[auth]
+redirect_urls = ["https://pwa-amber-three.vercel.app"]
+
+[webhooks]
+api_version = "2026-07"

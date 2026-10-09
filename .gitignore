@@ -34,3 +34,6 @@ dev-dist
 # Playwright
 playwright-report
 test-results
+
+# Shopify CLI
+shopify/.shopify
