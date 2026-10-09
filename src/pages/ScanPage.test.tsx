@@ -88,7 +88,7 @@ describe('Return link (/return)', () => {
     vi.stubGlobal('fetch', fetchMock)
     renderAt(`/return?t=${token}`)
     expect(await screen.findByText('Sizeless Reef, EU 27')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 2, name: 'Bestellung bestätigt' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Danke für deine Bestellung' })).toBeInTheDocument()
     expect(fetchMock).toHaveBeenCalledWith(`/api/order-return?t=${token}`)
   })
 
@@ -141,8 +141,9 @@ describe('Return link (/return)', () => {
   it('says the link is invalid when the server does not know the token', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }))
     renderAt(`/return?t=${token}`)
-    expect(await screen.findByText(/abgelaufen oder nicht gültig/)).toBeInTheDocument()
-  })
+    // The page retries for a few seconds first (the webhook may still be saving the order).
+    expect(await screen.findByText(/abgelaufen oder nicht gültig/, undefined, { timeout: 12000 })).toBeInTheDocument()
+  }, 15000)
 
   it('does not call the server without a token', async () => {
     const fetchMock = vi.fn()
@@ -196,13 +197,12 @@ describe('Colourway and checkout hand-off', () => {
     expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
   })
 
-  it('goes through payment done to the order confirmation (demo, no back arrow)', async () => {
+  it('goes straight from checkout to the order confirmation (demo, no back arrow)', async () => {
     const user = userEvent.setup()
     renderWithScan('/checkout')
     await user.click(await screen.findByRole('button', { name: 'Weiter zur Kasse' }))
     expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Zurück zu Home' })).not.toBeInTheDocument()
-    await user.click(screen.getByRole('link', { name: 'Weiter' }))
     expect(await screen.findByText('Classic Schuh, Reef, EU 27')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Jetzt anmelden' })).toHaveAttribute('href', '/sign-in')
     // Nothing is ticked by default; a request needs a box and a channel (demo: nothing is sent).

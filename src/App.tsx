@@ -8,7 +8,6 @@ import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
 import NextSizePage from '@/pages/NextSizePage'
 import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
-import PaymentDonePage from '@/pages/PaymentDonePage'
 import ReturnPage from '@/pages/ReturnPage'
 import RescanPage from '@/pages/RescanPage'
 import RescanResultPage from '@/pages/RescanResultPage'
@@ -62,7 +61,6 @@ export default function App() {
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />
           <Route path="/checkout" element={<ColourwayPage />} />
-          <Route path="/order/done" element={<PaymentDonePage />} />
           <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>

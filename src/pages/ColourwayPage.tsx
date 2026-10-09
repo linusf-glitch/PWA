@@ -43,7 +43,7 @@ export default function ColourwayPage() {
   const soldOut = list.filter((c) => !c.available)
 
   function simulatePayment() {
-    if (pick && scan) navigate('/order/done', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })
+    if (pick && scan) navigate('/order/confirmed', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })
   }
 
   async function goToCheckout() {

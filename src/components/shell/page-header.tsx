@@ -6,7 +6,7 @@ import { KidSwitcher } from './kid-switcher'
 // Top bar of every non-Home screen: back arrow to Home (iOS standalone has no browser back),
 // title, and the kid switcher on child-specific screens (the sidebar has it on desktop).
 // Inside the order flow `back="step"` goes to the previous step instead of Home; `back="none"`
-// hides the arrow (going back from "Zahlung erledigt" would reopen checkout).
+// hides the arrow (going back from the order screen would reopen checkout).
 export function PageHeader({ title, kidSwitcher = false, back = 'home' }: { title: string; kidSwitcher?: boolean; back?: 'home' | 'step' | 'none' }) {
   const navigate = useNavigate()
   const arrow = 'sz-glass flex size-11 shrink-0 items-center justify-center rounded-full outline-none active:scale-95 focus-visible:ring-4 focus-visible:ring-ring/45'
