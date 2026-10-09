@@ -1,12 +1,16 @@
 import type { ShoeSetting } from '@/components/sizeless/setting-chip'
 
+export type OutgrownShoe = { size: number; settings: ShoeSetting[]; colourway: string; since: string; until: string; fromScan: boolean }
+
 export type Kid = {
   id: string
   name: string
   /** ISO date, YYYY-MM-DD. */
   birthDate: string
   /** Shoe in use, if the child has one. */
-  shoe?: { model: string; size: number; setting: ShoeSetting }
+  shoe?: { model: string; size: number; setting: ShoeSetting; colourway?: string; since?: string; fromScan?: boolean }
+  /** Earlier pairs that no longer fit, newest first. */
+  outgrown?: OutgrownShoe[]
   measurements: number
   /** ISO date of the next WhatsApp fit check. */
   nextFitCheck?: string
@@ -23,7 +27,8 @@ export const MOCK_KIDS: Kid[] = [
     id: 'emil',
     name: 'Emil',
     birthDate: '2022-03-02',
-    shoe: { model: 'Classic', size: 26, setting: 'turquoise' },
+    shoe: { model: 'Classic', size: 26, setting: 'turquoise', colourway: 'Reef', since: '2026-06-12', fromScan: true },
+    outgrown: [{ size: 25, settings: ['turquoise', 'yellow'], colourway: 'Sprout', since: '2026-01-10', until: '2026-06-12', fromScan: true }],
     measurements: 3,
     nextFitCheck: '2027-01-23',
   },
@@ -140,4 +145,25 @@ export function checkKidDetails(name: string, month: number, year: number, today
   if (!birthYears(today).includes(year) || month < 1 || month > 12)
     errors.birth = 'Wähle Geburtsmonat und -jahr. Sizeless passt für Kinder von 2 bis 6 Jahren.'
   return errors
+}
+
+export type ShoeEntry = {
+  id: string
+  status: 'inUse' | 'outgrown'
+  size: number
+  /** Settings the pair went through, smallest first. The last one is the current one. */
+  settings: ShoeSetting[]
+  colourway: string
+  since: string
+  until?: string
+  fromScan: boolean
+}
+
+/** All pairs of a child for the Shoes screen: the one in use, then the outgrown ones. Ids are stable per list position. */
+export function shoesOf(kid: Kid): ShoeEntry[] {
+  const current: ShoeEntry[] = kid.shoe
+    ? [{ id: 'in-use', status: 'inUse', size: kid.shoe.size, settings: [kid.shoe.setting], colourway: kid.shoe.colourway ?? 'Reef', since: kid.shoe.since ?? '2026-01-01', fromScan: kid.shoe.fromScan ?? true }]
+    : []
+  const old: ShoeEntry[] = (kid.outgrown ?? []).map((o, i) => ({ id: `outgrown-${i}`, status: 'outgrown', ...o }))
+  return [...current, ...old]
 }

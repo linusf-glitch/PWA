@@ -13,6 +13,8 @@ import ReturnPage from '@/pages/ReturnPage'
 import ScanPage from '@/pages/ScanPage'
 import ScanResultPage from '@/pages/ScanResultPage'
 import SettingExplainPage from '@/pages/SettingExplainPage'
+import ShoeDetailPage from '@/pages/ShoeDetailPage'
+import ShoesPage from '@/pages/ShoesPage'
 import SignInPage from '@/pages/SignInPage'
 
 function RequireAuth() {
@@ -47,7 +49,8 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/growth" element={<PlaceholderPage title="Wachstum" />} />
-          <Route path="/shoes" element={<PlaceholderPage title="Schuhe" />} />
+          <Route path="/shoes" element={<ShoesPage />} />
+          <Route path="/shoes/:id" element={<ShoeDetailPage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />

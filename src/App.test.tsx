@@ -75,7 +75,7 @@ describe('app frame', () => {
   })
 
   it('selects the child named in a link', async () => {
-    renderApp(signedIn(), '/shoes?kid=lotta')
+    renderApp(signedIn(), '/growth?kid=lotta')
     expect(await screen.findByText(/für Lotta/)).toBeInTheDocument()
   })
 
