@@ -20,7 +20,7 @@ const buttonVariants = cva(
           'bg-card text-ink shadow-button-secondary active:bg-muted active:shadow-button-secondary-pressed disabled:bg-transparent disabled:shadow-[0_0_0_1px_var(--border-strong)]',
         secondary: 'bg-secondary text-secondary-foreground active:bg-accent',
         ghost: 'text-foreground active:bg-muted',
-        link: 'rounded-md text-primary underline decoration-wavy decoration-2 underline-offset-4 active:scale-100 active:text-primary-pressed disabled:bg-transparent',
+        link: 'rounded-md text-primary underline decoration-wavy decoration-2 underline-offset-4 [text-decoration-skip-ink:none] active:scale-100 active:text-primary-pressed disabled:bg-transparent',
       },
       size: {
         default: 'min-h-11 px-6',

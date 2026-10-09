@@ -279,6 +279,10 @@
 @keyframes sz-burst { 0% { transform: translate(-50%, -50%) scale(0.3) rotate(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--r)); opacity: 0; } }
 @keyframes sz-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 
+.sz-chart-ring { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.sz-chart-anim .sz-chart-line { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) both; }
+.sz-chart-anim .sz-chart-ring { animation: sz-pulse-ring var(--duration-draw) var(--ease-soft) var(--duration-draw) 1 both; }
+@keyframes sz-pulse-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3.2); opacity: 0; } }
 .sz-squig-draw path { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) 150ms both; }
 .sz-pop { animation: sz-pop var(--duration-slow) var(--ease-spring) both; }
 .sz-rise { animation: sz-rise var(--duration-slow) var(--ease-spring) both; }

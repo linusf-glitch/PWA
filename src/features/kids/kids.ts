@@ -46,8 +46,11 @@ export const MOCK_KIDS: Kid[] = [
     id: 'lotta',
     name: 'Lotta',
     birthDate: '2024-06-10',
-    measurements: 1,
-    history: [{ date: '2026-09-20', lengthMm: 138, widthMm: 55, size: 21 }],
+    measurements: 2,
+    history: [
+      { date: '2026-03-14', lengthMm: 121, widthMm: 50, size: 20 },
+      { date: '2026-09-20', lengthMm: 128, widthMm: 52, size: 21 },
+    ],
   },
 ]
 
@@ -84,6 +87,14 @@ export function mockKids(demo: DemoState | null, today = new Date()): Kid[] {
         birthDate: '2020-12-04',
         shoe: { model: 'Classic', size: 31, setting: 'yellow' },
         measurements: 6,
+        history: [
+          { date: '2024-10-08', lengthMm: 166, widthMm: 65, size: 26 },
+          { date: '2025-01-21', lengthMm: 171, widthMm: 67, size: 27 },
+          { date: '2025-04-30', lengthMm: 177, widthMm: 69, size: 28 },
+          { date: '2025-08-19', lengthMm: 183, widthMm: 71, size: 29 },
+          { date: '2026-01-13', lengthMm: 189, widthMm: 73, size: 30 },
+          { date: '2026-08-25', lengthMm: 195, widthMm: 75, size: 31, shoe: 'Classic' },
+        ],
         nextFitCheck: '2027-02-12',
         season: 'winter',
       },
@@ -92,7 +103,8 @@ export function mockKids(demo: DemoState | null, today = new Date()): Kid[] {
         name: 'Ida',
         birthDate: '2023-04-21',
         shoe: { model: 'Classic', size: 24, setting: 'turquoise' },
-        measurements: 2,
+        measurements: 1,
+        history: [{ date: '2026-08-03', lengthMm: 150, widthMm: 60, size: 24, shoe: 'Classic' }],
         nextFitCheck: '2027-03-05',
       },
     ]
@@ -126,6 +138,12 @@ export function daysUntil(isoDate: string, today = new Date()): number {
   const [y, m, d] = isoDate.split('-').map(Number)
   const start = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
   return Math.round((Date.UTC(y, m - 1, d) - start) / 86_400_000)
+}
+
+/** Short German month with a two-digit year, e.g. "Nov. 25". */
+export function formatMonth(isoDate: string): string {
+  const [y, m] = isoDate.split('-').map(Number)
+  return `${new Date(y, m - 1, 1).toLocaleDateString('de-DE', { month: 'short' }).replace('.', '')} ${String(y).slice(2)}`
 }
 
 /** German date, e.g. "23. Jan. 2027". */
