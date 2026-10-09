@@ -143,7 +143,7 @@ One primary action per state. Priority on the canvas (lowest number that applies
 **Layout (all states with a child):**
 - Header: logo, kid switcher → sheet, **Share** → S17, **Account** → S20.
 - Primary card (state-specific heading, line of text, primary button, optional secondary link).
-- Cross-child lines (several kids, `S12-Home-SeveralKids`): one line per other child with their due action ("Lotta: first scan due"); tapping switches the child.
+- ~~Cross-child lines~~ removed 2026-10-09 (Linus): Home shows no reminder lines for other children; they are reached through the kid switcher.
 - Card "Gift & invite": **Gift {Name}'s size** → S17, **Invite · 25 € each** → S17. (Not on No shoes.)
 - "{Name}'s overview" cards: Shoe (model · size · setting) "See shoe history" → S16; Growth ("n measurements") "See growth chart" → S15; Next fit check ("around {date}", "We'll ask on WhatsApp") → Account; **Add another child** → S13 add.
 
@@ -198,7 +198,7 @@ One primary action per state. Priority on the canvas (lowest number that applies
 - **Empty:** "No shoes yet for {Name}. When {Name} gets her first Sizeless pair, it shows up here with size, setting and dates."
 - Buttons: **Rescan {Name}** → S14, **Buy next size without scanning** → S08 Pick.
 - **Shoe detail, size still current:** back → Shoes. Product image, For {Name}, Size, Setting now, Colourway, In use since, Bought from a scan, "EU 27 is still {Name}'s size · Latest scan {date}, under 6 weeks old." **Buy again in this size** → S08; **Rescan {Name}** → S14; **Pick next size** → S08 Pick.
-- **Shoe detail, outgrown:** Size, Settings used (Turquoise → Yellow), Worn {dates}. "{Name} has outgrown EU 26. Rescan first so a new pair fits today." No "Buy again". **Rescan first** (primary) → S14; **Pick next size** → S08 Pick (small link once the last scan is over 8 weeks old).
+- **Shoe detail, outgrown:** Size, Settings used (Turquoise → Yellow), Worn {dates}. If a newer pair is in use (2026-10-09, Linus): "{Name} has outgrown EU 25 and now wears EU 26.", no buttons. Only without a newer pair: "{Name} has outgrown EU 26. Rescan first so a new pair fits today." No "Buy again". **Rescan first** (primary) → S14; **Pick next size** → S08 Pick (small link once the last scan is over 8 weeks old).
 
 ### S13 Kid profile (`S13-Kid-Add`, `S13-Kid-Edit`)
 - **Add:** from Home "Add another child", the kid switcher sheet, or the desktop side nav. Back → Home. Fields first name, birth month/year. "We only keep a first name, birth month and foot measurements. No photos, no surnames." **Save and start the scan** → S03 with the new child; **Save, scan later** → Home (no shoes state).

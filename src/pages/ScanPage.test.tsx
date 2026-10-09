@@ -99,13 +99,11 @@ describe('Return link (/return)', () => {
   }
   const order = { ok: true, json: async () => ({ kid_name: 'Emil', size: 27, setting: 'yellow', model: 'Sizeless Reef' }) }
 
-  it('asks for WhatsApp consent: the number field opens on the same screen and the request is sent with the token', async () => {
+  it('asks for WhatsApp consent: the number field is open on the same screen and the request is sent with the token', async () => {
     const user = userEvent.setup()
     const fetchMock = vi.fn().mockResolvedValueOnce(order).mockResolvedValueOnce({ ok: true, json: async () => ({}) })
     await openReturn(fetchMock)
-    expect(screen.queryByLabelText('WhatsApp-Nummer')).not.toBeInTheDocument()
     await user.click(screen.getByRole('checkbox', { name: /Fit-Checks/ }))
-    await user.click(screen.getByRole('button', { name: 'Per WhatsApp' }))
     const number = screen.getByLabelText('WhatsApp-Nummer')
     expect(number).toHaveValue('+49 ')
     await user.type(number, '151 1234567')
@@ -212,7 +210,9 @@ describe('Colourway and checkout hand-off', () => {
     expect(screen.getByRole('checkbox', { name: /Tipps und Angebote/ })).not.toBeChecked()
     await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
     expect(screen.getByText('Wähle mindestens eine Option.')).toBeInTheDocument()
-    expect(screen.getByText('Wähle WhatsApp oder E-Mail.')).toBeInTheDocument()
+    // WhatsApp is pre-selected, so its number field is already open.
+    expect(screen.getByRole('button', { name: 'Per WhatsApp' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByLabelText('WhatsApp-Nummer')).toBeInTheDocument()
   })
 
   it('shows the test payment button only when VITE_TEST_TOOLS is true', async () => {

@@ -40,12 +40,13 @@ describe('Shoes (S16)', () => {
     expect(screen.getByRole('link', { name: 'Füße von Emil neu scannen' })).toBeInTheDocument()
   })
 
-  it('shows an outgrown pair with its dates and asks to rescan first, no "buy again"', async () => {
+  it('shows an outgrown pair with its dates, no rescan prompt while a newer pair is in use, no "buy again"', async () => {
     const user = userEvent.setup()
     renderAt('/shoes')
     await user.click(await screen.findByRole('link', { name: /Größe 25/ }))
     expect(await screen.findByText(/Emil ist aus Größe 25 herausgewachsen/)).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Erst neu scannen' })).toHaveAttribute('href', '/scan')
+    expect(screen.getByText(/trägt jetzt Größe 26/)).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Erst neu scannen' })).not.toBeInTheDocument()
     expect(screen.queryByText(/noch einmal kaufen/i)).not.toBeInTheDocument()
   })
 

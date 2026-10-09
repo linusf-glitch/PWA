@@ -1,17 +1,18 @@
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 
 import { checkConsent, CONSENT_TEXT_VERSION, type Channel, type ConsentErrors } from './consent'
 
-// S10 opt-in: two separate unticked boxes (fit checks / tips and offers), then WhatsApp or email on
-// the same screen. This only requests; consent counts once the parent confirms (JA reply or link).
+// S10 opt-in: two separate unticked boxes (fit checks / tips and offers; a pre-ticked box is no valid
+// consent), WhatsApp pre-selected with its number field open, email one tap away on the same screen. This only requests; consent counts once the parent confirms (JA reply or link).
 export function ConsentForm({ name, token }: { name?: string; token?: string }) {
   const [fitChecks, setFitChecks] = useState(false)
   const [marketing, setMarketing] = useState(false)
-  const [channel, setChannel] = useState<Channel | null>(null)
-  const [contact, setContact] = useState('')
+  const [channel, setChannel] = useState<Channel | null>('whatsapp')
+  const [contact, setContact] = useState('+49 ')
   const [errors, setErrors] = useState<ConsentErrors>({})
   const [busy, setBusy] = useState(false)
   const [done, setDone] = useState<Channel | null>(null)
@@ -53,18 +54,12 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
     <div className="flex flex-col gap-3">
       <fieldset className="flex flex-col gap-2">
         <legend className="sr-only">Was möchtest du bekommen?</legend>
-        <label className="flex min-h-11 items-start gap-2 text-body-small">
-          <input type="checkbox" className="mt-1 size-5" checked={fitChecks} onChange={(e) => setFitChecks(e.target.checked)} />
-          <span>
-            <strong>Fit-Checks für {kid}:</strong> etwa alle 6 Wochen fragen wir, ob die Schuhe passen, und erinnern dich ans Neuscannen.
-          </span>
-        </label>
-        <label className="flex min-h-11 items-start gap-2 text-body-small">
-          <input type="checkbox" className="mt-1 size-5" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} />
-          <span>
-            <strong>Tipps und Angebote:</strong> saisonale Schuhe und gelegentliche Angebote, höchstens 2 pro Monat.
-          </span>
-        </label>
+        <Checkbox checked={fitChecks} onChange={(e) => setFitChecks(e.target.checked)}>
+          <strong>Fit-Checks für {kid}:</strong> etwa alle 6 Wochen fragen wir, ob die Schuhe passen, und erinnern dich ans Neuscannen.
+        </Checkbox>
+        <Checkbox checked={marketing} onChange={(e) => setMarketing(e.target.checked)}>
+          <strong>Tipps und Angebote:</strong> saisonale Schuhe und gelegentliche Angebote, höchstens 2 pro Monat.
+        </Checkbox>
         {errors.choice && (
           <p role="alert" className="text-body-small text-destructive">
             {errors.choice}
@@ -105,12 +100,12 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
             onChange={(e) => setContact(e.target.value)}
             aria-invalid={!!errors.contact}
           />
-          {errors.contact && (
-            <span role="alert" className="text-body-small text-destructive">
-              {errors.contact}
-            </span>
-          )}
         </label>
+      )}
+      {errors.contact && (
+        <p role="alert" className="text-body-small text-destructive">
+          {errors.contact}
+        </p>
       )}
       <p className="text-caption text-muted-foreground">
         Absender ist Sizeless. Du kannst jederzeit mit STOP antworten oder im Konto abmelden. Mehr in der Datenschutzerklärung.
