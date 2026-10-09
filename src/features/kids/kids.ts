@@ -30,15 +30,46 @@ export const MOCK_KIDS: Kid[] = [
   { id: 'lotta', name: 'Lotta', birthDate: '2024-06-10', measurements: 1 },
 ]
 
-export const DEMO_STATES = ['fitcheck', 'season', 'rescan', 'onekid', 'empty'] as const
+export const DEMO_STATES = ['fitcheck', 'season', 'rescan', 'onekid', 'empty', 'family'] as const
 export type DemoState = (typeof DEMO_STATES)[number]
 
 /** Sample children for a demo state (`?demo=fitcheck`). Changes the first child only. */
 export function mockKids(demo: DemoState | null, today = new Date()): Kid[] {
   if (demo === 'empty') return []
   if (demo === 'onekid') return MOCK_KIDS.slice(0, 1)
-  const [first, ...rest] = MOCK_KIDS
   const soon = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 12)
+  // A bigger family to play with: one child in each Home state, ages 2 to 6.
+  if (demo === 'family')
+    return [
+      { ...MOCK_KIDS[0], fitCheckTight: true },
+      MOCK_KIDS[1],
+      {
+        id: 'mia',
+        name: 'Mia',
+        birthDate: '2021-11-15',
+        shoe: { model: 'Classic', size: 29, setting: 'red' },
+        measurements: 4,
+        nextFitCheck: toIsoDate(soon),
+      },
+      {
+        id: 'paul',
+        name: 'Paul',
+        birthDate: '2020-12-04',
+        shoe: { model: 'Classic', size: 31, setting: 'yellow' },
+        measurements: 6,
+        nextFitCheck: '2027-02-12',
+        season: 'winter',
+      },
+      {
+        id: 'ida',
+        name: 'Ida',
+        birthDate: '2023-04-21',
+        shoe: { model: 'Classic', size: 24, setting: 'turquoise' },
+        measurements: 2,
+        nextFitCheck: '2027-03-05',
+      },
+    ]
+  const [first, ...rest] = MOCK_KIDS
   const patch: Partial<Kid> =
     demo === 'fitcheck'
       ? { fitCheckTight: true }
