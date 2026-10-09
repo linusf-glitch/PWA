@@ -7,12 +7,19 @@ import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
 import { scanResultSchema } from '@/features/scan/events'
-import { fetchColourways, type Colourway } from '@/features/shop/shop'
+import { useKids } from '@/features/kids/useKids'
+import { createCheckoutUrl, fetchColourways, type Colourway } from '@/features/shop/shop'
+import { readShopEnv } from '@/lib/env'
 
 // S08 Choose colourway: the size is fixed by the scan, the parent picks the colour. Sold out ones
-// are greyed. The scan result comes in the router state.
+// are greyed. The scan result comes in the router state. The button goes straight to Shopify's own
+// checkout (payment runs there); size, setting, measurement and child travel as cart attributes
+// for the order webhook.
 export default function ColourwayPage() {
   const navigate = useNavigate()
+  const { selected } = useKids()
+  const [busy, setBusy] = useState(false)
+  const [message, setMessage] = useState<string>()
   const parsed = scanResultSchema.safeParse(useLocation().state)
   const scan = parsed.success ? parsed.data : null
   const [colourways, setColourways] = useState<Colourway[] | 'error' | null>(null)
@@ -33,6 +40,27 @@ export default function ColourwayPage() {
   const list = Array.isArray(colourways) ? colourways : []
   const pick = list.find((c) => c.name === chosen)
   const soldOut = list.filter((c) => !c.available)
+
+  async function goToCheckout() {
+    if (!pick || !scan) return
+    // Demo (no Shopify keys): skip Shopify and show what comes after payment.
+    if (!readShopEnv()) return navigate('/order/done', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })
+    setBusy(true)
+    setMessage(undefined)
+    try {
+      window.location.assign(
+        await createCheckoutUrl(pick.variantId, {
+          size: String(scan.size),
+          setting: scan.setting ?? 'yellow',
+          measurement_id: scan.measurement_id,
+          ...(selected && { kid_name: selected.name, kid_birth: selected.birthDate.slice(0, 7) }),
+        }),
+      )
+    } catch {
+      setBusy(false)
+      setMessage('Die Kasse konnte nicht geöffnet werden. Bitte versuch es gleich noch einmal.')
+    }
+  }
 
   return (
     <>
@@ -101,12 +129,15 @@ export default function ColourwayPage() {
           </fieldset>
         )}
 
-        <Button
-          size="lg"
-          className="w-full"
-          disabled={!pick}
-          onClick={() => pick && navigate('/checkout/go', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })}
-        >
+        <p className="text-body-small text-muted-foreground">
+          Die Zahlung läuft bei Shopify. Größe und Einstellung{selected && ` von ${selected.name}`} reisen mit, du musst nichts noch einmal eingeben.
+        </p>
+        {message && (
+          <p role="status" className="text-body-small">
+            {message}
+          </p>
+        )}
+        <Button size="lg" className="w-full" disabled={!pick || busy} onClick={goToCheckout}>
           Weiter zur Kasse
         </Button>
       </main>

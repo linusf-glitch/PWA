@@ -115,15 +115,16 @@ describe('Colourway and checkout hand-off', () => {
     expect(await screen.findByRole('radio', { name: /Galaxy/ })).toBeDisabled()
     expect(screen.getByRole('radio', { name: /Reef/ })).toBeChecked()
     expect(screen.getByText(/Galaxy ist in Größe 27 gerade ausverkauft/)).toBeInTheDocument()
+    expect(screen.getByText(/Die Zahlung läuft bei Shopify/)).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: /Sprout/ }))
     await user.click(screen.getByRole('button', { name: 'Weiter zur Kasse' }))
-    expect(await screen.findByText('Classic Schuh, Sprout, EU 27')).toBeInTheDocument()
+    // Demo has no Shopify keys: straight on to what comes after payment (no separate Kasse screen).
+    expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
   })
 
   it('goes through payment done to the order confirmation (demo, no back arrow)', async () => {
     const user = userEvent.setup()
-    renderWithScan('/checkout/go', { variantId: 'v', colourway: 'Reef' })
-    expect(screen.getByRole('button', { name: 'Zurück' })).toBeInTheDocument()
+    renderWithScan('/checkout')
     await user.click(await screen.findByRole('button', { name: 'Weiter zur Kasse' }))
     expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Zurück zu Home' })).not.toBeInTheDocument()
