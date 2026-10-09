@@ -74,6 +74,11 @@ export default function ShoesPage() {
             </Link>
           </Button>
         )}
+        {selected?.shoe && (
+          <Button asChild variant="link" className="self-center">
+            <Link to="/next-size">Nächste Größe ohne Scan kaufen</Link>
+          </Button>
+        )}
       </main>
     </>
   )

@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-import { scanResultSchema } from '@/features/scan/events'
+import { orderBaseSchema } from '@/features/scan/events'
 
 // What the order screens need to know: the scan result plus the chosen colourway.
-export const orderSchema = scanResultSchema.extend({ colourway: z.string() })
+export const orderSchema = orderBaseSchema.extend({ colourway: z.string() })
 
 /** Random token for the return link after payment. The server keeps only its hash. */
 export function newReturnToken(): string {

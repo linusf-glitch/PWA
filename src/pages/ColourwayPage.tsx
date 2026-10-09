@@ -6,7 +6,7 @@ import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
-import { scanResultSchema } from '@/features/scan/events'
+import { orderBaseSchema } from '@/features/scan/events'
 import { useKids } from '@/features/kids/useKids'
 import { newReturnToken } from '@/features/shop/order'
 import { createCheckoutUrl, fetchColourways, type Colourway } from '@/features/shop/shop'
@@ -21,7 +21,7 @@ export default function ColourwayPage() {
   const { selected } = useKids()
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string>()
-  const parsed = scanResultSchema.safeParse(useLocation().state)
+  const parsed = orderBaseSchema.safeParse(useLocation().state)
   const scan = parsed.success ? parsed.data : null
   const [colourways, setColourways] = useState<Colourway[] | 'error' | null>(null)
   const [chosen, setChosen] = useState<string>()
@@ -43,7 +43,7 @@ export default function ColourwayPage() {
   const soldOut = list.filter((c) => !c.available)
 
   function simulatePayment() {
-    if (pick && scan) navigate('/order/done', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })
+    if (pick && scan) navigate('/order/confirmed', { state: { ...scan, variantId: pick.variantId, colourway: pick.name } })
   }
 
   async function goToCheckout() {
@@ -57,7 +57,7 @@ export default function ColourwayPage() {
         await createCheckoutUrl(pick.variantId, {
           size: String(scan.size),
           setting: scan.setting ?? 'yellow',
-          measurement_id: scan.measurement_id,
+          ...(scan.measurement_id && { measurement_id: scan.measurement_id }),
           _return_token: newReturnToken(),
           ...(selected && { kid_name: selected.name, kid_birth: selected.birthDate.slice(0, 7) }),
         }),

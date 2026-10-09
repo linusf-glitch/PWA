@@ -18,8 +18,15 @@ export default function ReturnPage() {
   useEffect(() => {
     if (!token) return
     let current = true
-    fetch(`/api/order-return?t=${encodeURIComponent(token)}`)
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('not found'))))
+    // The webhook may still be saving the order when the parent lands here: retry a few times.
+    const load = async (tries: number): Promise<unknown> => {
+      const res = await fetch(`/api/order-return?t=${encodeURIComponent(token)}`)
+      if (res.ok) return res.json()
+      if (tries <= 0 || !current) throw new Error('not found')
+      await new Promise((r) => setTimeout(r, 2000))
+      return load(tries - 1)
+    }
+    load(4)
       .then((json) => {
         const order = returnOrderSchema.parse(json)
         if (current) setState({ name: order.kid_name, size: order.size, model: order.model, setting: order.setting })

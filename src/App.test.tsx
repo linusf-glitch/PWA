@@ -246,7 +246,7 @@ describe('Home states', () => {
   ])('shows the %s state from a demo link', async (demo, action) => {
     renderApp(signedIn(), `/?demo=${demo}`)
     expect(await screen.findByRole('link', { name: action })).toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: /scannen|scan/i }).filter((l) => l.closest('section[data-state]'))).toHaveLength(1)
+    expect(screen.getAllByRole('link', { name: /scannen/i }).filter((l) => l.closest('section[data-state]'))).toHaveLength(1)
   })
 
   it('asks who to measure when there is no child yet', async () => {

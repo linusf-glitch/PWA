@@ -6,8 +6,8 @@ import AccountPage from '@/pages/AccountPage'
 import CodeEntryPage from '@/pages/CodeEntryPage'
 import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
+import NextSizePage from '@/pages/NextSizePage'
 import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
-import PaymentDonePage from '@/pages/PaymentDonePage'
 import ReturnPage from '@/pages/ReturnPage'
 import RescanPage from '@/pages/RescanPage'
 import RescanResultPage from '@/pages/RescanResultPage'
@@ -54,13 +54,13 @@ export default function App() {
           <Route path="/growth/compare" element={<GrowthPage />} />
           <Route path="/shoes" element={<ShoesPage />} />
           <Route path="/shoes/:id" element={<ShoeDetailPage />} />
+          <Route path="/next-size" element={<NextSizePage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/rescan" element={<RescanPage />} />
           <Route path="/rescan/result" element={<RescanResultPage />} />
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />
           <Route path="/checkout" element={<ColourwayPage />} />
-          <Route path="/order/done" element={<PaymentDonePage />} />
           <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Route>

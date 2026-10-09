@@ -19,7 +19,7 @@
 - Sign-in: check the Shopify Customer Account API first; fallback is Supabase Auth email OTP.
 
 ### Test button (no real orders needed)
-- With `VITE_TEST_TOOLS=true` "Farbe wählen" shows a second button "Test: Zahlung simulieren". It skips Shopify and goes straight to "Zahlung erledigt" and S10 with the scanned data. It writes nothing to Supabase (no order, no consent row). In Vercel: Settings > Environment Variables > add `VITE_TEST_TOOLS` = `true`, tick only **Preview**, never Production; redeploy the preview.
+- With `VITE_TEST_TOOLS=true` "Farbe wählen" shows a second button "Test: Zahlung simulieren". It skips Shopify and goes straight to S10 with the scanned data. It writes nothing to Supabase (no order, no consent row). In Vercel: Settings > Environment Variables > add `VITE_TEST_TOOLS` = `true`, tick only **Preview**, never Production; redeploy the preview.
 
 ### Return link after payment (the way back from Shopify)
 - The app puts a random token in the cart (line property `_return_token`; the underscore hides it from the customer in checkout). The order webhook stores only its SHA-256 hash in `orders.return_token_hash`. `GET /api/order-return?t=<token>` (`api/order-return.ts`) finds the order by that hash and returns only child first name, size, setting and product, for 30 days after payment. The app page is `/return?t=<token>` (public, no login; shows "Bestellung bestätigt").

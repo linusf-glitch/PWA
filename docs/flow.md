@@ -109,7 +109,7 @@ Side paths: S04 cancel/error → S03 or S05 error; S05 → S06 → back to S05.
 - Return URL → S09 return. The first order turns the lead into a customer and creates the profile/account.
 
 ### S09 Return (`S09-Return`)
-- **No back arrow** (would reopen checkout). "Payment done. We're setting up {Name}'s profile." Continues to S10 automatically (button **Continue**).
+- **Cut (Linus, 2026-10-09):** no interim "Payment done" screen. The return link opens S10 directly; S10 carries the thank-you line. The webhook saves the account in the background; the return page retries a few seconds if the order is not saved yet.
 
 ### S10 Order confirmed (`S10-Confirmation`, variant `S10-Confirmation-SkipScan`)
 - No back arrow. "Order confirmed. {Name}'s profile is saved. We'll email you a code whenever you need to sign in." Order number, "thanks, Anna".

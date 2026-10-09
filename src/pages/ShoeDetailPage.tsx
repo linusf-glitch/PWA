@@ -57,6 +57,11 @@ export default function ShoeDetailPage() {
             <Link to={selected.shoe ? '/rescan' : '/scan'}>{outgrown ? 'Erst neu scannen' : `Füße von ${selected.name} neu scannen`}</Link>
           </Button>
         )}
+        {!replaced && selected.shoe && (
+          <Button asChild variant="link" className="self-center">
+            <Link to="/next-size">Nächste Größe wählen</Link>
+          </Button>
+        )}
       </main>
     </>
   )

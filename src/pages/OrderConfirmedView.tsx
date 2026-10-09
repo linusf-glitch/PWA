@@ -20,10 +20,10 @@ export function OrderConfirmedView({ name, shoeTitle, colourway, setting, token 
         <section className="flex items-start justify-between gap-3">
           <div className="flex flex-col gap-2">
             <Headline as="h2" size="h2" animate>
-              Bestellung bestätigt
+              Danke für deine Bestellung
             </Headline>
             <p className="text-body">
-              {name ? `${name}s` : 'Das'} Profil ist gespeichert. Wenn du dich anmelden willst, schicken wir dir einen Code per E-Mail.
+              Bestellung bestätigt. {name ? `${name}s` : 'Das'} Profil ist gespeichert. Wenn du dich anmelden willst, schicken wir dir einen Code per E-Mail.
             </p>
           </div>
           <ShoeSticker colour={shoeColourFor(colourway)} size={110} tilt={-8} animate className="mt-2 shrink-0" />
