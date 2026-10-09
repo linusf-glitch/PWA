@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
-import { afterEach, vi } from 'vitest'
+import { afterEach, beforeEach, vi } from 'vitest'
 
 import App from '@/App'
 import { AuthProvider } from '@/features/auth/AuthProvider'
@@ -49,6 +49,33 @@ describe('Scan intro', () => {
     expect(await screen.findByRole('link', { name: 'Größe 27 kaufen' })).toHaveAttribute('href', '/checkout')
     expect(screen.getByText('Mittel')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Noch einmal scannen' })).toHaveAttribute('href', '/scan')
+  })
+})
+
+describe('First visit (S02)', () => {
+  beforeEach(() => localStorage.clear())
+
+  it('asks who is measured and only starts the scan with a name, month and year', async () => {
+    const user = userEvent.setup()
+    renderAt('/scan?demo=empty')
+    expect(await screen.findByRole('heading', { name: 'Wer wird gemessen?' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Scan starten' }))
+    expect(screen.getByText('Bitte gib einen Vornamen an.')).toBeInTheDocument()
+    expect(screen.getByText(/Kinder von 2 bis 6 Jahren/)).toBeInTheDocument()
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Vorname'), 'Nele')
+    await user.selectOptions(screen.getByLabelText('Geburtsmonat'), 'März')
+    await user.selectOptions(screen.getByLabelText('Geburtsjahr'), String(new Date().getFullYear() - 4))
+    await user.click(screen.getByRole('button', { name: 'Scan starten' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Wir messen')
+    expect(await screen.findByRole('heading', { name: /Füße von Nele messen/ })).toBeInTheDocument()
+  })
+
+  it('skips the form for a known child', async () => {
+    renderAt('/scan')
+    expect(await screen.findByRole('heading', { name: /Füße von Emil messen/ })).toBeInTheDocument()
+    expect(screen.queryByLabelText('Vorname')).not.toBeInTheDocument()
   })
 })
 

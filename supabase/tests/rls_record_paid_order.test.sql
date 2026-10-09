@@ -31,5 +31,19 @@ select tests.check(
   public.record_paid_order('eeeeeeee-0000-0000-0000-000000000000', 'ord-3', '#1003', 9999, 'EUR', now(), 'Emil', null, 28, null, 'Sizeless Sprout'),
   'order without a scan recorded');
 select tests.check((select purchase_type from public.orders where shopify_order_id = 'ord-3') = 'skip_scan', 'purchase type is skip_scan');
+
+-- Birth date: set for a new child, filled in once for a known child without one, never overwritten.
+select tests.check(
+  public.record_paid_order('eeeeeeee-0000-0000-0000-000000000000', 'ord-4', '#1004', 9999, 'EUR', now(), 'Lotta', null, 25, null, 'Sizeless Reef', date '2022-03-01'),
+  'order with a birth date recorded');
+select tests.check((select c.birth_date from public.children c where c.name = 'Lotta') = date '2022-03-01', 'new child gets the birth date');
+select tests.check(
+  public.record_paid_order('eeeeeeee-0000-0000-0000-000000000000', 'ord-5', '#1005', 9999, 'EUR', now(), 'Emil', null, 28, null, 'Sizeless Reef', date '2021-05-01'),
+  'later order recorded');
+select tests.check((select c.birth_date from public.children c where c.name = 'Emil') = date '2021-05-01', 'known child without a birth date gets it');
+select tests.check(
+  public.record_paid_order('eeeeeeee-0000-0000-0000-000000000000', 'ord-6', '#1006', 9999, 'EUR', now(), 'Emil', null, 28, null, 'Sizeless Reef', date '2020-01-01'),
+  'third order recorded');
+select tests.check((select c.birth_date from public.children c where c.name = 'Emil') = date '2021-05-01', 'an existing birth date is not overwritten');
 reset role;
 \echo 'record_paid_order tests passed.'

@@ -11,7 +11,7 @@ const SCAN_MS = 2500
 // ponytail: stand-in for the Footprint widget until we get API/widget access. It "measures" for a
 // moment, then fires the same window event the real widget documents, so the pages around it do
 // not change when the real one arrives. Replace this component, keep events.ts.
-export function ScanWidget({ sample }: { sample: { size: number; setting: ShoeSetting } }) {
+export function ScanWidget({ sample, onBeforeStart }: { sample: { size: number; setting: ShoeSetting }; onBeforeStart?: () => boolean }) {
   const [scanning, setScanning] = useState(false)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function ScanWidget({ sample }: { sample: { size: number; setting: ShoeSe
 
   if (!scanning) {
     return (
-      <Button size="lg" className="w-full" onClick={() => setScanning(true)}>
+      <Button size="lg" className="w-full" onClick={() => (onBeforeStart?.() ?? true) && setScanning(true)}>
         Scan starten
       </Button>
     )

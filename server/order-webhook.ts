@@ -25,6 +25,8 @@ const shoeSchema = z.object({
   setting: z.enum(['turquoise', 'yellow', 'red']),
   measurement_id: z.string().min(1).max(200).optional(),
   kid_name: z.string().trim().min(1).max(60).default('Kind'),
+  // Birth month, YYYY-MM (the app only asks for month and year).
+  kid_birth: z.string().regex(/^(19|20)\d{2}-(0[1-9]|1[0-2])$/).optional().catch(undefined),
 })
 
 export type PaidOrder = {
@@ -35,6 +37,8 @@ export type PaidOrder = {
   currency: string
   paidAt: string
   kidName: string
+  /** First of the birth month, YYYY-MM-01. */
+  birthDate?: string
   measurementId?: string
   sizeEu: number
   setting: 'turquoise' | 'yellow' | 'red'
@@ -72,6 +76,7 @@ export function parseOrder(rawBody: string): PaidOrder | null {
       currency: order.currency,
       paidAt: order.processed_at ?? order.created_at,
       kidName: shoe.data.kid_name,
+      birthDate: shoe.data.kid_birth && `${shoe.data.kid_birth}-01`,
       measurementId: shoe.data.measurement_id,
       sizeEu: shoe.data.size,
       setting: shoe.data.setting,
@@ -120,6 +125,7 @@ export function supabaseStore(client: SupabaseClient): Store {
         p_currency: o.currency,
         p_paid_at: o.paidAt,
         p_kid_name: o.kidName,
+        p_birth_date: o.birthDate ?? null,
         p_footprint_measurement_id: o.measurementId ?? null,
         p_size_eu: o.sizeEu,
         p_setting: o.setting,

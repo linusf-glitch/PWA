@@ -120,3 +120,24 @@ export function formatAge(birthDate: string, today = new Date()): string {
   const years = Math.floor(months / 12)
   return years > 0 ? `${years} J. ${months % 12} M.` : `${months} M.`
 }
+
+/** Birth years the first-visit form offers: Sizeless fits ages 2 to 6. */
+export function birthYears(today = new Date()): number[] {
+  return Array.from({ length: 5 }, (_, i) => today.getFullYear() - 2 - i)
+}
+
+/** The first of the month: we only keep birth month and year. */
+export function birthDateFor(month: number, year: number): string {
+  return `${year}-${String(month).padStart(2, '0')}-01`
+}
+
+export type KidDetailErrors = { name?: string; birth?: string }
+
+/** Checks the first-visit form (S02). Errors are the wireframe's German texts. */
+export function checkKidDetails(name: string, month: number, year: number, today = new Date()): KidDetailErrors {
+  const errors: KidDetailErrors = {}
+  if (!name.trim()) errors.name = 'Bitte gib einen Vornamen an.'
+  if (!birthYears(today).includes(year) || month < 1 || month > 12)
+    errors.birth = 'Wähle Geburtsmonat und -jahr. Sizeless passt für Kinder von 2 bis 6 Jahren.'
+  return errors
+}
