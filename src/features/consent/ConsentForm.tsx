@@ -116,7 +116,7 @@ export function ConsentForm({ name, token }: { name?: string; token?: string }) 
           Das hat nicht geklappt. Bitte versuch es gleich noch einmal.
         </p>
       )}
-      <Button variant="outline" disabled={busy} onClick={submit}>
+      <Button disabled={busy} onClick={submit}>
         Bestätigen
       </Button>
     </div>
