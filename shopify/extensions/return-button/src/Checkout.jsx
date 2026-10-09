@@ -17,12 +17,13 @@ function Extension() {
     .find((a) => a.key === '_return_token')?.value
   const href = token ? `${APP}/return?t=${encodeURIComponent(token)}` : `${APP}/sign-in`
   return (
-    <s-stack gap="base">
-      <s-heading>Weiter in der Sizeless App</s-heading>
-      <s-text>Dein Profil ist gleich bereit.</s-text>
-      <s-button variant="primary" inlineSize="fill" href={href}>
-        Zurück zu deinem Profil
-      </s-button>
-    </s-stack>
+    <s-banner tone="success" heading="Weiter in der Sizeless App">
+      <s-stack gap="base">
+        <s-text>Dein Profil ist gleich bereit. Tippe hier, um zurückzugehen:</s-text>
+        <s-button variant="primary" inlineSize="fill" href={href}>
+          Zurück zu deinem Profil
+        </s-button>
+      </s-stack>
+    </s-banner>
   )
 }
