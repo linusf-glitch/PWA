@@ -212,10 +212,10 @@ describe('Code entry screen', () => {
     await goToCodeScreen(user)
     const resend = screen.getByRole('button', { name: /Neuen Code senden/ })
     expect(resend).toBeDisabled()
-    act(() => {
-      vi.advanceTimersByTime(61_000)
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(61_000)
     })
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Neuen Code senden' })).toBeEnabled())
+    expect(screen.getByRole('button', { name: 'Neuen Code senden' })).toBeEnabled()
     await user.click(screen.getByRole('button', { name: 'Neuen Code senden' }))
     expect(await screen.findByRole('status')).toHaveTextContent('neuer Code')
     expect(auth.signInWithOtp).toHaveBeenCalledTimes(2)
