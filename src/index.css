@@ -178,11 +178,11 @@
   --shadow-card: 0 2px 0 rgb(120 80 50 / 0.08), 0 8px 20px rgb(120 80 50 / 0.08);
   --shadow-lift: 0 3px 0 rgb(120 80 50 / 0.1), 0 14px 28px rgb(120 80 50 / 0.14);
   --shadow-sheet: 0 -6px 28px rgb(43 34 32 / 0.14);
-  /* Gel buttons (like the macOS window buttons): bright inner top edge, sink in when pressed. No rim (Linus, 2026-10-09). */
-  --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -2px 3px rgb(0 0 0 / 0.14), 0 2px 6px rgb(8 126 139 / 0.3);
-  --shadow-button-pressed: inset 0 2px 5px rgb(0 0 0 / 0.28);
-  --shadow-button-secondary: inset 0 1px 0 #ffffff, 0 1px 2px rgb(43 34 32 / 0.1), 0 4px 10px rgb(43 34 32 / 0.06);
-  --shadow-button-secondary-pressed: inset 0 2px 4px rgb(43 34 32 / 0.18);
+  /* Flat buttons (design system, 2026-10-09): a barely visible light top edge, a darker rim of the same hue, no gloss. */
+  --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 0 0 1px #06666f, 0 1px 2px rgb(6 95 105 / 0.25);
+  --shadow-button-pressed: inset 0 1px 3px rgb(0 0 0 / 0.3), 0 0 0 1px #06666f;
+  --shadow-button-secondary: 0 0 0 1px rgb(43 34 32 / 0.16), 0 1px 1px rgb(43 34 32 / 0.06);
+  --shadow-button-secondary-pressed: inset 0 1px 2px rgb(43 34 32 / 0.14), 0 0 0 1px rgb(43 34 32 / 0.22);
   --shadow-focus: 0 0 0 4px rgb(8 126 139 / 0.45);
   --shadow-glass: inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 -1px 0 rgb(255 255 255 / 0.4), 0 1px 2px rgb(43 34 32 / 0.06), 0 10px 28px rgb(43 34 32 / 0.12);
 
@@ -230,13 +230,6 @@
 
 /* In the components layer so Tailwind utilities (borders, active colours) can still override them. */
 @layer components {
-/* Gel button fills (design system 2.2, Button). The gloss sits on top of the teal gradient. */
-.sz-gel-primary { background: radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0) 60%), linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 48%, var(--primary-pressed) 100%); text-shadow: 0 -1px 0 rgb(0 0 0 / 0.2); }
-.sz-gel-primary:active { background: linear-gradient(180deg, var(--primary-pressed) 0%, var(--primary) 100%); }
-.sz-gel-secondary { background: linear-gradient(180deg, var(--card) 0%, var(--card) 35%, var(--secondary) 100%); }
-.sz-gel-secondary:active { background: var(--secondary); }
-.sz-gel-primary:disabled, .sz-gel-secondary:disabled { background: var(--muted); text-shadow: none; }
-
 /* Liquid glass (design system 2.2). Bars get .sz-glass-bar; floating pills and panels get .sz-glass. */
 .sz-glass-bar { background: var(--glass); box-shadow: 0 1px 0 var(--glass-edge); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%); backdrop-filter: blur(var(--glass-blur)) saturate(180%); }
 .sz-glass, .sz-glass-strong {

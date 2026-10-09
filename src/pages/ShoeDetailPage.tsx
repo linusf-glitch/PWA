@@ -17,6 +17,8 @@ export default function ShoeDetailPage() {
   const shoe = selected && shoesOf(selected).find((s) => s.id === id)
   if (!selected || !shoe) return <Navigate to="/shoes" replace />
   const outgrown = shoe.status === 'outgrown'
+  // A newer pair is already in use: the old pair needs no rescan prompt.
+  const replaced = outgrown && selected.shoe
   const rows: [string, React.ReactNode][] = [
     ['Für', selected.name],
     ['Größe', `EU ${shoe.size}`],
@@ -44,13 +46,17 @@ export default function ShoeDetailPage() {
           ))}
         </dl>
         <p className="text-body">
-          {outgrown
+          {replaced
+            ? `${selected.name} ist aus Größe ${shoe.size} herausgewachsen und trägt jetzt Größe ${selected.shoe!.size}.`
+            : outgrown
             ? `${selected.name} ist aus Größe ${shoe.size} herausgewachsen. Miss die Füße erst neu, damit das nächste Paar heute passt.`
             : `Größe ${shoe.size} ist weiterhin die Größe von ${selected.name}.`}
         </p>
-        <Button asChild size="lg" variant={outgrown ? 'default' : 'outline'} className="w-full">
-          <Link to="/scan">{outgrown ? 'Erst neu scannen' : `Füße von ${selected.name} neu scannen`}</Link>
-        </Button>
+        {!replaced && (
+          <Button asChild size="lg" variant={outgrown ? 'default' : 'outline'} className="w-full">
+            <Link to="/scan">{outgrown ? 'Erst neu scannen' : `Füße von ${selected.name} neu scannen`}</Link>
+          </Button>
+        )}
       </main>
     </>
   )

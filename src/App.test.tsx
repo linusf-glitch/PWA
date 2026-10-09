@@ -233,14 +233,10 @@ describe('Home states', () => {
     expect(screen.getByRole('link', { name: /Passform-Check/ })).toBeInTheDocument()
   })
 
-  it('offers a line for another child that needs something, which switches to that child', async () => {
-    const user = userEvent.setup()
+  it('shows no reminder line for another child (they are reached through the kid switcher)', async () => {
     renderApp(signedIn())
-    await user.click(await screen.findByRole('button', { name: /Lotta: erster Scan fällig/ }))
-    expect(screen.getByRole('link', { name: 'Füße von Lotta scannen' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Noch keine Schuhe/ })).toBeInTheDocument()
-    // Emil is normal, so he gets no line.
-    expect(screen.queryByRole('button', { name: /Emil:/ })).not.toBeInTheDocument()
+    await screen.findByRole('link', { name: 'Füße von Emil neu scannen' })
+    expect(screen.queryByRole('button', { name: /Lotta:/ })).not.toBeInTheDocument()
   })
 
   it.each([

@@ -1,4 +1,4 @@
-import { CalendarDays, ChevronRight, Lock, TrendingUp, UserRound } from 'lucide-react'
+import { CalendarDays, Lock, TrendingUp, UserRound } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 
@@ -14,9 +14,9 @@ import { daysUntil, formatDate, homeState, type HomeState, type Kid } from '@/fe
 import { useKids } from '@/features/kids/useKids'
 
 // Home is the hub: one dominant action for the selected child (see homeState), then the
-// child's overview. Other children with something to do get one line each.
+// child's overview. Other children are reached through the kid switcher.
 export default function HomePage() {
-  const { kids, selected, select } = useKids()
+  const { selected } = useKids()
   return (
     <>
       <header className="sz-glass-bar sticky top-0 z-10 flex min-h-14 items-center gap-2 px-4 pt-[env(safe-area-inset-top)] lg:hidden">
@@ -38,27 +38,6 @@ export default function HomePage() {
         {selected ? (
           <>
             <Hero kid={selected} state={homeState(selected)} />
-            {kids
-              .filter((k) => k.id !== selected.id && homeState(k) !== 'normal')
-              .map((k) => (
-                <button
-                  key={k.id}
-                  type="button"
-                  onClick={() => select(k.id)}
-                  className="flex min-h-12 items-center gap-3 rounded-lg border bg-card px-3 py-2 text-left outline-none active:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex size-7 items-center justify-center rounded-full bg-accent text-caption font-semibold text-accent-foreground"
-                  >
-                    {k.name.charAt(0)}
-                  </span>
-                  <span className="flex-1 text-body-small">
-                    <span className="font-semibold">{k.name}:</span> {OTHER_KID_LINE[homeState(k)]}
-                  </span>
-                  <ChevronRight aria-hidden="true" className="size-5 text-muted-foreground" />
-                </button>
-              ))}
             <Overview kid={selected} />
           </>
         ) : (
@@ -67,14 +46,6 @@ export default function HomePage() {
       </main>
     </>
   )
-}
-
-const OTHER_KID_LINE: Record<HomeState, string> = {
-  noShoes: 'erster Scan fällig',
-  fitCheck: 'Schuhe drücken, neu scannen',
-  rescanDue: 'Scan bald fällig',
-  season: 'Größe für den Winter prüfen',
-  normal: '',
 }
 
 function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
