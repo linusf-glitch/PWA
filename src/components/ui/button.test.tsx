@@ -25,7 +25,7 @@ describe('Button', () => {
     for (const button of screen.getAllByRole('button')) expect(button).toHaveClass('min-h-11')
   })
 
-  it('is a round pill, and the secondary is an ink outline', () => {
+  it('is a round gel pill, and the secondary is a white gel', () => {
     render(
       <>
         <Button>A</Button>
@@ -33,8 +33,9 @@ describe('Button', () => {
       </>,
     )
     const [primary, secondary] = screen.getAllByRole('button')
-    expect(primary).toHaveClass('rounded-full')
-    expect(secondary).toHaveClass('border-ink', 'bg-card')
+    expect(primary).toHaveClass('rounded-full', 'sz-gel-primary', 'shadow-button')
+    expect(secondary).toHaveClass('sz-gel-secondary', 'bg-card', 'shadow-button-secondary')
+    expect(secondary).not.toHaveClass('border-ink')
   })
 
   it('keeps a narrow padding for links', () => {

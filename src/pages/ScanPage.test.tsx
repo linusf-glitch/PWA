@@ -47,7 +47,7 @@ describe('Scan intro', () => {
       vi.advanceTimersByTime(3000)
     })
     expect(await screen.findByRole('link', { name: 'Größe 27 kaufen' })).toHaveAttribute('href', '/checkout')
-    expect(screen.getByText('Gelb')).toBeInTheDocument()
+    expect(screen.getByText('Mittel')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Noch einmal scannen' })).toHaveAttribute('href', '/scan')
   })
 })
@@ -109,6 +109,6 @@ describe('Colourway and checkout hand-off', () => {
 
   it('sends order screens without an order back to Home', async () => {
     renderAt('/order/confirmed')
-    expect(await screen.findByRole('heading', { name: /Hallo|Emil/ })).toBeInTheDocument()
+    expect(await screen.findByRole('link', { name: 'Füße von Emil neu scannen' })).toBeInTheDocument()
   })
 })

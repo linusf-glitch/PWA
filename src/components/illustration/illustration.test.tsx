@@ -1,14 +1,28 @@
 import { render } from '@testing-library/react'
 
-import { Illustration } from './illustration'
-import { DRAWINGS } from './drawings'
+import { Headline } from './illustration'
+import { shoeColourFor } from './shoe-colour'
+import { ShoeSticker } from './shoe-sticker'
 
-describe('Illustration', () => {
-  it.each(Object.keys(DRAWINGS) as Array<keyof typeof DRAWINGS>)('%s is hidden from screen readers and draws lines', (name) => {
-    const { container } = render(<Illustration name={name} draw />)
-    const svg = container.querySelector('svg')!
-    expect(svg).toHaveAttribute('aria-hidden', 'true')
-    expect(svg).toHaveClass('sz-draw')
-    expect(container.querySelectorAll('.sz-ln').length).toBeGreaterThan(0)
+describe('ShoeSticker', () => {
+  it('is decorative by default and named when it carries meaning', () => {
+    const { container, rerender, getByRole } = render(<ShoeSticker />)
+    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+    rerender(<ShoeSticker colour="blue" label />)
+    expect(getByRole('img', { name: 'Sizeless-Schuh in Blau' })).toBeInTheDocument()
+  })
+
+  it('maps the shop colourways to sticker colours', () => {
+    expect(shoeColourFor('Galaxy')).toBe('purple')
+    expect(shoeColourFor('Sizeless Reef')).toBe('blue')
+    expect(shoeColourFor('Sprout')).toBe('green')
+    expect(shoeColourFor('Classic')).toBe('green')
+  })
+})
+
+describe('Headline', () => {
+  it('keeps the squiggle hidden from screen readers', () => {
+    const { container } = render(<Headline>Hallo</Headline>)
+    expect(container.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
   })
 })

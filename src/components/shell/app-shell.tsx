@@ -12,9 +12,9 @@ export function AppShell() {
   return (
     <KidsProvider>
       <div className="min-h-dvh lg:flex">
-        <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-4 border-r p-4 lg:flex">
-          <span className="px-2 py-3 text-h3 tracking-wide text-foreground">SIZELESS</span>
-          <KidSwitcher className="w-full rounded-lg border" />
+        <aside className="sz-glass-strong sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-4 border-y-0 border-l-0 p-4 lg:flex">
+          <img src="/sizeless-logo.png" alt="Sizeless" className="mx-2 my-3 h-[26px] w-auto self-start" />
+          <KidSwitcher className="w-full" />
           <nav aria-label="Hauptmenü" className="flex flex-col gap-1">
             {NAV.map(({ to, label, icon: Icon }) => (
               <NavLink

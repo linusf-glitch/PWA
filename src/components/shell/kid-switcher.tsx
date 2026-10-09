@@ -63,7 +63,7 @@ export function KidSwitcher({ compact = false, className }: { compact?: boolean;
         aria-label={`Kind wechseln, ${selected.name} ausgewählt`}
         onClick={() => setOpen(true)}
         className={cn(
-          'flex min-h-11 min-w-0 items-center gap-2 rounded-full py-1 pr-2 pl-1 text-left outline-none active:bg-muted focus-visible:ring-2 focus-visible:ring-ring',
+          'sz-glass flex min-h-11 min-w-0 items-center gap-2 rounded-full py-1 pr-2 pl-1 text-left outline-none active:scale-[0.98] active:bg-accent focus-visible:ring-4 focus-visible:ring-ring/45',
           className,
         )}
       >
@@ -91,7 +91,7 @@ export function KidSwitcher({ compact = false, className }: { compact?: boolean;
               role="dialog"
               aria-modal="true"
               aria-label="Kind auswählen"
-              className="absolute inset-x-0 bottom-0 flex max-h-[80dvh] flex-col gap-2 overflow-y-auto rounded-t-xl bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-card lg:inset-x-auto lg:top-20 lg:bottom-auto lg:left-4 lg:w-80 lg:rounded-xl"
+              className="sz-glass-strong absolute inset-x-0 bottom-0 flex max-h-[80dvh] flex-col gap-2 overflow-y-auto rounded-t-xl border-b-0 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-sheet lg:inset-x-auto lg:top-20 lg:bottom-auto lg:left-4 lg:w-80 lg:rounded-xl"
             >
               <h2 className="px-2 py-1 text-h3">Kind auswählen</h2>
               {kids.map((kid) => (

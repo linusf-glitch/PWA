@@ -15,17 +15,18 @@
 :root {
   --radius: 14px;
 
-  /* Warm paper palette (design system version 2). Teal is an accent: only the primary button, links and focus. */
+  /* White page, warm accents (design system version 2.2). Teal is an accent: only the primary button, links and focus. */
   --ink: #2b2220;
-  --background: #fff7ee;
+  --background: #ffffff;
   --foreground: var(--ink);
-  --card: #fffdf9;
+  --card: #ffffff;
   --card-foreground: var(--ink);
-  --popover: #fffdf9;
+  --popover: #ffffff;
   --popover-foreground: var(--ink);
   --primary: #087e8b;
   --primary-foreground: #ffffff;
   --primary-pressed: #065f69;
+  --primary-highlight: #2a98a3;
   --secondary: #fbe8d4;
   --secondary-foreground: var(--ink);
   --muted: #f6e7d6;
@@ -52,6 +53,13 @@
   --input: #7d6a5f;
   --ring: #087e8b;
   --scrim: rgb(43 34 32 / 0.45);
+
+  /* Liquid glass: only for chrome that floats above content (header bars, back button, kid switcher,
+     sheet, sidebar). Cards, buttons and fields stay solid. */
+  --glass: rgb(255 255 255 / 0.72);
+  --glass-strong: rgb(255 255 255 / 0.86);
+  --glass-edge: rgb(43 34 32 / 0.1);
+  --glass-blur: 24px;
 
   --chart-1: var(--ink);
   --chart-2: var(--ink);
@@ -105,6 +113,7 @@
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-pressed: var(--primary-pressed);
+  --color-primary-highlight: var(--primary-highlight);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -125,6 +134,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-scrim: var(--scrim);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --color-glass-edge: var(--glass-edge);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -166,8 +178,13 @@
   --shadow-card: 0 2px 0 rgb(120 80 50 / 0.08), 0 8px 20px rgb(120 80 50 / 0.08);
   --shadow-lift: 0 3px 0 rgb(120 80 50 / 0.1), 0 14px 28px rgb(120 80 50 / 0.14);
   --shadow-sheet: 0 -6px 28px rgb(43 34 32 / 0.14);
-  --shadow-button: 0 4px 0 var(--primary-pressed);
-  --shadow-button-pressed: 0 1px 0 var(--primary-pressed);
+  /* Gel buttons (like the macOS window buttons): bright inner top edge, sink in when pressed. No rim (Linus, 2026-10-09). */
+  --shadow-button: inset 0 1px 0 rgb(255 255 255 / 0.45), inset 0 -2px 3px rgb(0 0 0 / 0.14), 0 2px 6px rgb(8 126 139 / 0.3);
+  --shadow-button-pressed: inset 0 2px 5px rgb(0 0 0 / 0.28);
+  --shadow-button-secondary: inset 0 1px 0 #ffffff, 0 1px 2px rgb(43 34 32 / 0.1), 0 4px 10px rgb(43 34 32 / 0.06);
+  --shadow-button-secondary-pressed: inset 0 2px 4px rgb(43 34 32 / 0.18);
+  --shadow-focus: 0 0 0 4px rgb(8 126 139 / 0.45);
+  --shadow-glass: inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 -1px 0 rgb(255 255 255 / 0.4), 0 1px 2px rgb(43 34 32 / 0.06), 0 10px 28px rgb(43 34 32 / 0.12);
 
   /* Type styles from the design system: text-display, text-h1 ... text-caption. */
   --text-display: 32px;
@@ -211,19 +228,40 @@
   }
 }
 
-/* Drawings and motion (design system v2: illustration.md, motion.md). Light CSS/SVG only. */
-.sz-ill { display: block; flex: none; overflow: visible; filter: drop-shadow(0 2px 2px rgb(43 34 32 / 0.2)); }
-/* Sticker die-cut: a white border around the filled shapes, behind the ink line. */
-.sz-cut path { fill: #fff; stroke: #fff; stroke-width: 11; stroke-linejoin: round; }
-.sz-ln, .sz-ln-dashed { fill: none; stroke: var(--ink); stroke-width: var(--sw, 3); stroke-linecap: round; stroke-linejoin: round; }
-.sz-ln-dashed { stroke-dasharray: 3 7; }
-.sz-dot { fill: var(--ink); }
-.sz-fl-a, .sz-fl-apricot { fill: var(--accent-apricot); }
-.sz-fl-l, .sz-fl-lilac { fill: var(--accent-lilac); }
-.sz-fl-s, .sz-fl-sage { fill: var(--accent-sage); }
-.sz-fl-y { fill: var(--brand-yellow); }
-.sz-fl-n { fill: var(--card); }
-.sz-fl-p { fill: var(--accent-apricot-soft); }
+/* In the components layer so Tailwind utilities (borders, active colours) can still override them. */
+@layer components {
+/* Gel button fills (design system 2.2, Button). The gloss sits on top of the teal gradient. */
+.sz-gel-primary { background: radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0) 60%), linear-gradient(180deg, var(--primary-highlight) 0%, var(--primary) 48%, var(--primary-pressed) 100%); text-shadow: 0 -1px 0 rgb(0 0 0 / 0.2); }
+.sz-gel-primary:active { background: linear-gradient(180deg, var(--primary-pressed) 0%, var(--primary) 100%); }
+.sz-gel-secondary { background: linear-gradient(180deg, var(--card) 0%, var(--card) 35%, var(--secondary) 100%); }
+.sz-gel-secondary:active { background: var(--secondary); }
+.sz-gel-primary:disabled, .sz-gel-secondary:disabled { background: var(--muted); text-shadow: none; }
+
+/* Liquid glass (design system 2.2). Bars get .sz-glass-bar; floating pills and panels get .sz-glass. */
+.sz-glass-bar { background: var(--glass); box-shadow: 0 1px 0 var(--glass-edge); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%); backdrop-filter: blur(var(--glass-blur)) saturate(180%); }
+.sz-glass, .sz-glass-strong {
+  background-color: var(--glass);
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0) 55%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%); backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-edge); box-shadow: var(--shadow-glass);
+}
+.sz-glass-strong { background-color: var(--glass-strong); }
+/* No blur support, or the user asked for less transparency: solid white. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sz-glass-bar, .sz-glass, .sz-glass-strong { background-color: var(--card); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .sz-glass-bar, .sz-glass, .sz-glass-strong { background-color: var(--card); background-image: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+}
+
+/* Stickers, decoration and motion (design system 2.2: illustration.md, motion.md). Light CSS/SVG only. */
+.sz-sticker { display: block; flex: none; overflow: visible; transform: rotate(var(--tilt, -6deg)); filter: drop-shadow(0 2px 0 rgb(43 34 32 / 0.08)) drop-shadow(0 6px 10px rgb(43 34 32 / 0.12)); }
+.sz-sticker-row { display: flex; align-items: center; justify-content: center; }
+.sz-sticker-row .sz-sticker + .sz-sticker { margin-left: -18px; }
+.sz-fl-apricot { fill: var(--accent-apricot); }
+.sz-fl-lilac { fill: var(--accent-lilac); }
+.sz-fl-sage { fill: var(--accent-sage); }
 .sz-fl-ink { fill: var(--ink); }
 .sz-ln-apricot, .sz-ln-lilac, .sz-ln-sage, .sz-ln-ink { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .sz-ln-apricot { stroke: var(--accent-apricot); }
@@ -242,22 +280,21 @@
 
 @keyframes sz-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sz-draw { 0% { stroke-dashoffset: 1; opacity: 0; } 1% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-@keyframes sz-pop { 0% { transform: rotate(-1.5deg) scale(0.7); opacity: 0; } 60% { transform: rotate(-1.5deg) scale(1.1); opacity: 1; } 100% { transform: rotate(-1.5deg) scale(1); opacity: 1; } }
+@keyframes sz-pop { 0% { transform: rotate(var(--tilt, -1.5deg)) scale(0.7); opacity: 0; } 60% { transform: rotate(var(--tilt, -1.5deg)) scale(1.1); opacity: 1; } 100% { transform: rotate(var(--tilt, -1.5deg)) scale(1); opacity: 1; } }
+@keyframes sz-rise { 0% { transform: scaleY(0.5); } 60% { transform: scaleY(1.08); } 100% { transform: none; } }
 @keyframes sz-bounce-in { 0% { transform: translateY(10px) scale(0.8); opacity: 0; } 55% { transform: translateY(-5px) scale(1.06); opacity: 1; } 100% { transform: none; opacity: 1; } }
 @keyframes sz-burst { 0% { transform: translate(-50%, -50%) scale(0.3) rotate(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--r)); opacity: 0; } }
 @keyframes sz-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 
-.sz-draw .sz-ln { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) both; animation-delay: calc(var(--i, 0) * 70ms); }
-.sz-draw .sz-ill-fills { animation: sz-fade var(--duration-slow) var(--ease-soft) 350ms both; }
 .sz-squig-draw path { stroke-dasharray: 1; animation: sz-draw var(--duration-draw) var(--ease-soft) 150ms both; }
 .sz-pop { animation: sz-pop var(--duration-slow) var(--ease-spring) both; }
+.sz-rise { animation: sz-rise var(--duration-slow) var(--ease-spring) both; }
 .sz-bounce-in { animation: sz-bounce-in var(--duration-slow) var(--ease-spring) both; }
 .sz-skel { border-radius: var(--radius); background: linear-gradient(100deg, var(--muted) 30%, var(--card) 50%, var(--muted) 70%); background-size: 200% 100%; animation: sz-shimmer 1.6s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sz-draw .sz-ln, .sz-squig-draw path { animation: none; stroke-dasharray: none; opacity: 1; }
-  .sz-draw .sz-ill-fills { animation: sz-fade var(--duration-base) both; }
-  .sz-pop, .sz-bounce-in { animation: sz-fade var(--duration-base) both; }
+  .sz-squig-draw path { animation: none; stroke-dasharray: none; opacity: 1; }
+  .sz-pop, .sz-bounce-in, .sz-rise { animation: sz-fade var(--duration-base) both; }
   .sz-skel { animation: none; }
   .sz-confetti { display: none; }
 }

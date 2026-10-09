@@ -36,7 +36,7 @@ shadcn/ui is configured in components.json; add components with `npx shadcn@late
 - Add or update tests for every behaviour change. Core e2e path must stay green: sign-in, scan, checkout, order webhook, account created.
 - No bottom tab bar on mobile. Home is a state machine with one dominant action. Global kid switcher. Back arrow on every non-Home screen.
 - Setting colour (turquoise/yellow/red) is the shoe's adjustment setting, never the colourway.
-- Look: warm, playful kids brand. Teal only for the main button, links and focus. Drawings are sticker style and live in src/components/illustration/.
+- Look: warm, playful kids brand. Teal only for the main button, links and focus. No hand-drawn drawings: icons first, the real shoe as a sticker (ShoeSticker in src/components/illustration/). Setting chips say Klein / Mittel / Groß.
 - Work in phases (phase list in docs/progress.md); when reporting progress, show the phase list.
 - At the end of each session: update docs/progress.md and docs/decisions.md.
 - Never make changes outside the task without explicit approval.

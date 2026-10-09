@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router'
 
-import { Confetti, Headline, Illustration } from '@/components/illustration/illustration'
+import { Confetti, Headline } from '@/components/illustration/illustration'
+import { shoeColourFor } from '@/components/illustration/shoe-colour'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
@@ -32,7 +34,7 @@ export default function OrderConfirmedPage() {
               {name ? `${name}s` : 'Das'} Profil ist gespeichert. Wenn du dich anmelden willst, schicken wir dir einen Code per E-Mail.
             </p>
           </div>
-          <Illustration name="shoe" size={96} draw className="shrink-0" />
+          <ShoeSticker colour={shoeColourFor(colourway)} size={110} tilt={-8} animate className="mt-2 shrink-0" />
         </section>
 
         <section aria-label="Gespeichert" className="flex flex-col gap-2 rounded-xl bg-card p-4">

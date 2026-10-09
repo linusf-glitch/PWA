@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor, within } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { MemoryRouter } from 'react-router'
@@ -212,10 +212,10 @@ describe('Code entry screen', () => {
     await goToCodeScreen(user)
     const resend = screen.getByRole('button', { name: /Neuen Code senden/ })
     expect(resend).toBeDisabled()
-    act(() => {
-      vi.advanceTimersByTime(61_000)
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(61_000)
     })
-    await waitFor(() => expect(screen.getByRole('button', { name: 'Neuen Code senden' })).toBeEnabled())
+    expect(screen.getByRole('button', { name: 'Neuen Code senden' })).toBeEnabled()
     await user.click(screen.getByRole('button', { name: 'Neuen Code senden' }))
     expect(await screen.findByRole('status')).toHaveTextContent('neuer Code')
     expect(auth.signInWithOtp).toHaveBeenCalledTimes(2)
@@ -228,8 +228,8 @@ describe('Home states', () => {
   it('shows the normal rescan action with the shoe, growth and fit check', async () => {
     renderApp(signedIn())
     expect(await screen.findByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/scan')
-    expect(screen.getByRole('link', { name: /Classic-Schuh/ })).toHaveTextContent(/EU 26.*Türkis/)
-    expect(screen.getByRole('link', { name: /3 Messungen/ })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Aktueller Schuh/ })).toHaveTextContent(/Größe 26.*Klein/)
+    expect(screen.getByRole('link', { name: /Wachstum.*3.*Messungen/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Passform-Check/ })).toBeInTheDocument()
   })
 

@@ -1,6 +1,6 @@
 import { Link, Navigate, useLocation } from 'react-router'
 
-import { Confetti, Headline, Illustration } from '@/components/illustration/illustration'
+import { Confetti, Headline } from '@/components/illustration/illustration'
 import { PageHeader } from '@/components/shell/page-header'
 import { SettingChip } from '@/components/sizeless/setting-chip'
 import { Button } from '@/components/ui/button'
@@ -8,9 +8,9 @@ import { useKids } from '@/features/kids/useKids'
 import { scanResultSchema } from '@/features/scan/events'
 
 const EXPLAIN = {
-  turquoise: 'Stell den Schuh auf Türkis, die kleinste Einstellung.',
-  yellow: 'Stell den Schuh auf Gelb, die mittlere Einstellung.',
-  red: 'Stell den Schuh auf Rot, die größte Einstellung.',
+  turquoise: 'Stell den Schuh auf Klein, die kleinste Einstellung.',
+  yellow: 'Stell den Schuh auf Mittel, die mittlere Einstellung.',
+  red: 'Stell den Schuh auf Groß, die größte Einstellung.',
 }
 
 // S05 Result: the recommended size and setting, then buy or scan again. The scan page passes the
@@ -26,7 +26,6 @@ export default function ScanResultPage() {
       <PageHeader title="Ergebnis" kidSwitcher />
       <main className="relative mx-auto flex max-w-2xl flex-col items-center gap-6 p-4 text-center lg:p-8">
         <Confetti />
-        <Illustration name="footprints" size={110} draw />
         <Headline as="h2" size="h2" animate className="flex flex-col items-center">
           {selected ? `Die passende Größe für ${selected.name}` : 'Die passende Größe'}
         </Headline>
@@ -39,7 +38,7 @@ export default function ScanResultPage() {
           </span>
         </p>
         <div className="flex flex-col items-center gap-2">
-          <SettingChip setting={setting} />
+          <SettingChip setting={setting} size="lg" animate className="items-center" />
           <p className="text-body">{EXPLAIN[setting]}</p>
           <Button asChild variant="link">
             <Link to="/scan/setting">Was bedeutet die Einstellung?</Link>

@@ -10,9 +10,17 @@ export type Colourway = { name: string; image?: string; variantId: string; avail
 const API_VERSION = '2025-07'
 
 // ponytail: sample for demo mode (no keys). Galaxy is "sold out" in EU 27 to show that state.
+// Product photos from the live shop (Shopify CDN), so demo mode shows the real shoes.
+const DEMO_IMAGES: Record<string, string> = {
+  Galaxy: 'https://cdn.shopify.com/s/files/1/1043/1220/9753/files/sizeless-galaxy-dreiviertelansicht-vorne-kinderschuh.jpg?v=1780329164',
+  Reef: 'https://cdn.shopify.com/s/files/1/1043/1220/9753/files/sizeless-reef-blau-dreiviertelansicht-vorne-kinderschuh.jpg?v=1780329331',
+  Sprout: 'https://cdn.shopify.com/s/files/1/1043/1220/9753/files/sizeless-sprout-dreiviertelansicht-vorne-kinderschuh.jpg?v=1780328868',
+}
+
 export function demoColourways(size: number): Colourway[] {
   return ['Galaxy', 'Reef', 'Sprout'].map((name) => ({
     name,
+    image: DEMO_IMAGES[name],
     variantId: `demo-${name.toLowerCase()}-${size}`,
     available: !(name === 'Galaxy' && size === 27),
   }))

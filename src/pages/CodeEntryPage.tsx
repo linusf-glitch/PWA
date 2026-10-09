@@ -2,7 +2,8 @@ import { ArrowLeft } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router'
 
-import { Headline, Illustration } from '@/components/illustration/illustration'
+import { Headline } from '@/components/illustration/illustration'
+import { ShoeSticker } from '@/components/illustration/shoe-sticker'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -79,7 +80,7 @@ export default function CodeEntryPage() {
         </Link>
       </Button>
       <div className="space-y-2">
-        <Illustration name="stars" size={110} boil />
+        <ShoeSticker colour="blue" size={110} tilt={-8} />
         <Headline animate>Code eingeben</Headline>
         <p className="text-muted-foreground">
           Wir haben einen 6-stelligen Code an <span className="font-medium text-foreground">{email}</span> geschickt.
