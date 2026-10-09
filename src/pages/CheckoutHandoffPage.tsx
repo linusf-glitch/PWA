@@ -33,7 +33,7 @@ export default function CheckoutHandoffPage() {
     setMessage(undefined)
     try {
       window.location.assign(
-        await createCheckoutUrl(variantId, { size: String(size), setting, measurement_id, ...(selected && { kid_id: selected.id }) }),
+        await createCheckoutUrl(variantId, { size: String(size), setting, measurement_id, ...(selected && { kid_name: selected.name }) }),
       )
     } catch {
       setBusy(false)
