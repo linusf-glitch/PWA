@@ -69,14 +69,14 @@ describe('app frame', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
     await user.click(screen.getAllByRole('link', { name: /Wachstum/ })[0])
     expect(await screen.findByRole('heading', { name: 'Wachstum' })).toBeInTheDocument()
-    expect(screen.getByText(/für Lotta/)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Füße von Lotta neu scannen' })).toBeInTheDocument()
     await user.click(screen.getByRole('link', { name: 'Zurück zu Home' }))
     expect(await screen.findByRole('link', { name: 'Füße von Lotta scannen' })).toBeInTheDocument()
   })
 
   it('selects the child named in a link', async () => {
     renderApp(signedIn(), '/growth?kid=lotta')
-    expect(await screen.findByText(/für Lotta/)).toBeInTheDocument()
+    expect(await screen.findByRole('link', { name: 'Füße von Lotta neu scannen' })).toBeInTheDocument()
   })
 
   it('ignores an unknown child in a link', async () => {
