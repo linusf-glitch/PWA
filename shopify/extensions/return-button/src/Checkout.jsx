@@ -18,8 +18,11 @@ function Extension() {
   const href = token ? `${APP}/return?t=${encodeURIComponent(token)}` : `${APP}/sign-in`
   return (
     <s-stack gap="base">
-      <s-text>Dein Profil in der Sizeless App ist gleich bereit.</s-text>
-      <s-button href={href}>Zurück zu deinem Profil</s-button>
+      <s-heading>Weiter in der Sizeless App</s-heading>
+      <s-text>Dein Profil ist gleich bereit.</s-text>
+      <s-button variant="primary" inlineSize="fill" href={href}>
+        Zurück zu deinem Profil
+      </s-button>
     </s-stack>
   )
 }

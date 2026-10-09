@@ -27,7 +27,7 @@
 
 ### Thank-you page button (Shopify app "Sizeless Rückkehr")
 - Code: `shopify/` (extension-only Shopify app, one checkout UI extension `return-button`, target `purchase.thank-you.block.render`). It reads `_return_token` from the order's cart line and shows "Zurück zu deinem Profil" linking to `/return?t=<token>`; without a token it links to `/sign-in`. The link host is the `APP` constant in `shopify/extensions/return-button/src/Checkout.jsx` (change to app.sizeless-shoe.com later).
-- Setup (Linus): create the app at dev.shopify.com (no embed, no scopes), then in `shopify/`: `npm install`, `npx shopify app config link` (pick the app), `npx shopify app deploy`, install the app on the store, then Settings > Checkout > Customize > Thank you page > add the block "Zurück zu Sizeless" > Save.
+- Setup (Linus): create the app at dev.shopify.com (no embed, no scopes), then in `shopify/`: `npm install` (also inside `extensions/return-button`), `npx shopify app config link` (pick the app), `npx shopify app deploy`, install the app on the store, then Settings > Checkout > Customize > Thank you page > add the block "Zurück zu Sizeless" > Save.
 - Not verified on a live store yet: that hidden `_` line properties are visible to the extension (if not, the button falls back to sign-in).
 
 ## WhatsApp

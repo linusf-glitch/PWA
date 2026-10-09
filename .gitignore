@@ -37,3 +37,4 @@ test-results
 
 # Shopify CLI
 shopify/.shopify
+shopify/extensions/*/shopify.d.ts
