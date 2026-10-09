@@ -32,6 +32,26 @@ function fakeStore(recorded = true) {
   return { store: { recordOrder, userIdForEmail } satisfies Store, recordOrder, userIdForEmail }
 }
 
+describe('child birth month', () => {
+  const recorded = async (extra: { name: string; value: string }[]) => {
+    const { store, recordOrder } = fakeStore()
+    const body = order([...appProps, ...extra])
+    await handleOrderPaid(body, sign(body), SECRET, store)
+    return recordOrder.mock.calls[0]?.[1]
+  }
+
+  it('saves the birth month as the first of the month', async () => {
+    expect((await recorded([{ name: 'kid_birth', value: '2022-03' }]))?.birthDate).toBe('2022-03-01')
+  })
+
+  it('still records the shoe when the birth month is missing or malformed', async () => {
+    expect((await recorded([]))?.birthDate).toBeUndefined()
+    const bad = await recorded([{ name: 'kid_birth', value: 'march' }])
+    expect(bad?.sizeEu).toBe(27)
+    expect(bad?.birthDate).toBeUndefined()
+  })
+})
+
 describe('handleOrderPaid', () => {
   it('rejects a wrong or missing signature without touching the store', async () => {
     const { store, recordOrder, userIdForEmail } = fakeStore()

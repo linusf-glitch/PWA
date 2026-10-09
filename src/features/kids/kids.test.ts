@@ -1,4 +1,4 @@
-import { formatAge, homeState, mockKids, type Kid } from './kids'
+import { birthDateFor, birthYears, checkKidDetails, formatAge, homeState, mockKids, type Kid } from './kids'
 
 describe('formatAge', () => {
   const today = new Date(2026, 9, 8) // 8 Oct 2026
@@ -60,5 +60,21 @@ describe('homeState', () => {
       'season',
       'normal',
     ])
+  })
+})
+
+describe('first-visit form', () => {
+  const today = new Date(2026, 9, 8)
+
+  it('offers ages 2 to 6 and stores the first of the month', () => {
+    expect(birthYears(today)).toEqual([2024, 2023, 2022, 2021, 2020])
+    expect(birthDateFor(3, 2022)).toBe('2022-03-01')
+  })
+
+  it('asks for a name and a birth month and year in range', () => {
+    expect(checkKidDetails('Emil', 3, 2022, today)).toEqual({})
+    expect(checkKidDetails('  ', 3, 2022, today).name).toMatch(/Vornamen/)
+    expect(checkKidDetails('Emil', 0, 2022, today).birth).toMatch(/2 bis 6/)
+    expect(checkKidDetails('Emil', 3, 2010, today).birth).toMatch(/2 bis 6/)
   })
 })

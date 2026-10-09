@@ -3,7 +3,6 @@ import { Navigate, Outlet, Route, Routes } from 'react-router'
 import { AppShell } from '@/components/shell/app-shell'
 import { useAuth } from '@/features/auth/AuthProvider'
 import AccountPage from '@/pages/AccountPage'
-import CheckoutHandoffPage from '@/pages/CheckoutHandoffPage'
 import CodeEntryPage from '@/pages/CodeEntryPage'
 import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
@@ -52,7 +51,6 @@ export default function App() {
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />
           <Route path="/checkout" element={<ColourwayPage />} />
-          <Route path="/checkout/go" element={<CheckoutHandoffPage />} />
           <Route path="/order/done" element={<PaymentDonePage />} />
           <Route path="/order/confirmed" element={<OrderConfirmedPage />} />
           <Route path="/account" element={<AccountPage />} />

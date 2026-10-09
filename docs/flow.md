@@ -34,7 +34,7 @@ Goal: ad click to paid order with the right size. Nothing between result and che
 
 Entry points: Instagram/Meta ad, shop button, S19 referral link.
 
-Order: **S01 → S02 → S04 (Footprint) → S05 → S08 → S09 hand-off → Shopify → S09 return → S10 → (S07) → S12 Home**
+Order: **S01 → S02 → S04 (Footprint) → S05 → S08 → Shopify → S09 return → S10 → (S07) → S12 Home**
 Side paths: S04 cancel/error → S03 or S05 error; S05 → S06 → back to S05.
 
 ### S01 Start (`S01-Start`, variant `S01-Start-Referral`)
@@ -99,15 +99,10 @@ Side paths: S04 cancel/error → S03 or S05 error; S05 → S06 → back to S05.
 - Back → S05. Title "Choose colourway", kid switcher.
 - Product image, "Sizeless Classic shoe [PRICE] €", colourway buttons A / B / C.
 - Locked summary: "For {Name}, from the scan on {date}" · Size EU 26 · Setting Turquoise.
-- Button **Go to checkout** → S09 hand-off.
+- Short info above the button (Linus, 2026-10-09, replaces the separate hand-off screen): "Payment runs on Shopify. {Name}'s size and setting come with you, nothing to re-enter."
+- Button **Go to checkout** → straight to Shopify checkout (cart permalink with line-item properties: kid name, birth month, size, setting, measurement ID, referral code). Same tab. From the iPhone home screen it may open in Safari; S09 return handles the way back.
 - **Sold out:** that colourway greyed, "Colourway A is sold out in EU 26" + **Tell me when it's back**.
 - Rule: colourway picked here; size and setting are locked from the result. From a rescan (outcome B) the colourway is preselected as last time.
-
-### S09 Checkout hand-off (`S09-Handoff`)
-- Back → S08. Title "Checkout". "Taking you to secure checkout. Payment runs on Shopify. {Name}'s size and setting come with you, nothing to re-enter."
-- Summary: Classic shoe · Colourway A · EU 26 · Turquoise · for {Name} · [PRICE] €.
-- Button **Continue to checkout** → Shopify.
-- Cart permalink with line-item properties (kid name, size, setting, measurement ID, referral code). Same tab. From the iPhone home screen it may open in Safari; S09 return handles the way back.
 
 ### S09 Shopify checkout (`S09-Checkout`, placeholder)
 - Outside the PWA. Primary action Pay. Travels with the order: kid, size, setting, colourway, Footprint measurement ID, referral code or gift token.
@@ -185,7 +180,7 @@ One primary action per state. Priority on the canvas (lowest number that applies
 ### S08 Pick next size, buy without scanning (`S08-Pick-Next-Size`)
 - Back → Home (the state it came from). Title "Next size", kid switcher.
 - "Pick {Name}'s next size", "Last size EU 26 · scanned 8 weeks ago", size buttons EU 26 / **EU 27 · suggested** / EU 28, "Last setting: turquoise. We can't confirm a new setting without a scan." "Classic shoe · Colourway A (as last time)" + **Change** → S08 colourway.
-- **Buy EU 27** → S09 hand-off. Link "Not sure? Rescan instead" → S14.
+- **Buy EU 27** → Shopify checkout (via S08). Link "Not sure? Rescan instead" → S14.
 - Order tagged "size only" → S10 skip-scan variant. Winter boot / house shoe nudges use this screen with the model preselected.
 
 ### S15 Growth (`S15-Growth-One`, `S15-Growth-Several`, `S15-Growth-Kids`)
@@ -321,7 +316,6 @@ See "Canvas vs decisions" item 1: inside a flow, back goes to the previous step.
 | S06 How the setting works | S05 |
 | S08 Choose colourway | S05 |
 | S08 Pick next size | Home (the state it came from) |
-| S09 Hand-off | S08 |
 | S09 Shopify, S09 Return, S10 (both) | none (checkout must not reopen) |
 | S07 WhatsApp reminders | S10 |
 | S11 Sign in | S01 |
@@ -356,7 +350,7 @@ Deep screens return to their parent; parents return to Home.
 
 Where they differ, decisions.md wins unless Linus decided otherwise. Linus answered the open items on 2026-10-08 (recorded in decisions.md).
 
-1. **Back arrows (decided).** Inside a flow (scan, buy, checkout, sign-in, share, account), the back arrow goes to the previous step of that flow, as in the "Back targets" table; leaving the flow must never force a restart (for example a back arrow must not throw the parent from the result back to Home and make them rescan). Screens that are reached from Home (Growth, Shoes, Account, Share, Rescan intro, Pick next size) go back to Home. This replaces the "every back arrow goes to Home" line in decisions.md (app frame). Screens already built that go to Home too early (S06, S08, S09 hand-off) need a small follow-up.
+1. **Back arrows (decided).** Inside a flow (scan, buy, checkout, sign-in, share, account), the back arrow goes to the previous step of that flow, as in the "Back targets" table; leaving the flow must never force a restart (for example a back arrow must not throw the parent from the result back to Home and make them rescan). Screens that are reached from Home (Growth, Shoes, Account, Share, Rescan intro, Pick next size) go back to Home. This replaces the "every back arrow goes to Home" line in decisions.md (app frame). Screens already built that go to Home too early (S06, S08) need a small follow-up.
 2. **Home state order (decided: Claude's recommendation).** Use the canvas order: link expired > empty > fit check pending > rescan due (including last scan older than 6 months) > season nudge > no shoes yet > normal. Reason: it is the more complete list and the states rarely overlap. This replaces the order in decisions.md ("Home state order"), where "no shoes yet" came first.
 3. **Scan age limits (decided).** All three limits from the canvas: under 6 weeks = a scan is reused (winter boot result, "Buy again in this size"; a child with no shoes whose scan is older must rescan before buying); about 8 weeks = skip-scan is demoted to a small link and the gift landing shows "may have grown"; over 6 months = Home shows "Rescan recommended". The 8-week number is still a placeholder to confirm.
 4. **WhatsApp opt-in (decided).** Only after purchase (S10). The S05 "size too small" result must not offer WhatsApp; it offers "Measure again" and an email reminder instead (exact wording still to be drawn).

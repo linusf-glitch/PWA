@@ -9,7 +9,7 @@ Database: Supabase Postgres, EU region (Frankfurt). Row-level security on every 
 | Table | Purpose | Notes |
 |---|---|---|
 | profiles | Parent account (the "users" table) | 1:1 with Supabase `auth.users`; created automatically on sign-up. Holds email, display name, Shopify customer id. |
-| children | One row per child | Name, birth date. Has no owner column: access goes through `child_guardians`. |
+| children | One row per child | Name, birth date (first of the birth month; from the first-visit form via the order webhook). Has no owner column: access goes through `child_guardians`. |
 | child_guardians | Which parent may see which child | `owner` or `co_parent`. Makes co-parent access (one child, two parents) work without changes later. |
 | measurements | Foot scan results from Footprint | Footprint measurement id (unique), left/right length, recommended EU size, setting colour (turquoise/yellow/red), scan time. |
 | orders | Shopify orders from the "order paid" webhook | Belongs to a parent. Scan-based or skip-scan. Shopify order id is unique, so a repeated webhook cannot create a duplicate. |

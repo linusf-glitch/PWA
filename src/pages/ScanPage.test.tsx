@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
-import { afterEach, vi } from 'vitest'
+import { afterEach, beforeEach, vi } from 'vitest'
 
 import App from '@/App'
 import { AuthProvider } from '@/features/auth/AuthProvider'
@@ -52,6 +52,33 @@ describe('Scan intro', () => {
   })
 })
 
+describe('First visit (S02)', () => {
+  beforeEach(() => localStorage.clear())
+
+  it('asks who is measured and only starts the scan with a name, month and year', async () => {
+    const user = userEvent.setup()
+    renderAt('/scan?demo=empty')
+    expect(await screen.findByRole('heading', { name: 'Wer wird gemessen?' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Scan starten' }))
+    expect(screen.getByText('Bitte gib einen Vornamen an.')).toBeInTheDocument()
+    expect(screen.getByText(/Kinder von 2 bis 6 Jahren/)).toBeInTheDocument()
+    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Vorname'), 'Nele')
+    await user.selectOptions(screen.getByLabelText('Geburtsmonat'), 'März')
+    await user.selectOptions(screen.getByLabelText('Geburtsjahr'), String(new Date().getFullYear() - 4))
+    await user.click(screen.getByRole('button', { name: 'Scan starten' }))
+    expect(screen.getByRole('status')).toHaveTextContent('Wir messen')
+    expect(await screen.findByRole('heading', { name: /Füße von Nele messen/ })).toBeInTheDocument()
+  })
+
+  it('skips the form for a known child', async () => {
+    renderAt('/scan')
+    expect(await screen.findByRole('heading', { name: /Füße von Emil messen/ })).toBeInTheDocument()
+    expect(screen.queryByLabelText('Vorname')).not.toBeInTheDocument()
+  })
+})
+
 describe('Result and setting screens', () => {
   it('sends a visit without a scan result back to the scan intro', async () => {
     renderAt('/scan/result')
@@ -88,15 +115,16 @@ describe('Colourway and checkout hand-off', () => {
     expect(await screen.findByRole('radio', { name: /Galaxy/ })).toBeDisabled()
     expect(screen.getByRole('radio', { name: /Reef/ })).toBeChecked()
     expect(screen.getByText(/Galaxy ist in Größe 27 gerade ausverkauft/)).toBeInTheDocument()
+    expect(screen.getByText(/Die Zahlung läuft bei Shopify/)).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: /Sprout/ }))
     await user.click(screen.getByRole('button', { name: 'Weiter zur Kasse' }))
-    expect(await screen.findByText('Classic Schuh, Sprout, EU 27')).toBeInTheDocument()
+    // Demo has no Shopify keys: straight on to what comes after payment (no separate Kasse screen).
+    expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
   })
 
   it('goes through payment done to the order confirmation (demo, no back arrow)', async () => {
     const user = userEvent.setup()
-    renderWithScan('/checkout/go', { variantId: 'v', colourway: 'Reef' })
-    expect(screen.getByRole('button', { name: 'Zurück' })).toBeInTheDocument()
+    renderWithScan('/checkout')
     await user.click(await screen.findByRole('button', { name: 'Weiter zur Kasse' }))
     expect(await screen.findByRole('heading', { name: 'Danke für deine Bestellung' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Zurück zu Home' })).not.toBeInTheDocument()
