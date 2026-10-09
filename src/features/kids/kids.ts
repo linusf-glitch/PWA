@@ -2,6 +2,9 @@ import type { ShoeSetting } from '@/components/sizeless/setting-chip'
 
 export type OutgrownShoe = { size: number; settings: ShoeSetting[]; colourway: string; since: string; until: string; fromScan: boolean }
 
+/** One foot scan. Length and width in mm. */
+export type Measurement = { date: string; lengthMm: number; widthMm: number; size: number; shoe?: string }
+
 export type Kid = {
   id: string
   name: string
@@ -12,6 +15,8 @@ export type Kid = {
   /** Earlier pairs that no longer fit, newest first. */
   outgrown?: OutgrownShoe[]
   measurements: number
+  /** Scans, oldest first (growth chart). Sample data until read from Supabase. */
+  history?: Measurement[]
   /** ISO date of the next WhatsApp fit check. */
   nextFitCheck?: string
   /** Parent answered "feels tight" on the last fit check (signed WhatsApp link). */
@@ -30,9 +35,20 @@ export const MOCK_KIDS: Kid[] = [
     shoe: { model: 'Classic', size: 26, setting: 'turquoise', colourway: 'Reef', since: '2026-06-12', fromScan: true },
     outgrown: [{ size: 25, settings: ['turquoise', 'yellow'], colourway: 'Sprout', since: '2026-01-10', until: '2026-06-12', fromScan: true }],
     measurements: 3,
+    history: [
+      { date: '2025-11-04', lengthMm: 152, widthMm: 61, size: 24 },
+      { date: '2026-01-10', lengthMm: 158, widthMm: 63, size: 25, shoe: 'Classic' },
+      { date: '2026-06-12', lengthMm: 163, widthMm: 65, size: 26, shoe: 'Classic' },
+    ],
     nextFitCheck: '2027-01-23',
   },
-  { id: 'lotta', name: 'Lotta', birthDate: '2024-06-10', measurements: 1 },
+  {
+    id: 'lotta',
+    name: 'Lotta',
+    birthDate: '2024-06-10',
+    measurements: 1,
+    history: [{ date: '2026-09-20', lengthMm: 138, widthMm: 55, size: 21 }],
+  },
 ]
 
 export const DEMO_STATES = ['fitcheck', 'season', 'rescan', 'onekid', 'empty', 'family'] as const
@@ -54,6 +70,12 @@ export function mockKids(demo: DemoState | null, today = new Date()): Kid[] {
         birthDate: '2021-11-15',
         shoe: { model: 'Classic', size: 29, setting: 'red' },
         measurements: 4,
+        history: [
+          { date: '2025-06-02', lengthMm: 160, widthMm: 64, size: 25 },
+          { date: '2025-11-20', lengthMm: 168, widthMm: 66, size: 27 },
+          { date: '2026-04-15', lengthMm: 176, widthMm: 68, size: 28 },
+          { date: '2026-09-30', lengthMm: 181, widthMm: 70, size: 29, shoe: 'Classic' },
+        ],
         nextFitCheck: toIsoDate(soon),
       },
       {

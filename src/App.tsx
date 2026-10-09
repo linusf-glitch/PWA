@@ -8,12 +8,12 @@ import ColourwayPage from '@/pages/ColourwayPage'
 import HomePage from '@/pages/HomePage'
 import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
 import PaymentDonePage from '@/pages/PaymentDonePage'
-import PlaceholderPage from '@/pages/PlaceholderPage'
 import ReturnPage from '@/pages/ReturnPage'
 import ScanPage from '@/pages/ScanPage'
 import ScanResultPage from '@/pages/ScanResultPage'
 import SettingExplainPage from '@/pages/SettingExplainPage'
 import ShoeDetailPage from '@/pages/ShoeDetailPage'
+import GrowthPage from '@/pages/GrowthPage'
 import ShoesPage from '@/pages/ShoesPage'
 import SignInPage from '@/pages/SignInPage'
 
@@ -48,7 +48,8 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route element={<AppShell />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/growth" element={<PlaceholderPage title="Wachstum" />} />
+          <Route path="/growth" element={<GrowthPage />} />
+          <Route path="/growth/compare" element={<GrowthPage />} />
           <Route path="/shoes" element={<ShoesPage />} />
           <Route path="/shoes/:id" element={<ShoeDetailPage />} />
           <Route path="/scan" element={<ScanPage />} />
