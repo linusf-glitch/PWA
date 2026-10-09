@@ -12,9 +12,9 @@ function Switch({ className, children, ...props }: Omit<React.ComponentProps<'in
       <input type="checkbox" role="switch" className="peer sr-only" {...props} />
       <span
         aria-hidden="true"
-        className="relative mt-px h-7 w-12 shrink-0 rounded-full bg-card shadow-[inset_0_0_0_1.5px_var(--input)] transition-[background-color,box-shadow] duration-150 group-hover:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-checked:bg-ink group-has-checked:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-focus-visible:ring-4 group-has-focus-visible:ring-ring/45 group-has-disabled:bg-muted motion-reduce:transition-none"
+        className="relative mt-px h-7 w-12 shrink-0 rounded-full bg-card shadow-[inset_0_0_0_1.5px_var(--input)] transition-[background-color,box-shadow] duration-200 ease-out group-hover:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-checked:bg-ink group-has-checked:shadow-[inset_0_0_0_1.5px_var(--ink)] group-has-focus-visible:ring-4 group-has-focus-visible:ring-ring/45 group-has-disabled:bg-muted motion-reduce:transition-none"
       >
-        <span className="absolute top-1 left-1 size-5 rounded-full bg-ink transition-[transform,background-color] duration-150 group-has-checked:translate-x-5 group-has-checked:bg-primary-foreground motion-reduce:transition-none" />
+        <span className="absolute top-1 left-1 size-5 rounded-full bg-ink transition-[translate,background-color] duration-200 ease-out group-has-checked:translate-x-5 group-has-checked:bg-primary-foreground motion-reduce:transition-none" />
       </span>
     </label>
   )
