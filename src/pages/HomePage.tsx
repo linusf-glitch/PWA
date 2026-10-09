@@ -91,6 +91,14 @@ function Hero({ kid, state }: { kid: Kid; state: HomeState }) {
       <Button asChild size="lg" className="mt-2 w-full">
         <Link to={kid.shoe ? '/rescan' : '/scan'}>{copy.action}</Link>
       </Button>
+      {kid.shoe && (state === 'normal' || state === 'rescanDue') && (
+        <p className="text-body-small text-muted-foreground">
+          Brauchst du die nächste Größe?{' '}
+          <Button asChild variant="link" className="h-auto p-0">
+            <Link to="/next-size">Ohne Scan kaufen</Link>
+          </Button>
+        </p>
+      )}
     </section>
   )
 }

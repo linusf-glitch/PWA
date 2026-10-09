@@ -20,6 +20,9 @@ export const scanResultSchema = z.object({
 })
 export type ScanResult = z.infer<typeof scanResultSchema>
 
+// Order screens also take a size-only order ("Nächste Größe", no scan): no measurement, no article number.
+export const orderBaseSchema = scanResultSchema.partial({ measurement_id: true, article_number: true })
+
 export function parseScanResult(event: Event): ScanResult | null {
   const parsed = scanResultSchema.safeParse((event as CustomEvent).detail)
   return parsed.success ? parsed.data : null
