@@ -37,6 +37,7 @@ Update at the end of every session.
 - 2026-10-09: Kasse hand-off screen cut (Linus): "Farbe wählen" now has the Shopify info and goes straight to Shopify's checkout (in demo: to "Zahlung erledigt"). Flow doc and decisions updated.
 - 2026-10-09: return link after payment (PR open): cart carries a random `_return_token`, the webhook stores its hash (`orders.return_token_hash`, new migration `20261009110000_order_return_token.sql`, Linus runs it in Supabase), `api/order-return.ts` and the public page `/return?t=` show "Bestellung bestätigt" without login. Next: email button (Liquid snippet in docs/integrations.md), thank-you page button (checkout extension), then the real WhatsApp opt-in with consent log.
 - 2026-10-09: setting chip more prominent everywhere (Linus): default (md) size bigger (steps 32px wide, active 36px tall, word in body size), inactive steps fainter. Small list size unchanged. To mirror in the design system.
+- 2026-10-09: S10 is WhatsApp only for now (Linus: eases operations): no channel buttons, number field always open. Server and consent check still accept email, so it can come back.
 - 2026-10-09: S10: one teal button only ("Bestätigen", swapped on Linus's request); channel choice (ink ring) and "Jetzt anmelden" are white buttons (Linus: 3 CTAs competed).
 - 2026-10-09: S10: "Zu Home" removed; "Jetzt anmelden" sits in its own section "Dein Konto" below a divider, apart from the message form (Linus).
 - 2026-10-09: S10 consent choices are now toggles (`Switch`), both start off (Linus). Same two separate consents.

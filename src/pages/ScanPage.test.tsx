@@ -114,15 +114,14 @@ describe('Return link (/return)', () => {
     expect(JSON.parse(init.body)).toEqual({ token, channel: 'whatsapp', contact: '+491511234567', fit_checks: true, marketing: false, text_version: 's10-2026-10-09' })
   })
 
-  it('opens an email field for email and rejects a bad address without calling the server', async () => {
+  it('rejects a bad WhatsApp number without calling the server', async () => {
     const user = userEvent.setup()
     const fetchMock = vi.fn().mockResolvedValueOnce(order)
     await openReturn(fetchMock)
     await user.click(screen.getByRole('switch', { name: /Tipps und Angebote/ }))
-    await user.click(screen.getByRole('button', { name: 'Per E-Mail' }))
-    await user.type(screen.getByLabelText('E-Mail-Adresse'), 'kein-mail')
+    await user.type(screen.getByLabelText('WhatsApp-Nummer'), '12')
     await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
-    expect(screen.getByText('Bitte gib eine gültige E-Mail-Adresse an.')).toBeInTheDocument()
+    expect(screen.getByText(/Bitte gib die Nummer mit Landesvorwahl an/)).toBeInTheDocument()
     expect(fetchMock).toHaveBeenCalledTimes(1)
   })
 
@@ -131,8 +130,7 @@ describe('Return link (/return)', () => {
     const fetchMock = vi.fn().mockResolvedValueOnce(order).mockResolvedValueOnce({ ok: false })
     await openReturn(fetchMock)
     await user.click(screen.getByRole('switch', { name: /Fit-Checks/ }))
-    await user.click(screen.getByRole('button', { name: 'Per E-Mail' }))
-    await user.type(screen.getByLabelText('E-Mail-Adresse'), 'mama@example.com')
+    await user.type(screen.getByLabelText('WhatsApp-Nummer'), '151 1234567')
     await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
     expect(await screen.findByText('Das hat nicht geklappt. Bitte versuch es gleich noch einmal.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Bestätigen' })).toBeEnabled()
@@ -210,8 +208,8 @@ describe('Colourway and checkout hand-off', () => {
     expect(screen.getByRole('switch', { name: /Tipps und Angebote/ })).not.toBeChecked()
     await user.click(screen.getByRole('button', { name: 'Bestätigen' }))
     expect(screen.getByText('Wähle mindestens eine Option.')).toBeInTheDocument()
-    // WhatsApp is pre-selected, so its number field is already open.
-    expect(screen.getByRole('button', { name: 'Per WhatsApp' })).toHaveAttribute('aria-pressed', 'true')
+    // WhatsApp only: the number field is already open, there is no channel choice.
+    expect(screen.queryByRole('button', { name: 'Per E-Mail' })).not.toBeInTheDocument()
     expect(screen.getByLabelText('WhatsApp-Nummer')).toBeInTheDocument()
   })
 
