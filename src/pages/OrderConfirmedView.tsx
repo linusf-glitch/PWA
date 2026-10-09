@@ -47,7 +47,7 @@ export function OrderConfirmedView({ name, shoeTitle, colourway, setting, token 
             Dein Konto
           </h3>
           <p className="text-body-small text-muted-foreground">Wir schicken dir einen Code per E-Mail, damit du dein Profil jederzeit öffnen kannst.</p>
-          <Button asChild variant="outline" size="lg" className="w-full">
+          <Button asChild variant="outline" size="lg" className="w-full ring-4 ring-ring/45">
             <Link to="/sign-in">Jetzt anmelden</Link>
           </Button>
         </section>
