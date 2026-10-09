@@ -146,7 +146,7 @@ export default function ColourwayPage() {
         <Button size="lg" className="w-full" disabled={!pick || busy} onClick={goToCheckout}>
           Weiter zur Kasse
         </Button>
-        {/* Test helper: only shows where VITE_TEST_TOOLS=true is set (Vercel Preview scope). */}
+        {/* Test helper: only shows where VITE_TEST_TOOLS=true is set (Vercel, Preview and Production for now). */}
         {import.meta.env.VITE_TEST_TOOLS === 'true' && (
           <Button size="lg" variant="outline" className="w-full" disabled={!pick} onClick={simulatePayment}>
             Test: Zahlung simulieren
