@@ -15,7 +15,7 @@ const FILL: Record<ShoeSetting, string> = {
 }
 const STEP = {
   sm: { step: 'w-[15px] h-2.5 rounded-t-[5px] rounded-b-[2px]', on: 'h-[18px]', gap: 'gap-2 text-caption' },
-  md: { step: 'w-6 h-4 rounded-t-[7px] rounded-b-[2px]', on: 'h-7', gap: 'gap-2.5 text-label' },
+  md: { step: 'w-8 h-5 rounded-t-[9px] rounded-b-[3px]', on: 'h-9', gap: 'gap-3 text-body' },
   lg: { step: 'w-9 h-6 rounded-t-[11px] rounded-b-[3px]', on: 'h-11', gap: 'flex-col items-start gap-2.5 text-label' },
 }
 
@@ -51,7 +51,7 @@ export function SettingChip({ setting, size = 'md', prefix, animate, className }
               FILL[k],
               k === setting
                 ? cn(s.on, 'bg-[linear-gradient(180deg,rgb(255_255_255/0.4),transparent_55%)] shadow-[inset_0_1px_0_rgb(255_255_255/0.55),inset_0_-2px_3px_rgb(0_0_0/0.1),0_0_0_1px_rgb(43_34_32/0.12)]', animate && 'sz-rise')
-                : 'opacity-50 saturate-[0.55]',
+                : 'opacity-40 saturate-[0.5]',
             )}
           />
         ))}
