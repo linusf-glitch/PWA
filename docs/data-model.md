@@ -18,6 +18,10 @@ Database: Supabase Postgres, EU region (Frankfurt). Row-level security on every 
 
 `setting_colour` is the shoe's adjustment setting, never the colourway.
 
+## Server function
+
+`record_paid_order(...)` (migration 20261008200000) writes an order, its child (new, or the parent's child with the same name, case-insensitive), the scan and the shoe in one transaction. Only the service role may call it. A repeated Shopify webhook returns false and changes nothing. One shoe per order for now.
+
 ## Who can do what
 
 - **Parents (signed in)** can read their own profile, their own orders, their own preferences, and the children they are a guardian of with those children's measurements and shoes. They can edit their display name, their child's name and birth date, and their notification switches. Nothing else.
