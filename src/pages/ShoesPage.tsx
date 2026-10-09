@@ -68,7 +68,7 @@ export default function ShoesPage() {
         )}
         {selected && (
           <Button asChild variant="outline" className="w-full">
-            <Link to="/scan">
+            <Link to={selected.shoe ? '/rescan' : '/scan'}>
               <Footprints aria-hidden="true" />
               Füße von {selected.name} neu scannen
             </Link>

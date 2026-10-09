@@ -24,3 +24,10 @@ export function parseScanResult(event: Event): ScanResult | null {
   const parsed = scanResultSchema.safeParse((event as CustomEvent).detail)
   return parsed.success ? parsed.data : null
 }
+
+// A failed scan: the widget reports an error code instead of a size (flow.md S14, outcome C).
+export const scanErrorSchema = z.object({ error_code: z.string().min(1) })
+
+export function parseScanError(event: Event): boolean {
+  return scanErrorSchema.safeParse((event as CustomEvent).detail).success
+}

@@ -9,6 +9,8 @@ import HomePage from '@/pages/HomePage'
 import OrderConfirmedPage from '@/pages/OrderConfirmedPage'
 import PaymentDonePage from '@/pages/PaymentDonePage'
 import ReturnPage from '@/pages/ReturnPage'
+import RescanPage from '@/pages/RescanPage'
+import RescanResultPage from '@/pages/RescanResultPage'
 import ScanPage from '@/pages/ScanPage'
 import ScanResultPage from '@/pages/ScanResultPage'
 import SettingExplainPage from '@/pages/SettingExplainPage'
@@ -53,6 +55,8 @@ export default function App() {
           <Route path="/shoes" element={<ShoesPage />} />
           <Route path="/shoes/:id" element={<ShoeDetailPage />} />
           <Route path="/scan" element={<ScanPage />} />
+          <Route path="/rescan" element={<RescanPage />} />
+          <Route path="/rescan/result" element={<RescanResultPage />} />
           <Route path="/scan/result" element={<ScanResultPage />} />
           <Route path="/scan/setting" element={<SettingExplainPage />} />
           <Route path="/checkout" element={<ColourwayPage />} />

@@ -23,7 +23,7 @@ describe('Growth (S15)', () => {
     expect(rows).toHaveLength(4)
     expect(rows[1]).toHaveTextContent('163 / 65')
     expect(rows[1]).toHaveTextContent('EU 26')
-    expect(screen.getByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/scan')
+    expect(screen.getByRole('link', { name: 'Füße von Emil neu scannen' })).toHaveAttribute('href', '/rescan')
   })
 
   it('says one measurement so far', async () => {
