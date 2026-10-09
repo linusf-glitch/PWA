@@ -39,7 +39,11 @@ export default function ColourwayPage() {
       <PageHeader title="Farbe wählen" kidSwitcher back="step" />
       <main className="mx-auto flex max-w-2xl flex-col gap-6 p-4 lg:p-8">
         <section className="flex items-center gap-3 rounded-xl bg-card p-4">
-          <ShoeSticker colour={shoeColourFor(chosen)} size={84} className="shrink-0" />
+          {pick?.image ? (
+            <img src={pick.image} alt="" className="size-21 shrink-0 rounded-lg object-cover" />
+          ) : (
+            <ShoeSticker colour={shoeColourFor(chosen)} size={84} className="shrink-0" />
+          )}
           <div className="flex flex-col gap-1">
             <p className="text-h3">Classic Schuh, EU {scan.size}</p>
             <SettingChip setting={scan.setting ?? 'yellow'} />
