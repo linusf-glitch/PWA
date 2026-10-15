@@ -30,6 +30,8 @@ Source: the "Sizeless PWA Wireframes" canvas, https://claude.ai/artifact/XqDsU12
 
 ## Journey 1: first scan to purchase (mobile)
 
+> **Changed 2026-10-10 (Linus, see decisions.md "First order without the app").** For a first purchase the app is not part of the order flow. New Journey 1: **Footprint scan (own window) → Shopify cart and checkout → thank-you page (box with button) + order email → app sign-in (code, or no code from the thank-you button) → setup screen (S10: first name or nickname, birth month/year, WhatsApp toggles) → S12 Home.** Shop and store orders enter at the same point, because every paid order creates the account through the webhook; a QR card in the shoe box is the entry for store buyers without an email. S01, S02 (first visit), S05, S08 and the checkout hand-off below describe the old app-first flow: they now apply to returning parents only (rescan, next size). Home for shoes without a setting offers "Scannen und Schuh einstellen". To be built by the build thread; this note wins over the text below until the screens are rewritten.
+
 Goal: ad click to paid order with the right size. Nothing between result and checkout leads away.
 
 Entry points: Instagram/Meta ad, shop button, S19 referral link.
